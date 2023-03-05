@@ -49,19 +49,23 @@ int main()
 
     // Create "Start" button
     sf::RectangleShape startButton(sf::Vector2f(600.f, 150.f));
-    startButton.setFillColor(sf::Color(128, 128, 128));
+    startButton.setFillColor(sf::Color(104, 0, 120));
+    startButton.setOutlineColor(sf::Color(253, 0, 112));
+    startButton.setOutlineThickness(5.f);
     startButton.setPosition(window.getSize().x / 2.f - startButton.getSize().x / 2.f, 440.f);
-    sf::Text startText("Start", font, 30);
-    startText.setFillColor(sf::Color::Red);
+    sf::Text startText("Start", font, 50);
+    startText.setFillColor(sf::Color(253, 0, 112));
     startText.setOrigin(startText.getLocalBounds().width / 2.f, startText.getLocalBounds().height / 2.f);
     startText.setPosition(window.getSize().x / 2.f, 500.f);
 
     // Create "Settings" button
     sf::RectangleShape settingsButton(sf::Vector2f(600.f, 150.f));
-    settingsButton.setFillColor(sf::Color::Blue);
+    settingsButton.setFillColor(sf::Color(104, 0, 120));
+    settingsButton.setOutlineColor(sf::Color(253, 0, 112));
+    settingsButton.setOutlineThickness(5.f);
     settingsButton.setPosition(window.getSize().x / 2.f - settingsButton.getSize().x / 2.f, 640.f);
-    sf::Text settingsText("Settings", font, 30);
-    settingsText.setFillColor(sf::Color::Red);
+    sf::Text settingsText("Settings", font, 50);
+    settingsText.setFillColor(sf::Color(253, 0, 112));
     settingsText.setOrigin(settingsText.getLocalBounds().width / 2.f, settingsText.getLocalBounds().height / 2.f);
     settingsText.setPosition(window.getSize().x / 2.f, 700.f);
     
@@ -74,49 +78,55 @@ int main()
     backText.setOrigin(backText.getLocalBounds().width / 2.f, backText.getLocalBounds().height / 2.f);
     backText.setPosition(backButton.getPosition() + backButton.getSize() / 2.f);
 
-        // Rectangle dimensions
-    const float rectWidth = 200.f;
-    const float rectHeight = 50.f;
+    // Rectangle dimensions
+    const float rectWidth = 600.f;
+    const float rectHeight = 180.f;
     const float padding = 20.f;
 
     // Start position
-    const float startX = (window.getSize().x - rectWidth) / 2.f;
-    const float startY = window.getSize().y / 4.f;
+    const float startX1 = window.getSize().x / 2.f - padding;
+    const float startY1 = startText.getGlobalBounds().height + padding + 120.f;
+    const float startX2 = window.getSize().x / 2.f ;
+    const float startY2 = startText.getGlobalBounds().height + padding + 120.f;
 
-    // Static array rectangle
+    // #1. Static array rectangle
     sf::RectangleShape rect1(sf::Vector2f(rectWidth, rectHeight));
-    rect1.setFillColor(sf::Color::Red);
-    rect1.setPosition(startX, startY);
+    rect1.setFillColor(sf::Color(0, 154, 172));
+    rect1.setOrigin(rect1.getSize().x, 0.f);
+    rect1.setPosition(startX1, startY1);
 
-    // Dynamic array rectangle
+    // #2. Dynamic array rectangle
     sf::RectangleShape rect2(sf::Vector2f(rectWidth, rectHeight));
-    rect2.setFillColor(sf::Color::Green);
-    rect2.setPosition(startX, startY + rectHeight + padding);
+    rect2.setFillColor(sf::Color(218, 83, 44));
+    rect2.setOrigin(rect2.getSize().x, 0.f);
+    rect2.setPosition(startX1, startY1 + rectHeight + padding);
 
-    // Singly linked list rectangle
+    // #3. Singly linked list rectangle
     sf::RectangleShape rect3(sf::Vector2f(rectWidth, rectHeight));
-    rect3.setFillColor(sf::Color::Blue);
-    rect3.setPosition(startX, startY + (rectHeight + padding) * 2.f);
+    rect3.setFillColor(sf::Color(160, 0, 167));
+    rect3.setOrigin(rect3.getSize().x, 0.f);
+    rect3.setPosition(startX1, startY1 + (rectHeight + padding) * 2.f);
 
-    // Doubly linked list rectangle
+    // #4. Doubly linked list rectangle
     sf::RectangleShape rect4(sf::Vector2f(rectWidth, rectHeight));
-    rect4.setFillColor(sf::Color::Yellow);
-    rect4.setPosition(startX, startY + (rectHeight + padding) * 3.f);
+    rect4.setFillColor(sf::Color(186, 29, 71));
+    rect4.setPosition(startX2, startY2);
 
-    // Circular linked list rectangle
+    // #5. Circular linked list rectangle
     sf::RectangleShape rect5(sf::Vector2f(rectWidth, rectHeight));
-    rect5.setFillColor(sf::Color::Magenta);
-    rect5.setPosition(startX, startY + (rectHeight + padding) * 4.f);
+    rect5.setFillColor(sf::Color(124, 192, 204));
+    rect5.setPosition(startX2, startY2 + rectHeight + padding);
 
-    // Stack rectangle
+    // #6. Stack rectangle
     sf::RectangleShape rect6(sf::Vector2f(rectWidth, rectHeight));
-    rect6.setFillColor(sf::Color::Cyan);
-    rect6.setPosition(startX, startY + (rectHeight + padding) * 5.f);
+    rect6.setFillColor(sf::Color(0, 160, 0));
+    rect6.setPosition(startX2, startY2 + (rectHeight + padding) * 2.f);
 
-    // Queue rectangle
+    // #7. Queue rectangle
     sf::RectangleShape rect7(sf::Vector2f(rectWidth, rectHeight));
-    rect7.setFillColor(sf::Color::White);
-    rect7.setPosition(startX, startY + (rectHeight + padding) * 6.f);
+    rect7.setFillColor(sf::Color(38, 116, 236));
+    rect7.setOrigin(rect7.getSize().x / 2.f, 0.f);
+    rect7.setPosition(window.getSize().x / 2.f,  startY2 + (rectHeight + padding) * 3.f);
 
     enum ScreenState { Menu, Start, Settings };
     ScreenState currentState = Menu;
@@ -163,7 +173,7 @@ int main()
             }
         }
 
-        window.clear(sf::Color::White);
+        window.clear(sf::Color(22, 73, 154));
         switch (currentState)
         {
             case Menu:
