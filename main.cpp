@@ -94,41 +94,75 @@ int main()
     rect1.setFillColor(sf::Color(0, 154, 172));
     rect1.setOrigin(rect1.getSize().x, 0.f);
     rect1.setPosition(startX1, startY1);
+    sf::Text rect1_text("Static Array", font, 40);
+    rect1_text.setFillColor(sf::Color::White);
+    rect1_text.setOrigin(rect1_text.getLocalBounds().width / 2.f, rect1_text.getLocalBounds().height / 2.f);
+    rect1_text.setPosition(rect1.getPosition().x - rect1.getSize().x / 2.f, rect1.getPosition().y + rect1.getSize().y / 2.f - rect1_text.getLocalBounds().height / 2.f);
 
     // #2. Dynamic array rectangle
     sf::RectangleShape rect2(sf::Vector2f(rectWidth, rectHeight));
     rect2.setFillColor(sf::Color(218, 83, 44));
     rect2.setOrigin(rect2.getSize().x, 0.f);
     rect2.setPosition(startX1, startY1 + rectHeight + padding);
+    sf::Text rect2_text("Dynamic array", font, 40);
+    rect2_text.setFillColor(sf::Color::White);
+    rect2_text.setOrigin(rect2_text.getLocalBounds().width / 2.f, rect2_text.getLocalBounds().height / 2.f);
+    rect2_text.setPosition(rect2.getPosition().x - rect2.getSize().x / 2.f, rect2.getPosition().y + rect2.getSize().y / 2.f - rect2_text.getLocalBounds().height / 2.f);
+
 
     // #3. Singly linked list rectangle
     sf::RectangleShape rect3(sf::Vector2f(rectWidth, rectHeight));
     rect3.setFillColor(sf::Color(160, 0, 167));
     rect3.setOrigin(rect3.getSize().x, 0.f);
     rect3.setPosition(startX1, startY1 + (rectHeight + padding) * 2.f);
+    sf::Text rect3_text("Singly linked list", font, 40);
+    rect3_text.setFillColor(sf::Color::White);
+    rect3_text.setOrigin(rect3_text.getLocalBounds().width / 2.f, rect3_text.getLocalBounds().height / 2.f);
+    rect3_text.setPosition(rect3.getPosition().x - rect3.getSize().x / 2.f, rect3.getPosition().y + rect3.getSize().y / 2.f - rect3_text.getLocalBounds().height / 2.f);
+
 
     // #4. Doubly linked list rectangle
     sf::RectangleShape rect4(sf::Vector2f(rectWidth, rectHeight));
     rect4.setFillColor(sf::Color(186, 29, 71));
     rect4.setPosition(startX2, startY2);
+    sf::Text rect4_text("Doubly linked list", font, 40);
+    rect4_text.setFillColor(sf::Color::White);
+    rect4_text.setOrigin(rect4_text.getLocalBounds().width / 2.f, rect4_text.getLocalBounds().height / 2.f);
+    rect4_text.setPosition(rect4.getPosition().x + rect4.getSize().x / 2.f, rect4.getPosition().y + rect4.getSize().y / 2.f - rect4_text.getLocalBounds().height / 2.f);
+
 
     // #5. Circular linked list rectangle
     sf::RectangleShape rect5(sf::Vector2f(rectWidth, rectHeight));
     rect5.setFillColor(sf::Color(124, 192, 204));
     rect5.setPosition(startX2, startY2 + rectHeight + padding);
+    sf::Text rect5_text("Circular linked list", font, 40);
+    rect5_text.setFillColor(sf::Color::White);
+    rect5_text.setOrigin(rect5_text.getLocalBounds().width / 2.f, rect5_text.getLocalBounds().height / 2.f);
+    rect5_text.setPosition(rect5.getPosition().x + rect5.getSize().x / 2.f, rect5.getPosition().y + rect5.getSize().y / 2.f - rect5_text.getLocalBounds().height / 2.f);
+
 
     // #6. Stack rectangle
     sf::RectangleShape rect6(sf::Vector2f(rectWidth, rectHeight));
     rect6.setFillColor(sf::Color(0, 160, 0));
     rect6.setPosition(startX2, startY2 + (rectHeight + padding) * 2.f);
+    sf::Text rect6_text("Stack", font, 40);
+    rect6_text.setFillColor(sf::Color::White);
+    rect6_text.setOrigin(rect6_text.getLocalBounds().width / 2.f, rect6_text.getLocalBounds().height / 2.f);
+    rect6_text.setPosition(rect6.getPosition().x + rect6.getSize().x / 2.f, rect6.getPosition().y + rect6.getSize().y / 2.f - rect6_text.getLocalBounds().height / 2.f);
+
 
     // #7. Queue rectangle
-    sf::RectangleShape rect7(sf::Vector2f(rectWidth, rectHeight));
+    sf::RectangleShape rect7(sf::Vector2f(rectWidth + padding*2, rectHeight));
     rect7.setFillColor(sf::Color(38, 116, 236));
     rect7.setOrigin(rect7.getSize().x / 2.f, 0.f);
     rect7.setPosition(window.getSize().x / 2.f,  startY2 + (rectHeight + padding) * 3.f);
+    sf::Text rect7_text("Queue", font, 40);
+    rect7_text.setFillColor(sf::Color::White);
+    rect7_text.setOrigin(rect7_text.getLocalBounds().width / 2.f, rect7_text.getLocalBounds().height / 2.f);
+    rect7_text.setPosition(rect7.getPosition().x, rect7.getPosition().y + rect7.getSize().y / 2.f - rect7_text.getLocalBounds().height / 2.f);
 
-    enum ScreenState { Menu, Start, Settings };
+
+    enum ScreenState { Menu, Start, Settings, DV1, DV2, DV3, DV4, DV5, DV6, DV7 };
     ScreenState currentState = Menu;
 
     while (window.isOpen())
@@ -161,6 +195,34 @@ int main()
                         {
                             currentState = Menu;
                         }
+                        if (rect1.getGlobalBounds().contains(mousePos))
+                        {
+                            currentState = DV1;
+                        } 
+                        if (rect2.getGlobalBounds().contains(mousePos))
+                        {
+                            currentState = DV2;
+                        } 
+                        if (rect3.getGlobalBounds().contains(mousePos))
+                        {
+                            currentState = DV3;
+                        } 
+                        if (rect4.getGlobalBounds().contains(mousePos))
+                        {
+                            currentState = DV4;
+                        } 
+                        if (rect5.getGlobalBounds().contains(mousePos))
+                        {
+                            currentState = DV5;
+                        } 
+                        if (rect6.getGlobalBounds().contains(mousePos))
+                        {
+                            currentState = DV6;
+                        } 
+                        if (rect7.getGlobalBounds().contains(mousePos))
+                        {
+                            currentState = DV7;
+                        } 
                         break;
 
                     case Settings:
@@ -169,6 +231,48 @@ int main()
                             currentState = Menu;
                         }
                         break;
+                    case DV1:
+                        if (backButton.getGlobalBounds().contains(mousePos))
+                        {
+                            currentState = Start;
+                        }
+                        break;
+                    case DV2:
+                        if (backButton.getGlobalBounds().contains(mousePos))
+                        {
+                            currentState = Start;
+                        }
+                        break;
+                    case DV3:
+                        if (backButton.getGlobalBounds().contains(mousePos))
+                        {
+                            currentState = Start;
+                        }
+                        break;
+                    case DV4:
+                        if (backButton.getGlobalBounds().contains(mousePos))
+                        {
+                            currentState = Start;
+                        }
+                        break;
+                    case DV5:
+                        if (backButton.getGlobalBounds().contains(mousePos))
+                        {
+                            currentState = Start;
+                        }
+                        break;
+                    case DV6:
+                        if (backButton.getGlobalBounds().contains(mousePos))
+                        {
+                            currentState = Start;
+                        }
+                        break;
+                    case DV7:
+                        if (backButton.getGlobalBounds().contains(mousePos))
+                        {
+                            currentState = Start;
+                        }
+                        break;                    
                 }
             }
         }
@@ -189,15 +293,50 @@ int main()
                 window.draw(StartTitle);
                 window.draw(backText);
                 window.draw(rect1);
+                window.draw(rect1_text);
                 window.draw(rect2);
+                window.draw(rect2_text);
                 window.draw(rect3);
+                window.draw(rect3_text);
                 window.draw(rect4);
+                window.draw(rect4_text);
                 window.draw(rect5);
+                window.draw(rect5_text);
                 window.draw(rect6);
+                window.draw(rect6_text);
                 window.draw(rect7);
+                window.draw(rect7_text);
                 break;  
             case Settings:
                 window.draw(SettingTitle);
+                window.draw(backButton);
+                window.draw(backText);
+                break;
+            case DV1:
+                window.draw(backButton);
+                window.draw(backText);
+                break;
+            case DV2:
+                window.draw(backButton);
+                window.draw(backText);
+                break;
+            case DV3:
+                window.draw(backButton);
+                window.draw(backText);
+                break;
+            case DV4:
+                window.draw(backButton);
+                window.draw(backText);
+                break;
+            case DV5:
+                window.draw(backButton);
+                window.draw(backText);
+                break;
+            case DV6:
+                window.draw(backButton);
+                window.draw(backText);
+                break;
+            case DV7:
                 window.draw(backButton);
                 window.draw(backText);
                 break;
