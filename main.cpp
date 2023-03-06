@@ -1,5 +1,26 @@
-#include <iostream>
+#include <bits/stdc++.h>
 #include <SFML/Graphics.hpp>
+
+sf::Font font;
+
+struct Node
+{
+    sf::CircleShape CircleShape;
+    int num;
+    sf::Text Data;
+};
+
+void initNode(Node &temp, int value)
+{
+    temp.CircleShape.setRadius(20.f);
+    temp.CircleShape.setFillColor(sf::Color::White);
+    temp.num = value;
+    temp.Data.setString(std::to_string(temp.num));
+    temp.Data.setFont(font);
+    temp.Data.setCharacterSize(20.f);
+    temp.Data.setOrigin(10.f, 10.f);
+}
+
 
 int main()
 {
@@ -16,22 +37,21 @@ int main()
     sprite.setScale(window.getSize().x / sprite.getLocalBounds().width, 
                     window.getSize().y / sprite.getLocalBounds().height);
 
-    sf::Font font;
     if (!font.loadFromFile("Fonts/arial.ttf"))
     {
         std::cerr << "Failed to load Fonts" << "\n";
         return 1;
     }
     // Create MenuTitle
-    sf::Text MenuTitle("Data Visualization", font, 120);
+    sf::Text MenuTitle("Data Visualization", font, 150);
     MenuTitle.setOutlineThickness(3);
     MenuTitle.setOutlineColor(sf::Color::Red);
     MenuTitle.setFillColor(sf::Color::White);
     MenuTitle.setOrigin(MenuTitle.getLocalBounds().width / 2.f, MenuTitle.getLocalBounds().height / 2.f);
-    MenuTitle.setPosition(window.getSize().x / 2.f, 50.f);
+    MenuTitle.setPosition(window.getSize().x / 2.f, 150.f);
 
     // Create StartTitle
-    sf::Text StartTitle("Start Mode", font, 100);
+    sf::Text StartTitle("Menu", font, 100);
     StartTitle.setOutlineThickness(3);
     StartTitle.setOutlineColor(sf::Color::Red);
     StartTitle.setFillColor(sf::Color::White);
@@ -98,6 +118,13 @@ int main()
     rect1_text.setFillColor(sf::Color::White);
     rect1_text.setOrigin(rect1_text.getLocalBounds().width / 2.f, rect1_text.getLocalBounds().height / 2.f);
     rect1_text.setPosition(rect1.getPosition().x - rect1.getSize().x / 2.f, rect1.getPosition().y + rect1.getSize().y / 2.f - rect1_text.getLocalBounds().height / 2.f);
+    // menu
+    sf::Text StaticArrayTitle("Static Array", font, 90);
+    StaticArrayTitle.setOutlineThickness(3);
+    StaticArrayTitle.setOutlineColor(sf::Color::Red);
+    StaticArrayTitle.setFillColor(sf::Color::White);
+    StaticArrayTitle.setOrigin(StaticArrayTitle.getLocalBounds().width / 2.f, StaticArrayTitle.getLocalBounds().height / 2.f);
+    StaticArrayTitle.setPosition(window.getSize().x / 2.f, 50.f);
 
     // #2. Dynamic array rectangle
     sf::RectangleShape rect2(sf::Vector2f(rectWidth, rectHeight));
@@ -108,7 +135,13 @@ int main()
     rect2_text.setFillColor(sf::Color::White);
     rect2_text.setOrigin(rect2_text.getLocalBounds().width / 2.f, rect2_text.getLocalBounds().height / 2.f);
     rect2_text.setPosition(rect2.getPosition().x - rect2.getSize().x / 2.f, rect2.getPosition().y + rect2.getSize().y / 2.f - rect2_text.getLocalBounds().height / 2.f);
-
+    // menu
+    sf::Text DynamicArrayTitle("Dynamic Array", font, 90);
+    DynamicArrayTitle.setOutlineThickness(3);
+    DynamicArrayTitle.setOutlineColor(sf::Color::Red);
+    DynamicArrayTitle.setFillColor(sf::Color::White);
+    DynamicArrayTitle.setOrigin(DynamicArrayTitle.getLocalBounds().width / 2.f, DynamicArrayTitle.getLocalBounds().height / 2.f);
+    DynamicArrayTitle.setPosition(window.getSize().x / 2.f, 50.f);
 
     // #3. Singly linked list rectangle
     sf::RectangleShape rect3(sf::Vector2f(rectWidth, rectHeight));
@@ -119,7 +152,13 @@ int main()
     rect3_text.setFillColor(sf::Color::White);
     rect3_text.setOrigin(rect3_text.getLocalBounds().width / 2.f, rect3_text.getLocalBounds().height / 2.f);
     rect3_text.setPosition(rect3.getPosition().x - rect3.getSize().x / 2.f, rect3.getPosition().y + rect3.getSize().y / 2.f - rect3_text.getLocalBounds().height / 2.f);
-
+    // menu
+    sf::Text SingleLLTitle("Singly Linked List", font, 90);
+    SingleLLTitle.setOutlineThickness(3);
+    SingleLLTitle.setOutlineColor(sf::Color::Red);
+    SingleLLTitle.setFillColor(sf::Color::White);
+    SingleLLTitle.setOrigin(SingleLLTitle.getLocalBounds().width / 2.f, SingleLLTitle.getLocalBounds().height / 2.f);
+    SingleLLTitle.setPosition(window.getSize().x / 2.f, 50.f);
 
     // #4. Doubly linked list rectangle
     sf::RectangleShape rect4(sf::Vector2f(rectWidth, rectHeight));
@@ -129,7 +168,13 @@ int main()
     rect4_text.setFillColor(sf::Color::White);
     rect4_text.setOrigin(rect4_text.getLocalBounds().width / 2.f, rect4_text.getLocalBounds().height / 2.f);
     rect4_text.setPosition(rect4.getPosition().x + rect4.getSize().x / 2.f, rect4.getPosition().y + rect4.getSize().y / 2.f - rect4_text.getLocalBounds().height / 2.f);
-
+    // menu
+    sf::Text DoublyLLTitle("Doubly Linked List", font, 90);
+    DoublyLLTitle.setOutlineThickness(3);
+    DoublyLLTitle.setOutlineColor(sf::Color::Red);
+    DoublyLLTitle.setFillColor(sf::Color::White);
+    DoublyLLTitle.setOrigin(DoublyLLTitle.getLocalBounds().width / 2.f, DoublyLLTitle.getLocalBounds().height / 2.f);
+    DoublyLLTitle.setPosition(window.getSize().x / 2.f, 50.f);
 
     // #5. Circular linked list rectangle
     sf::RectangleShape rect5(sf::Vector2f(rectWidth, rectHeight));
@@ -139,7 +184,13 @@ int main()
     rect5_text.setFillColor(sf::Color::White);
     rect5_text.setOrigin(rect5_text.getLocalBounds().width / 2.f, rect5_text.getLocalBounds().height / 2.f);
     rect5_text.setPosition(rect5.getPosition().x + rect5.getSize().x / 2.f, rect5.getPosition().y + rect5.getSize().y / 2.f - rect5_text.getLocalBounds().height / 2.f);
-
+    // menu
+    sf::Text CircularLLTitle("Circular Linked List", font, 90);
+    CircularLLTitle.setOutlineThickness(3);
+    CircularLLTitle.setOutlineColor(sf::Color::Red);
+    CircularLLTitle.setFillColor(sf::Color::White);
+    CircularLLTitle.setOrigin(CircularLLTitle.getLocalBounds().width / 2.f, CircularLLTitle.getLocalBounds().height / 2.f);
+    CircularLLTitle.setPosition(window.getSize().x / 2.f, 50.f);
 
     // #6. Stack rectangle
     sf::RectangleShape rect6(sf::Vector2f(rectWidth, rectHeight));
@@ -149,7 +200,13 @@ int main()
     rect6_text.setFillColor(sf::Color::White);
     rect6_text.setOrigin(rect6_text.getLocalBounds().width / 2.f, rect6_text.getLocalBounds().height / 2.f);
     rect6_text.setPosition(rect6.getPosition().x + rect6.getSize().x / 2.f, rect6.getPosition().y + rect6.getSize().y / 2.f - rect6_text.getLocalBounds().height / 2.f);
-
+    // menu
+    sf::Text StackTitle("Stack", font, 90);
+    StackTitle.setOutlineThickness(3);
+    StackTitle.setOutlineColor(sf::Color::Red);
+    StackTitle.setFillColor(sf::Color::White);
+    StackTitle.setOrigin(StackTitle.getLocalBounds().width / 2.f, StackTitle.getLocalBounds().height / 2.f);
+    StackTitle.setPosition(window.getSize().x / 2.f, 50.f);
 
     // #7. Queue rectangle
     sf::RectangleShape rect7(sf::Vector2f(rectWidth + padding*2, rectHeight));
@@ -160,10 +217,77 @@ int main()
     rect7_text.setFillColor(sf::Color::White);
     rect7_text.setOrigin(rect7_text.getLocalBounds().width / 2.f, rect7_text.getLocalBounds().height / 2.f);
     rect7_text.setPosition(rect7.getPosition().x, rect7.getPosition().y + rect7.getSize().y / 2.f - rect7_text.getLocalBounds().height / 2.f);
+    // menu
+    sf::Text QueueTitle("Queue", font, 90);
+    QueueTitle.setOutlineThickness(3);
+    QueueTitle.setOutlineColor(sf::Color::Red);
+    QueueTitle.setFillColor(sf::Color::White);
+    QueueTitle.setOrigin(QueueTitle.getLocalBounds().width / 2.f, QueueTitle.getLocalBounds().height / 2.f);
+    QueueTitle.setPosition(window.getSize().x / 2.f, 50.f);
+
+    // control menu
+    // #1
+    sf::RectangleShape ControlMenu_btn1(sf::Vector2f(200.f, 50.f));
+    ControlMenu_btn1.setFillColor(sf::Color(255, 138, 39));
+    ControlMenu_btn1.setPosition(150.f, window.getSize().y / 2.f + 100.f);
+    sf::Text Func1_text("Create", font, 23);
+    Func1_text.setFillColor(sf::Color::White);
+    Func1_text.setOrigin(Func1_text.getLocalBounds().width / 2.f, Func1_text.getLocalBounds().height / 2.f);
+    Func1_text.setPosition(ControlMenu_btn1.getPosition().x + ControlMenu_btn1.getSize().x / 2.f, ControlMenu_btn1.getPosition().y + ControlMenu_btn1.getSize(). y / 2.f - Func1_text.getLocalBounds().height / 2.f);
+    
+    sf::RectangleShape CreateEmpty(sf::Vector2f(130.f, 50.f));
+    CreateEmpty.setFillColor(sf::Color(255, 138, 39));
+    CreateEmpty.setPosition(ControlMenu_btn1.getPosition().x + ControlMenu_btn1.getSize().x +20.f, ControlMenu_btn1.getPosition().y);
+    sf::Text CreateEmptyText("Empty", font, 23);
+    CreateEmptyText.setFillColor(sf::Color::White);
+    CreateEmptyText.setOrigin(CreateEmptyText.getLocalBounds().width / 2.f, CreateEmptyText.getLocalBounds().height / 2.f);
+    CreateEmptyText.setPosition(CreateEmpty.getPosition().x + CreateEmpty.getSize().x / 2.f, CreateEmpty.getPosition().y + CreateEmpty.getSize().y / 2.f - CreateEmptyText.getLocalBounds().height / 2.f);
+
+    sf::RectangleShape CreateRandom(sf::Vector2f(150.f, 50.f));
+    sf::RectangleShape CreateRandomSort(sf::Vector2f(180.f, 50.f));
+    sf::RectangleShape CreateRandomFixedSize(sf::Vector2f(200.f, 50.f));
+    sf::RectangleShape CreateUserDefinedList(sf::Vector2f(200.f, 50.f));
+
+    // #2
+    sf::RectangleShape ControlMenu_btn2(sf::Vector2f(200.f, 50.f));
+    ControlMenu_btn2.setFillColor(sf::Color(255, 138, 39));
+    ControlMenu_btn2.setPosition(150.f, window.getSize().y / 2.f + 150.f);
+    sf::Text Func2_text("Add", font, 23);
+    Func2_text.setFillColor(sf::Color::White);
+    Func2_text.setOrigin(Func2_text.getLocalBounds().width / 2.f, Func2_text.getLocalBounds().height / 2.f);
+    Func2_text.setPosition(ControlMenu_btn2.getPosition().x + ControlMenu_btn2.getSize().x / 2.f, ControlMenu_btn1.getPosition().y + ControlMenu_btn1.getSize(). y / 2.f - Func1_text.getLocalBounds().height / 2.f + 50.f);
+    // #3
+    sf::RectangleShape ControlMenu_btn3(sf::Vector2f(200.f, 50.f));
+    ControlMenu_btn3.setFillColor(sf::Color(255, 138, 39));
+    ControlMenu_btn3.setPosition(150.f, window.getSize().y / 2.f + 200.f);
+    sf::Text Func3_text("Delete", font, 23);
+    Func3_text.setFillColor(sf::Color::White);
+    Func3_text.setOrigin(Func3_text.getLocalBounds().width / 2.f, Func3_text.getLocalBounds().height / 2.f);
+    Func3_text.setPosition(ControlMenu_btn3.getPosition().x + ControlMenu_btn3.getSize().x / 2.f, ControlMenu_btn1.getPosition().y + ControlMenu_btn1.getSize(). y / 2.f - Func1_text.getLocalBounds().height / 2.f + 100.f);
+    // #4
+    sf::RectangleShape ControlMenu_btn4(sf::Vector2f(200.f, 50.f));
+    ControlMenu_btn4.setFillColor(sf::Color(255, 138, 39));
+    ControlMenu_btn4.setPosition(150.f, window.getSize().y / 2.f + 250.f);
+    sf::Text Func4_text("Update", font, 23);
+    Func4_text.setFillColor(sf::Color::White);
+    Func4_text.setOrigin(Func4_text.getLocalBounds().width / 2.f, Func4_text.getLocalBounds().height / 2.f);
+    Func4_text.setPosition(ControlMenu_btn4.getPosition().x + ControlMenu_btn4.getSize().x / 2.f, ControlMenu_btn1.getPosition().y + ControlMenu_btn1.getSize(). y / 2.f - Func1_text.getLocalBounds().height / 2.f + 150.f);
+    // #5
+    sf::RectangleShape ControlMenu_btn5(sf::Vector2f(200.f, 50.f));
+    ControlMenu_btn5.setFillColor(sf::Color(255, 138, 39));
+    ControlMenu_btn5.setPosition(150.f, window.getSize().y / 2.f + 300.f);
+    sf::Text Func5_text("Search", font, 23);
+    Func5_text.setFillColor(sf::Color::White);
+    Func5_text.setOrigin(Func5_text.getLocalBounds().width / 2.f, Func5_text.getLocalBounds().height / 2.f);
+    Func5_text.setPosition(ControlMenu_btn5.getPosition().x + ControlMenu_btn5.getSize().x / 2.f, ControlMenu_btn1.getPosition().y + ControlMenu_btn1.getSize(). y / 2.f - Func1_text.getLocalBounds().height / 2.f + 200.f);
+
+
 
 
     enum ScreenState { Menu, Start, Settings, DV1, DV2, DV3, DV4, DV5, DV6, DV7 };
     ScreenState currentState = Menu;
+
+
 
     while (window.isOpen())
     {
@@ -275,6 +399,44 @@ int main()
                         break;                    
                 }
             }
+            else if (event.type == sf::Event::MouseMoved)
+            {
+                sf::Vector2f mousePos = sf::Vector2f(sf::Mouse::getPosition(window));
+                switch (currentState){
+                    case DV3:
+                        if (ControlMenu_btn1.getGlobalBounds().contains(mousePos))
+                        {
+                            ControlMenu_btn1.setFillColor(sf::Color::Black);
+                        } else {
+                            ControlMenu_btn1.setFillColor(sf::Color(255, 138, 39));
+                        }
+                        if (ControlMenu_btn2.getGlobalBounds().contains(mousePos))
+                        {
+                            ControlMenu_btn2.setFillColor(sf::Color::Black);
+                        } else {
+                            ControlMenu_btn2.setFillColor(sf::Color(255, 138, 39));
+                        }
+                        if (ControlMenu_btn3.getGlobalBounds().contains(mousePos))
+                        {
+                            ControlMenu_btn3.setFillColor(sf::Color::Black);
+                        } else {
+                            ControlMenu_btn3.setFillColor(sf::Color(255, 138, 39));
+                        }
+                        if (ControlMenu_btn4.getGlobalBounds().contains(mousePos))
+                        {
+                            ControlMenu_btn4.setFillColor(sf::Color::Black);
+                        } else {
+                            ControlMenu_btn4.setFillColor(sf::Color(255, 138, 39));
+                        }
+                        if (ControlMenu_btn5.getGlobalBounds().contains(mousePos))
+                        {
+                            ControlMenu_btn5.setFillColor(sf::Color::Black);
+                        } else {
+                            ControlMenu_btn5.setFillColor(sf::Color(255, 138, 39));
+                        }
+                        break;
+                }
+            }
         }
 
         window.clear(sf::Color(22, 73, 154));
@@ -312,33 +474,52 @@ int main()
                 window.draw(backButton);
                 window.draw(backText);
                 break;
-            case DV1:
+            case DV1: // Static Array
                 window.draw(backButton);
                 window.draw(backText);
+                window.draw(StaticArrayTitle);
                 break;
-            case DV2:
+            case DV2: // Dynamic Array
                 window.draw(backButton);
                 window.draw(backText);
+                window.draw(DynamicArrayTitle);
                 break;
-            case DV3:
+            case DV3: // Singly LL
                 window.draw(backButton);
                 window.draw(backText);
+                window.draw(SingleLLTitle);
+                window.draw(ControlMenu_btn1);
+                window.draw(Func1_text);
+                window.draw(CreateEmpty);
+                window.draw(CreateEmptyText);
+                window.draw(ControlMenu_btn2);
+                window.draw(Func2_text);
+                window.draw(ControlMenu_btn3);
+                window.draw(Func3_text);
+                window.draw(ControlMenu_btn4);
+                window.draw(Func4_text);
+                window.draw(ControlMenu_btn5);
+                window.draw(Func5_text);
                 break;
-            case DV4:
+            case DV4: // Doubly LL
                 window.draw(backButton);
                 window.draw(backText);
+                window.draw(DoublyLLTitle);
                 break;
-            case DV5:
+            case DV5: // Circular LL
                 window.draw(backButton);
                 window.draw(backText);
+                window.draw(CircularLLTitle);
                 break;
-            case DV6:
+            case DV6: // Stack
                 window.draw(backButton);
                 window.draw(backText);
+                window.draw(StackTitle);
                 break;
-            case DV7:
+            case DV7: // Queue
                 window.draw(backButton);
                 window.draw(backText);
+                window.draw(QueueTitle);
                 break;
             default:
                 break;
