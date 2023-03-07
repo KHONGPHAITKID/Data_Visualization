@@ -1,42 +1,18 @@
-#include <bits/stdc++.h>
-#include <SFML/Graphics.hpp>
+#include "header.hpp"
+#include <vector>
 
 sf::Font font;
 
-struct Node
-{
-    sf::CircleShape CircleShape;
-    int num;
-    sf::Text Data;
-};
-
-void initNode(Node &temp, int value)
-{
-    temp.CircleShape.setRadius(20.f);
-    temp.CircleShape.setFillColor(sf::Color::White);
-    temp.num = value;
-    temp.Data.setString(std::to_string(temp.num));
-    temp.Data.setFont(font);
-    temp.Data.setCharacterSize(20.f);
-    temp.Data.setOrigin(10.f, 10.f);
-}
+//Color
+const sf::Color Pink1(253, 0, 112);
+const sf::Color Purple1(104, 0, 120);
 
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "Data Visualization");
+    srand(time(NULL)); // Seed random number generator
+    sf::RenderWindow window(sf::VideoMode(1920, 1080), "Data Visualization", sf::Style::Titlebar | sf::Style::Close);
     window.setFramerateLimit(60);
-
-    sf::Texture texture;
-    if (!texture.loadFromFile("media/img/background.jfif"))
-    {
-        std::cerr << "Failed to load img!" << "\n";
-        return 1;
-    }
-    sf::Sprite sprite(texture);
-    sprite.setScale(window.getSize().x / sprite.getLocalBounds().width, 
-                    window.getSize().y / sprite.getLocalBounds().height);
-
     if (!font.loadFromFile("Fonts/arial.ttf"))
     {
         std::cerr << "Failed to load Fonts" << "\n";
@@ -44,50 +20,33 @@ int main()
     }
     // Create MenuTitle
     sf::Text MenuTitle("Data Visualization", font, 150);
-    MenuTitle.setOutlineThickness(3);
-    MenuTitle.setOutlineColor(sf::Color::Red);
-    MenuTitle.setFillColor(sf::Color::White);
-    MenuTitle.setOrigin(MenuTitle.getLocalBounds().width / 2.f, MenuTitle.getLocalBounds().height / 2.f);
-    MenuTitle.setPosition(window.getSize().x / 2.f, 150.f);
+    CreateTitle(MenuTitle, window.getSize().x / 2.f, 100.f);
 
     // Create StartTitle
     sf::Text StartTitle("Menu", font, 100);
-    StartTitle.setOutlineThickness(3);
-    StartTitle.setOutlineColor(sf::Color::Red);
-    StartTitle.setFillColor(sf::Color::White);
-    StartTitle.setOrigin(StartTitle.getLocalBounds().width / 2.f, StartTitle.getLocalBounds().height / 2.f);
-    StartTitle.setPosition(window.getSize().x / 2.f, 50.f);
+    CreateTitle(StartTitle, window.getSize().x / 2.f, 50.f);
 
     // Create SettingTitle
     sf::Text SettingTitle("Setting Mode", font, 120);
-    SettingTitle.setOutlineThickness(3);
-    SettingTitle.setOutlineColor(sf::Color::Red);
-    SettingTitle.setFillColor(sf::Color::White);
-    SettingTitle.setOrigin(SettingTitle.getLocalBounds().width / 2.f, SettingTitle.getLocalBounds().height / 2.f);
-    SettingTitle.setPosition(window.getSize().x / 2.f, 50.f);
-
+    CreateTitle(SettingTitle, window.getSize().x / 2.f, 50.f);
 
     // Create "Start" button
-    sf::RectangleShape startButton(sf::Vector2f(600.f, 150.f));
-    startButton.setFillColor(sf::Color(104, 0, 120));
-    startButton.setOutlineColor(sf::Color(253, 0, 112));
-    startButton.setOutlineThickness(5.f);
-    startButton.setPosition(window.getSize().x / 2.f - startButton.getSize().x / 2.f, 440.f);
-    sf::Text startText("Start", font, 50);
-    startText.setFillColor(sf::Color(253, 0, 112));
-    startText.setOrigin(startText.getLocalBounds().width / 2.f, startText.getLocalBounds().height / 2.f);
-    startText.setPosition(window.getSize().x / 2.f, 500.f);
+    Button startButton = CreateButton(600, 150, window.getSize().x / 2.f, 530, Purple1, Pink1, "Start", font, Pink1);
 
     // Create "Settings" button
-    sf::RectangleShape settingsButton(sf::Vector2f(600.f, 150.f));
-    settingsButton.setFillColor(sf::Color(104, 0, 120));
-    settingsButton.setOutlineColor(sf::Color(253, 0, 112));
-    settingsButton.setOutlineThickness(5.f);
-    settingsButton.setPosition(window.getSize().x / 2.f - settingsButton.getSize().x / 2.f, 640.f);
-    sf::Text settingsText("Settings", font, 50);
-    settingsText.setFillColor(sf::Color(253, 0, 112));
-    settingsText.setOrigin(settingsText.getLocalBounds().width / 2.f, settingsText.getLocalBounds().height / 2.f);
-    settingsText.setPosition(window.getSize().x / 2.f, 700.f);
+    Button settingsButton = CreateButton(600, 150, 
+    window.getSize().x / 2.f - settingsButton.rect.getSize().x / 2.f, 
+    startButton.rect.getPosition().y + startButton.rect.getSize().y / 2.f + 30 + 150 / 2.f, 
+    Purple1, Pink1, "Setting", font, Pink1);
+    // sf::RectangleShape settingsButton(sf::Vector2f(600.f, 150.f));
+    // settingsButton.setFillColor(sf::Color(104, 0, 120));
+    // settingsButton.setOutlineColor(sf::Color(253, 0, 112));
+    // settingsButton.setOutlineThickness(5.f);
+    // settingsButton.setPosition(window.getSize().x / 2.f - settingsButton.getSize().x / 2.f, 640.f);
+    // sf::Text settingsText("Settings", font, 50);
+    // settingsText.setFillColor(sf::Color(253, 0, 112));
+    // settingsText.setOrigin(settingsText.getLocalBounds().width / 2.f, settingsText.getLocalBounds().height / 2.f);
+    // settingsText.setPosition(window.getSize().x / 2.f, 700.f);
     
     // Back button
     sf::RectangleShape backButton(sf::Vector2f(100.f, 50.f));
@@ -105,9 +64,9 @@ int main()
 
     // Start position
     const float startX1 = window.getSize().x / 2.f - padding;
-    const float startY1 = startText.getGlobalBounds().height + padding + 120.f;
+    const float startY1 = StartTitle.getLocalBounds().height + padding * 5;
     const float startX2 = window.getSize().x / 2.f ;
-    const float startY2 = startText.getGlobalBounds().height + padding + 120.f;
+    const float startY2 = StartTitle.getLocalBounds().height + padding * 5;
 
     // #1. Static array rectangle
     sf::RectangleShape rect1(sf::Vector2f(rectWidth, rectHeight));
@@ -281,13 +240,14 @@ int main()
     Func5_text.setOrigin(Func5_text.getLocalBounds().width / 2.f, Func5_text.getLocalBounds().height / 2.f);
     Func5_text.setPosition(ControlMenu_btn5.getPosition().x + ControlMenu_btn5.getSize().x / 2.f, ControlMenu_btn1.getPosition().y + ControlMenu_btn1.getSize(). y / 2.f - Func1_text.getLocalBounds().height / 2.f + 200.f);
 
-
-
+    
+    Node v[10];
+    int n = 0;
+    CreateRandomNode(v, n, font);
+    sortArray(v, n);
 
     enum ScreenState { Menu, Start, Settings, DV1, DV2, DV3, DV4, DV5, DV6, DV7 };
     ScreenState currentState = Menu;
-
-
 
     while (window.isOpen())
     {
@@ -304,11 +264,11 @@ int main()
                 switch (currentState)
                 {
                     case Menu:
-                        if (startButton.getGlobalBounds().contains(mousePos))
+                        if (startButton.rect.getGlobalBounds().contains(mousePos))
                         {
                             currentState = Start;
                         }
-                        else if (settingsButton.getGlobalBounds().contains(mousePos))
+                        else if (settingsButton.rect.getGlobalBounds().contains(mousePos))
                         {
                             currentState = Settings;
                         }
@@ -371,6 +331,10 @@ int main()
                         if (backButton.getGlobalBounds().contains(mousePos))
                         {
                             currentState = Start;
+                        }
+                        if (CreateEmpty.getGlobalBounds().contains(mousePos))
+                        {
+                            CreateRandomNode(v, n, font);
                         }
                         break;
                     case DV4:
@@ -444,10 +408,10 @@ int main()
         {
             case Menu:
                 window.draw(MenuTitle);
-                window.draw(startButton);
-                window.draw(startText);
-                window.draw(settingsButton);
-                window.draw(settingsText);
+                window.draw(settingsButton.rect);
+                window.draw(settingsButton.text);
+                window.draw(startButton.rect);
+                window.draw(startButton.text);
                 break;
 
             case Start:
@@ -500,6 +464,26 @@ int main()
                 window.draw(Func4_text);
                 window.draw(ControlMenu_btn5);
                 window.draw(Func5_text);
+                for (int i = 0; i < n; i++)
+                {
+                    window.draw(v[i].circle);
+                    window.draw(v[i].text);
+                    if (i != n - 1)
+                    {
+                        sf::Vector2f first(v[i].circle.getPosition().x + 60, v[i].circle.getPosition().y + 30);
+                        sf::Vector2f second(v[i + 1].circle.getPosition().x, v[i + 1].circle.getPosition().y + 30);
+                        sf::VertexArray line(sf::Lines, 2);
+                        line[0].position = first;
+                        line[1].position = second;
+                        line[0].color = sf::Color::Red;
+                        line[1].color = sf::Color::Red;
+                        line[0].color.a = 200;
+                        line[1].color.a = 200;
+                        line[0].texCoords = sf::Vector2f(0.f, 0.f);
+                        line[1].texCoords = sf::Vector2f(30.f, 30.f);
+                        window.draw(line);
+                    }
+                }
                 break;
             case DV4: // Doubly LL
                 window.draw(backButton);
