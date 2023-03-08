@@ -11,15 +11,15 @@ void sortArray(Node v[], int n)
 {
     for (int i = 0; i < n - 1; i++)
     {
-        int max = i;
+        int min = i;
         for (int j = i + 1; j < n; j++)
         {
-            if (std::stoi(v[max].text.getString().toAnsiString()) < std::stoi(v[j].text.getString().toAnsiString()))
+            if (std::stoi(v[min].text.getString().toAnsiString()) > std::stoi(v[j].text.getString().toAnsiString()))
             {
-                max = j;
+                min = j;
             }
         }
-        swapNode(v[max], v[i]);
+        swapNode(v[min], v[i]);
     }
 }
 
@@ -33,11 +33,11 @@ void CreateTitle(sf::Text &Title, float PosX, float PosY)
 }
 
 // position: config in main.
-Button CreateButton(float recheight, float recwidth, float PosX, float PosY, sf::Color buttonbgcolor, sf::Color buttonOutlineColor, sf::String text, sf::Font &font, sf::Color text_color) {
+Button CreateButton(float recwidth, float recheight, float PosX, float PosY, sf::Color buttonbgcolor, sf::Color buttonOutlineColor, sf::String text, sf::Font &font, sf::Color text_color) {
     
     Button b;
     // Set up the rectangle
-    b.rect.setSize(sf::Vector2f(recheight, recwidth));
+    b.rect.setSize(sf::Vector2f(recwidth, recheight));
     b.rect.setPosition(sf::Vector2f(PosX, PosY));
     b.rect.setFillColor(buttonbgcolor);
     b.rect.setOutlineThickness(5);
@@ -47,14 +47,14 @@ Button CreateButton(float recheight, float recwidth, float PosX, float PosY, sf:
     // Set up the text
     b.text.setFont(font);
     b.text.setString(text);
-    b.text.setCharacterSize(b.rect.getSize().y / 2.5);
+    b.text.setCharacterSize(b.rect.getSize().y / 3.f);
     b.text.setFillColor(text_color);
 
     // Center the text
     sf::FloatRect textRect = b.text.getLocalBounds();
-    b.text.setOrigin(textRect.width/2.0f, textRect.height/2.0f);
-    b.text.setPosition(b.rect.getPosition().x, b.rect.getPosition().y - b.text.getLocalBounds().height / 2.f);
-
+    b.text.setOrigin(textRect.width/2.f, textRect.height/2.f);
+    // b.text.setPosition(b.rect.getPosition().x + b.rect.getSize().x/ 2.f, b.rect.getPosition().y + b.rect.getSize().y/ 2.f);
+    b.text.setPosition(b.rect.getPosition().x , b.rect.getPosition().y - b.text.getLocalBounds().height / 3.f);
     return b;
 }
 
@@ -78,13 +78,12 @@ Node createNode(float x, float y, float radius, sf::Font &font) {
     return nc;
 }
 
-void CreateRandomNode(Node v[], int &n, sf::Font &font)
+void CreateRandomNodes(Node v[], int &n, sf::Font &font)
 {
     n = 3 + rand() % 7;
     for (int i = 0; i < n; i++)
     {
-        Node temp = createNode(250 + i * 150, 250, 30, font);
-        v[i] = temp;
+        v[i] = createNode(250 + i * 150, 250, 30, font);
     }
     sortArray(v, n);
 }
