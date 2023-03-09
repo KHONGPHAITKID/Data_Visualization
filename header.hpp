@@ -41,8 +41,6 @@ struct Button {
 
 void CreateTitle(sf::Text &Title, float PosX, float PosY);
 
-// Button CreateButton(float recX, float recY, float PosX, float PosY, sf::Color bgcolor, sf::Color OutlineColor, sf::String text, sf::Font font, sf::Color text_color);
-
 Button CreateButton(float recwidth, float recheight, float PosX, float PosY, sf::Color buttonbgcolor, sf::Color buttonOutlineColor, sf::String text, sf::Font &font, sf::Color text_color);
 
 int randNum();
@@ -56,7 +54,6 @@ void drawArrow(sf::RenderWindow window, sf::Vector2f first, sf::Vector2f second)
 void swapNode(Node &a, Node &b);
 
 void sortArray(Node v[], int n);
-
 
 
 #endif

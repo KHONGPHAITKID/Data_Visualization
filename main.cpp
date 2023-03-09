@@ -22,6 +22,7 @@ int main()
         std::cerr << "Failed to load Fonts" << "\n";
         return 1;
     }
+    CreateRandomNodes(v, n, font);
     // Create MenuTitle
     sf::Text MenuTitle("Data Visualization", font, 150);
     CreateTitle(MenuTitle, window.getSize().x / 2.f, 100.f);
@@ -84,11 +85,14 @@ int main()
 
     Button CreateEmpty = CreateButton(130.f, 50.f, ControlMenu_btn1.rect.getPosition().x + ControlMenu_btn1.rect.getSize().x / 2.f + padding + 130/2.f, ControlMenu_btn1.rect.getPosition().y, sf::Color(255, 138, 39), BackGroundColor, "Empty", font, sf::Color::White);
     CreateEmpty.display = false;
-
-    sf::RectangleShape CreateRandom(sf::Vector2f(150.f, 50.f));
-    sf::RectangleShape CreateRandomSort(sf::Vector2f(180.f, 50.f));
-    sf::RectangleShape CreateRandomFixedSize(sf::Vector2f(200.f, 50.f));
-    sf::RectangleShape CreateUserDefinedList(sf::Vector2f(200.f, 50.f));
+    Button CreateRadom = CreateButton(130.f, 50.f, ControlMenu_btn1.rect.getPosition().x + ControlMenu_btn1.rect.getSize().x / 2.f + padding + 130/2.f + 130.f, ControlMenu_btn1.rect.getPosition().y, sf::Color(255, 138, 39), BackGroundColor, "Random", font, sf::Color::White);
+    CreateRadom.display = false;
+    Button CreateRandomSort = CreateButton(130.f, 50.f, ControlMenu_btn1.rect.getPosition().x + ControlMenu_btn1.rect.getSize().x / 2.f + padding + 130/2.f + 130.f * 2, ControlMenu_btn1.rect.getPosition().y, sf::Color(255, 138, 39), BackGroundColor, "Random Sort", font, sf::Color::White);
+    CreateRandomSort.display = false;
+    Button CreateRandomFixedSize = CreateButton(130.f, 50.f, ControlMenu_btn1.rect.getPosition().x + ControlMenu_btn1.rect.getSize().x / 2.f + padding + 130/2.f + 130.f * 3, ControlMenu_btn1.rect.getPosition().y, sf::Color(255, 138, 39), BackGroundColor, "Random Fixed Size", font, sf::Color::White);
+    CreateRandomFixedSize.display = false;
+    Button CreateUserDefinedList = CreateButton(130.f, 50.f, ControlMenu_btn1.rect.getPosition().x + ControlMenu_btn1.rect.getSize().x / 2.f + padding + 130/2.f + 130.f * 4, ControlMenu_btn1.rect.getPosition().y, sf::Color(255, 138, 39), BackGroundColor, "User Defined", font, sf::Color::White);
+    CreateUserDefinedList.display = false;
 
     // #2
     Button ControlMenu_btn2 = CreateButton(200.f, 50.f, 250.f, window.getSize().y / 2.f + 175.f, sf::Color(255, 138, 39), BackGroundColor, "Add", font, sf::Color::White);
@@ -103,7 +107,6 @@ int main()
     Button ControlMenu_btn5 = CreateButton(200.f, 50.f, 250.f, window.getSize().y / 2.f + 325.f, sf::Color(255, 138, 39), BackGroundColor, "Search", font, sf::Color::White);
     ControlMenu_btn5.rect.setOutlineThickness(0);
 
-    CreateRandomNodes(v, n, font);
 
     while (window.isOpen())
     {
@@ -191,8 +194,16 @@ int main()
                         if (ControlMenu_btn1.rect.getGlobalBounds().contains(mousePos))
                         {
                             CreateEmpty.display = !CreateEmpty.display;
+                            CreateRadom.display = !CreateRadom.display;
+                            CreateRandomFixedSize.display = !CreateRandomFixedSize.display;
+                            CreateRandomSort.display = !CreateRandomSort.display;
+                            CreateUserDefinedList.display = !CreateUserDefinedList.display;
                         }
                         if (CreateEmpty.rect.getGlobalBounds().contains(mousePos))
+                        {
+                            n = 0;
+                        }
+                        if (CreateRadom.rect.getGlobalBounds().contains(mousePos))
                         {
                             CreateRandomNodes(v, n, font);
                         }
@@ -326,8 +337,15 @@ int main()
                 {
                     window.draw(CreateEmpty.rect);
                     window.draw(CreateEmpty.text);
+                    window.draw(CreateRadom.rect);
+                    window.draw(CreateRadom.text);
+                    window.draw(CreateRandomSort.rect);
+                    window.draw(CreateRandomSort.text);
+                    window.draw(CreateRandomFixedSize.rect);
+                    window.draw(CreateRandomFixedSize.text);
+                    window.draw(CreateUserDefinedList.rect);
+                    window.draw(CreateUserDefinedList.text);
                 }
-                sortArray(v, n);
                 // CreateRandomNode
                 for (int i = 0; i < n; i++)
                 {
@@ -342,10 +360,6 @@ int main()
                         line[1].position = second;
                         line[0].color = sf::Color::Red;
                         line[1].color = sf::Color::Red;
-                        line[0].color.a = 200;
-                        line[1].color.a = 200;
-                        line[0].texCoords = sf::Vector2f(0.f, 0.f);
-                        line[1].texCoords = sf::Vector2f(30.f, 30.f);
                         window.draw(line);
                     }
                 }

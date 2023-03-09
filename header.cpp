@@ -1,28 +1,5 @@
 #include "header.hpp"
 
-void swapNode(Node &a, Node &b)
-{
-    Node temp = a;
-    a = b;
-    b = temp;
-}
-
-void sortArray(Node v[], int n)
-{
-    for (int i = 0; i < n - 1; i++)
-    {
-        int min = i;
-        for (int j = i + 1; j < n; j++)
-        {
-            if (std::stoi(v[min].text.getString().toAnsiString()) > std::stoi(v[j].text.getString().toAnsiString()))
-            {
-                min = j;
-            }
-        }
-        swapNode(v[min], v[i]);
-    }
-}
-
 void CreateTitle(sf::Text &Title, float PosX, float PosY)
 {
     Title.setOutlineColor(sf::Color::Red);
@@ -67,14 +44,12 @@ Node createNode(float x, float y, float radius, sf::Font &font) {
     nc.circle.setRadius(radius);
     nc.circle.setPosition(x, y);
     nc.circle.setFillColor(sf::Color::Yellow);
-
     nc.text.setFont(font);
     nc.text.setString(std::to_string(randNum()));
     nc.text.setCharacterSize(20);
     // nc.text.setOrigin(nc.text.getLocalBounds().height / 2.f, nc.text.getLocalBounds().width / 2.f);
     nc.text.setPosition(x + radius/2, y + radius/2);
     nc.text.setFillColor(sf::Color::Black);
-
     return nc;
 }
 
@@ -85,7 +60,7 @@ void CreateRandomNodes(Node v[], int &n, sf::Font &font)
     {
         v[i] = createNode(250 + i * 150, 250, 30, font);
     }
-    sortArray(v, n);
+    // sortArray(v, n);
 }
 
 void drawArrow(sf::RenderWindow window, sf::Vector2f first, sf::Vector2f second)
@@ -100,4 +75,27 @@ void drawArrow(sf::RenderWindow window, sf::Vector2f first, sf::Vector2f second)
     line[0].texCoords = sf::Vector2f(0, 0);
     line[1].texCoords = sf::Vector2f(5.f, 5.f);
     window.draw(line);
-}  
+}
+
+void swapNode(sf::Text &a, sf::Text &b)
+{
+    sf::Text temp = a;
+    a = b;
+    b = temp;
+}
+
+void sortArray(Node v[], int n)
+{
+    for (int i = 0; i < n - 1; i++)
+    {
+        int min = i;
+        for (int j = i + 1; j < n; j++)
+        {
+            if (std::stoi(v[min].text.getString().toAnsiString()) > std::stoi(v[j].text.getString().toAnsiString()))
+            {
+                min = j;
+            }
+        }
+        swapNode(v[min].text, v[i].text);
+    }
+}
