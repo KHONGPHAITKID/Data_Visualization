@@ -4,12 +4,10 @@ sf::Font font;
 sf::Color BackGroundColor = sf::Color(22, 73, 154);
 const sf::Color Pink1(253, 0, 112);
 const sf::Color Purple1(104, 0, 120);
-Node v[10];
-int n = 0;
 
 int main()
 {
-    srand(time(NULL)); // Random number generator
+    srand(time(NULL)); // Random number generate
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "Data Visualization", sf::Style::Titlebar | sf::Style::Close);
     window.setFramerateLimit(60);
     
@@ -33,6 +31,17 @@ int main()
     DataVisualization_6 dv6;
     DataVisualization_7 dv7;
 
+//---------------------------
+    // int n = 0;
+    // SLL_Node* temp = nullptr;
+    // CreateRandomNodes(dv3.NodeArray, dv3.size, dv3.font);
+    // SLL_Node* curr = dv3.NodeArray;
+    // while (curr != nullptr) {
+    //     std::cout << curr->data << " ";
+    //     curr = curr->next;
+    // }
+    // std::cout << std::endl;
+//---------------------------
     while (window.isOpen())
     {
         sf::Event event;
@@ -118,27 +127,25 @@ int main()
                         }
                         if (dv3.ControlMenu_btn1.rect.getGlobalBounds().contains(mousePos))
                         {
-                            dv3.CreateEmpty.display = !dv3.CreateEmpty.display;
-                            dv3.CreateRadom.display = !dv3.CreateRadom.display;
-                            dv3.CreateRandomFixedSize.display = !dv3.CreateRandomFixedSize.display;
-                            dv3.CreateRandomSort.display = !dv3.CreateRandomSort.display;
-                            dv3.CreateUserDefinedList.display = !dv3.CreateUserDefinedList.display;
+                            dv3.funcstate = 1;
                         }
-                        if (dv3.CreateEmpty.display)
+                        if (dv3.ControlMenu_btn2.rect.getGlobalBounds().contains(mousePos))
                         {
-                            if (dv3.CreateEmpty.rect.getGlobalBounds().contains(mousePos))
-                            {
-                                n = 0;
-                            }
-                            if (dv3.CreateRadom.rect.getGlobalBounds().contains(mousePos))
-                            {
-                                CreateRandomNodes(v, n, font);
-                            }
-                            if (dv3.CreateRandomSort.rect.getGlobalBounds().contains(mousePos))
-                            {
-                                CreateRandomSortNodes(v, n, font);
-                            }
+                            dv3.funcstate = 2;
                         }
+                        if (dv3.ControlMenu_btn3.rect.getGlobalBounds().contains(mousePos))
+                        {
+                            dv3.funcstate = 3;
+                        }
+                        if (dv3.ControlMenu_btn4.rect.getGlobalBounds().contains(mousePos))
+                        {
+                            dv3.funcstate = 4;
+                        }
+                        if (dv3.ControlMenu_btn5.rect.getGlobalBounds().contains(mousePos))
+                        {
+                            dv3.funcstate = 5;
+                        }
+                        dv3.handleEvent(mousePos, event);
                         break;
                     case DV4:
                         if (dv4.backButton.rect.getGlobalBounds().contains(mousePos))
@@ -169,7 +176,8 @@ int main()
             else if (event.type == sf::Event::MouseMoved)
             {
                 sf::Vector2f mousePos = sf::Vector2f(sf::Mouse::getPosition(window));
-                switch (currentState){
+                switch (currentState)
+                {
                     case DV3:
                         if (dv3.ControlMenu_btn1.rect.getGlobalBounds().contains(mousePos))
                         {
@@ -205,14 +213,12 @@ int main()
                 }
             }
         }
-
         window.clear(BackGroundColor);
         switch (currentState)
         {
             case Menu:
                 menu.display(window);
                 break;
-
             case Start:
                 start.display(window);
                 break;  
@@ -227,23 +233,7 @@ int main()
                 break;
             case DV3: // Singly LL
                 dv3.display(window);
-                // CreateRandomNode
-                for (int i = 0; i < n; i++)
-                {
-                    window.draw(v[i].circle);
-                    window.draw(v[i].text);
-                    if (i != n - 1)
-                    {
-                        sf::Vector2f first(v[i].circle.getPosition().x + 60, v[i].circle.getPosition().y + 30);
-                        sf::Vector2f second(v[i + 1].circle.getPosition().x, v[i + 1].circle.getPosition().y + 30);
-                        sf::VertexArray line(sf::Lines, 2);
-                        line[0].position = first;
-                        line[1].position = second;
-                        line[0].color = sf::Color::Red;
-                        line[1].color = sf::Color::Red;
-                        window.draw(line);
-                    }
-                }
+                dv3.drawNodes(window);
                 break;
             case DV4: // Doubly LL
                 dv4.display(window);

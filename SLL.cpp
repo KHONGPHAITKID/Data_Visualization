@@ -1,5 +1,10 @@
 #include "SLL.hpp"
 
+int randNum() 
+{
+    return rand() % 99 + 1;
+}
+
 void DeleteSLL(SLL_Node* &pHead)
 {
     SLL_Node* temp = pHead;
@@ -17,8 +22,8 @@ void SortSLL(SLL_Node* &pHead)
     SLL_Node* i = pHead;
     while (i->next != nullptr)
     {
-        SLL_Node min_ptr = i;
-        SLL_Node j = i->next;
+        SLL_Node* min_ptr = i;
+        SLL_Node* j = i->next;
         while (j != nullptr)
         {
             if (j->data < min_ptr->data)
@@ -34,26 +39,141 @@ void SortSLL(SLL_Node* &pHead)
     }
 }
 
-void addBack(SLL_Node* pHead, int value)
+void addBack(SLL_Node* &pHead, SLL_Node* &temp)
 {
-    SLL_Node* temp = new SLL_Node;
-    temp->data = value;
-    temp->next = nullptr;
     if (pHead == nullptr)
     {
         pHead = temp;
         return;
     }
-    pHead->next = temp;
+    SLL_Node* cur = pHead;
+    while (cur->next != nullptr)
+    {
+        cur = cur->next;
+    }
+    cur->next = temp;
 }
 
-void CreateRandomSLL(SLL_Node* &pHead)
+// void CreateRandomSLL(SLL_Node* &pHead)
+// {
+//     DeleteSLL(pHead);
+//     int n = 4 + srand() % 6;
+//     while (n--)
+//     {
+//         int randomValue = 1 + srand() % 99;
+//         addBack(pHead, randomValue);
+//     }
+// }
+
+void CreateRandomSortSLL(SLL_Node* &head, int &n, sf::Font &font)
 {
-    DeleteSLL(pHead);
-    int n = 3 + srand() % 7;
-    while (n--)
+    DeleteSLL(head);
+    n = 5 + rand() % 5;
+    for (int i = 0; i < n; i++)
     {
-        int randomValue = 1 + srand() % 99;
-        addBack(pHead, randomValue);
+        int value = 1 + rand() % 99;
+        SLL_Node* tmp = createNode(250 + i * 150, 250, 30, font, value);
+        addBack(head, tmp);
+    }
+    SLL_Node* i = head;
+    while (i->next != nullptr)
+    {
+        SLL_Node* min_ptr = i;
+        SLL_Node* j = i->next;
+        while (j != nullptr)
+        {
+            if (j->data < min_ptr->data)
+            {
+                min_ptr = j;
+            }
+            j = j->next;
+        }
+        int temp = i->data;
+        i->data = min_ptr->data;
+        min_ptr->data = temp;
+        i = i->next;
+
+    }
+
+    // update text 
+    i = head;
+    while (i != nullptr)
+    {
+        i->text.setString(std::to_string(i->data));
+        i = i->next;
     }
 }
+
+int randNumNode() {
+    srand(time(NULL));
+    return rand() % 99 + 1;
+}
+
+//--------------
+SLL_Node* createNode(float x, float y, float radius, sf::Font &font, int value) 
+{
+    SLL_Node* nc = new SLL_Node;
+    nc->data = value;
+    nc->next = nullptr;
+    nc->circle.setRadius(radius);
+    nc->circle.setPosition(x, y);
+    nc->circle.setFillColor(sf::Color::Yellow);
+    nc->text.setFont(font);
+    nc->text.setString(std::to_string(value));
+    nc->text.setCharacterSize(20);
+    // nc.text.setOrigin(nc.text.getLocalBounds().height / 2.f, nc.text.getLocalBounds().width / 2.f);
+    nc->text.setPosition(x + radius/2, y + radius/2);
+    nc->text.setFillColor(sf::Color::Black);
+    return nc;
+}
+
+void CreateRandomNodes(SLL_Node* &v, int &n, sf::Font &font)
+{
+    DeleteSLL(v);
+    n = 5 + rand() % 5;
+    for (int i = 0; i < n; i++)
+    {
+        int value = 1 + rand() % 99;
+        SLL_Node* temp = createNode(250 + i * 150, 250, 30, font, value);
+        addBack(v, temp);
+    }
+}
+
+void drawArrow(sf::RenderWindow window, sf::Vector2f first, sf::Vector2f second)
+{
+    sf::VertexArray line(sf::Lines, 2);
+    line[0].position = first;
+    line[1].position = second;
+    line[0].color = sf::Color::Red;
+    line[1].color = sf::Color::Red;
+    line[0].color.a = 200;
+    line[1].color.a = 200;
+    line[0].texCoords = sf::Vector2f(0, 0);
+    line[1].texCoords = sf::Vector2f(5.f, 5.f);
+    window.draw(line);
+}
+
+// void addSort(SLL_Node* &pHead, SLL_Node* &temp)
+// {
+//     if (pHead == nullptr)
+//     {
+//         pHead = temp;
+//         return;
+//     }
+//     if (temp->data < pHead->data)
+//     {
+//         temp->next = pHead;
+//         pHead = temp;
+//         return;
+//     }
+//     SLL_Node* cur = pHead;
+//     while (cur->next != nullptr)
+//     {
+//         if (temp->data > cur->next->data)
+//             cur = cur->next;
+//         else 
+//             break;
+//     }
+//     temp->next = cur->next;
+//     cur->next = temp;
+// }
