@@ -22,7 +22,7 @@ int main()
 
     MenuPage menu;
     SettingPage setting;
-    StartPage start;
+    StartingPage StartMenu;
     DataVisualization_1 dv1;
     DataVisualization_2 dv2;
     DataVisualization_3 dv3;
@@ -30,6 +30,7 @@ int main()
     DataVisualization_5 dv5;
     DataVisualization_6 dv6;
     DataVisualization_7 dv7;
+
 
 //---------------------------
     // int n = 0;
@@ -68,35 +69,35 @@ int main()
                         break;
 
                     case Start:
-                        if (start.backButton.rect.getGlobalBounds().contains(mousePos))
+                        if (StartMenu.backButton.rect.getGlobalBounds().contains(mousePos))
                         {
                             currentState = Menu;
                         }
-                        if (start.rect1.rect.getGlobalBounds().contains(mousePos))
+                        if (StartMenu.rect1.rect.getGlobalBounds().contains(mousePos))
                         {
                             currentState = DV1;
                         } 
-                        if (start.rect2.rect.getGlobalBounds().contains(mousePos))
+                        if (StartMenu.rect2.rect.getGlobalBounds().contains(mousePos))
                         {
                             currentState = DV2;
                         } 
-                        if (start.rect3.rect.getGlobalBounds().contains(mousePos))
+                        if (StartMenu.rect3.rect.getGlobalBounds().contains(mousePos))
                         {
                             currentState = DV3;
                         } 
-                        if (start.rect4.rect.getGlobalBounds().contains(mousePos))
+                        if (StartMenu.rect4.rect.getGlobalBounds().contains(mousePos))
                         {
                             currentState = DV4;
                         } 
-                        if (start.rect5.rect.getGlobalBounds().contains(mousePos))
+                        if (StartMenu.rect5.rect.getGlobalBounds().contains(mousePos))
                         {
                             currentState = DV5;
                         } 
-                        if (start.rect6.rect.getGlobalBounds().contains(mousePos))
+                        if (StartMenu.rect6.rect.getGlobalBounds().contains(mousePos))
                         {
                             currentState = DV6;
                         } 
-                        if (start.rect7.rect.getGlobalBounds().contains(mousePos))
+                        if (StartMenu.rect7.rect.getGlobalBounds().contains(mousePos))
                         {
                             currentState = DV7;
                         } 
@@ -145,7 +146,7 @@ int main()
                         {
                             dv3.funcstate = 5;
                         }
-                        dv3.handleEvent(mousePos, event);
+                        dv3.handleEvent(window, mousePos, event);
                         break;
                     case DV4:
                         if (dv4.backButton.rect.getGlobalBounds().contains(mousePos))
@@ -220,7 +221,7 @@ int main()
                 menu.display(window);
                 break;
             case Start:
-                start.display(window);
+                StartMenu.display(window);
                 break;  
             case Settings:
                 setting.display(window);

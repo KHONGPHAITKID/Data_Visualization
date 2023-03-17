@@ -7,6 +7,12 @@
 #include <ctime>
 #include <sstream>
 #include <vector>
+#include <windows.h>
+//---
+#include <chrono> // for std::chrono
+#include <thread> // for std::this_thread::sleep_for
+//---
+#include <unistd.h>
 #include "Button.hpp"
 #include "SLL.hpp"
 // #include "Textbox.hpp"
@@ -20,12 +26,6 @@ struct Node {
     sf::Text text;
 };
 
-// void CreateRandomNodes(Node v[], int &n, sf::Font &font);
-// void swapNode(sf::Text &a, sf::Text &b);
-// void CreateRandomSortNodes(Node v[], int &n, sf::Font &font);
-// Node createNode(float x, float y, float radius, sf::Font &font);
-// void sortArray(Node v[], int n);
-// void drawArrow(sf::RenderWindow window, sf::Vector2f first, sf::Vector2f second);
 
 class MenuPage
 {
@@ -50,7 +50,7 @@ public:
     void display(sf::RenderWindow &window);
 };
 
-class StartPage
+class StartingPage
 {
 private:
 public:
@@ -65,7 +65,7 @@ public:
     Button rect6;
     Button rect7;
 
-    StartPage();
+    StartingPage();
     void display(sf::RenderWindow &window);
 };
 
@@ -115,13 +115,16 @@ public:
     Button InsertMid;
 
     Button ControlMenu_btn3;
-    
-    Button ControlMenu_btn4;
-    
-    Button ControlMenu_btn5;
-    Button Search;
+    Button DeleteHead;
+    Button DeleteBack;
+    Button DeleteMid;
 
-    // Node NodeArray[10];
+    Button ControlMenu_btn4;
+    Button UpdateNode;
+
+    Button ControlMenu_btn5;
+    Button SearchNode;
+
     int size;
 
     SLL_Node* NodeArray;
@@ -130,9 +133,18 @@ public:
 
     DataVisualization_3();
     ~DataVisualization_3();
-    void handleEvent(sf::Vector2f &mousePos, sf::Event &ev);
+
+    void handleEvent(sf::RenderWindow &window, sf::Vector2f &mousePos, sf::Event &ev);
     void display(sf::RenderWindow &window);
     void drawNodes(sf::RenderWindow &window);
+
+    int getSLLSize();
+    void InsertNodeFront(sf::RenderWindow &window);
+    void InsertNodeBack(sf::RenderWindow &window);
+    void InsertNodeMid(sf::RenderWindow &window);
+    void DeleteNodeFront(sf::RenderWindow &window);
+    void DeleteNodeBack(sf::RenderWindow &window);
+    void DeleteNodeMid(sf::RenderWindow &window);
 };
 
 class DataVisualization_4
@@ -178,8 +190,5 @@ public:
     DataVisualization_7();
     void display(sf::RenderWindow &window);
 };
-
-//------------ testing
-
 
 #endif

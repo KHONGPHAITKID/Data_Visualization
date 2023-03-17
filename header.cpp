@@ -142,7 +142,7 @@ void SettingPage::display(sf::RenderWindow &window)
     this->backButton.displayButton(window);
 }
 
-StartPage::StartPage()
+StartingPage::StartingPage()
 {
     //Font
     if (!this->font.loadFromFile("Fonts/arial.ttf"))
@@ -183,8 +183,7 @@ StartPage::StartPage()
     // #7. Queue rectangle
     rect7.CreateButton(rectWidth + padding*2, rectHeight, 1920 / 2.f,  startY2 + (rectHeight + padding) * 3.f, sf::Color(38, 116, 236), "Queue", font, sf::Color::White);
 }
-
-void StartPage::display(sf::RenderWindow &window)
+void StartingPage::display(sf::RenderWindow &window)
 {
     this->backButton.displayButton(window);
     this->rect1.displayButton(window);
@@ -239,7 +238,6 @@ void DataVisualization_2::display(sf::RenderWindow &window)
     window.draw(this->Title);
 }
 
-
 DataVisualization_3::DataVisualization_3()
 {
     //Fonts
@@ -255,7 +253,6 @@ DataVisualization_3::DataVisualization_3()
     //Back button
     this->backButton.CreateButton(100.f, 50.f, 70.f, 45.f, sf::Color(128, 128, 128), "Back", this->font, sf::Color::White);
     
-    
     //Function Key #1
     this->ControlMenu_btn1.CreateButton(200.f, 50.f, 250.f, 1080 / 2.f + 125.f, sf::Color(255, 138, 39), "Create", this->font, sf::Color::White);
     this->ControlMenu_btn1.rect.setOutlineThickness(0);
@@ -265,31 +262,29 @@ DataVisualization_3::DataVisualization_3()
     this->CreateRandomFixedSize.CreateButton(180.f, 50.f, this->CreateRandomSort.rect.getPosition().x + this->CreateRandomSort.rect.getSize().x / 2.f + 160.f / 2.f + 20.f, this->ControlMenu_btn1.rect.getPosition().y, sf::Color(255, 138, 39), "Random Fixed Size", this->font, sf::Color::White);
     this->CreateUserDefinedList.CreateButton(130.f, 50.f, this->CreateRandomFixedSize.rect.getPosition().x + this->CreateRandomFixedSize.rect.getSize().x / 2.f + 130.f/2.f + 10.f, this->ControlMenu_btn1.rect.getPosition().y, sf::Color(255, 138, 39), "User Defined", this->font, sf::Color::White);
 
-
     //Function Key #2: Adding
     this->ControlMenu_btn2.CreateButton(200.f, 50.f, 250.f, 1080 / 2.f + 175.f, sf::Color(255, 138, 39), "Add", this->font, sf::Color::White);
-    this->ControlMenu_btn2.rect.setOutlineThickness(0);
     this->InsertHead.CreateButton(130.f, 50.f, this->ControlMenu_btn2.rect.getPosition().x + this->ControlMenu_btn2.rect.getSize().x / 2.f + 20.f + 130/2.f + 10.f, 1080 / 2.f + 175.f, sf::Color(255, 138, 39), "Head", this->font, sf::Color::White);
     this->InsertBack.CreateButton(130.f, 50.f, this->InsertHead.rect.getPosition().x + this->InsertHead.rect.getSize().x / 2.f + 10.f + 130/2.f, 1080 / 2.f + 175.f, sf::Color(255, 138, 39), "Back", this->font, sf::Color::White);
     this->InsertMid.CreateButton(130.f, 50.f, this->InsertBack.rect.getPosition().x + this->InsertBack.rect.getSize().x / 2.f + 10.f + 130/2.f, 1080 / 2.f + 175.f, sf::Color(255, 138, 39), "Mid", this->font, sf::Color::White);
 
-
     //Function Key #3
     this->ControlMenu_btn3.CreateButton(200.f, 50.f, 250.f, 1080 / 2.f + 225.f, sf::Color(255, 138, 39), "Delete", this->font, sf::Color::White);
-    this->ControlMenu_btn3.rect.setOutlineThickness(0);
+    this->DeleteHead.CreateButton(130.f, 50.f, this->ControlMenu_btn3.rect.getPosition().x + this->ControlMenu_btn3.rect.getSize().x / 2.f + 20.f + 130/2.f + 10.f, 1080 / 2.f + 225.f, sf::Color(255, 138, 39), "Head", this->font, sf::Color::White);
+    this->DeleteBack.CreateButton(130.f, 50.f, this->DeleteHead.rect.getPosition().x + this->DeleteHead.rect.getSize().x / 2.f + 10.f + 130/2.f, 1080 / 2.f + 225.f, sf::Color(255, 138, 39), "Back", this->font, sf::Color::White);
+    this->DeleteMid.CreateButton(130.f, 50.f, this->DeleteBack.rect.getPosition().x + this->DeleteBack.rect.getSize().x / 2.f + 10.f + 130/2.f, 1080 / 2.f + 225.f, sf::Color(255, 138, 39), "Mid", this->font, sf::Color::White);
+    
     //Function Key #4
     this->ControlMenu_btn4.CreateButton(200.f, 50.f, 250.f, 1080 / 2.f + 275.f, sf::Color(255, 138, 39), "Update", this->font, sf::Color::White);
-    this->ControlMenu_btn4.rect.setOutlineThickness(0);
+    
     //Function Key #5
     this->ControlMenu_btn5.CreateButton(200.f, 50.f, 250.f, 1080 / 2.f + 325.f, sf::Color(255, 138, 39), "Search", this->font, sf::Color::White);
-    this->ControlMenu_btn5.rect.setOutlineThickness(0);
 
     this->size = 0;
     this->NodeArray = nullptr;
 
     funcstate = 0;
 
-    // this->RandomFixedSizeTextBox.visible = false;
 }
 
 void DataVisualization_3::display(sf::RenderWindow &window)
@@ -309,7 +304,6 @@ void DataVisualization_3::display(sf::RenderWindow &window)
         this->CreateRandomSort.displayButton(window);
         this->CreateRandomFixedSize.displayButton(window);
         this->CreateUserDefinedList.displayButton(window);
-        // this->FixedSizeTextBox.drawTo(window);
         break;
     case 2:
         this->InsertBack.displayButton(window);
@@ -317,6 +311,9 @@ void DataVisualization_3::display(sf::RenderWindow &window)
         this->InsertMid.displayButton(window);
         break;
     case 3:
+        this->DeleteBack.displayButton(window);
+        this->DeleteHead.displayButton(window);
+        this->DeleteMid.displayButton(window);
         break;
     case 4:
         break;
@@ -327,10 +324,9 @@ void DataVisualization_3::display(sf::RenderWindow &window)
         break;
     }
 
-    // this->RandomFixedSizeTextBox.display(window);
 }
 
-void DataVisualization_3::handleEvent(sf::Vector2f &mousePos, sf::Event &ev)
+void DataVisualization_3::handleEvent(sf::RenderWindow &window, sf::Vector2f &mousePos, sf::Event &ev)
 {
     switch (this->funcstate)
     {
@@ -347,9 +343,10 @@ void DataVisualization_3::handleEvent(sf::Vector2f &mousePos, sf::Event &ev)
         {
             CreateRandomSortSLL(this->NodeArray, this->size, this->font);
         }
+
         if (this->CreateRandomFixedSize.rect.getGlobalBounds().contains(mousePos))
         {
-            
+
         }
         if (this->CreateUserDefinedList.rect.getGlobalBounds().contains(mousePos))
         {
@@ -358,18 +355,36 @@ void DataVisualization_3::handleEvent(sf::Vector2f &mousePos, sf::Event &ev)
         break;  
         
     case 2:
+        if (this->InsertHead.rect.getGlobalBounds().contains(mousePos))
+        {
+            this->InsertNodeFront(window);
+        }
+        if (this->InsertBack.rect.getGlobalBounds().contains(mousePos))
+        {
+            this->InsertNodeBack(window);
+        }
+        if (this->InsertMid.rect.getGlobalBounds().contains(mousePos))
+        {
+            this->InsertNodeMid(window);
+        }
         break;
     case 3:
+        if (this->DeleteHead.rect.getGlobalBounds().contains(mousePos))
+        {
+            this->DeleteNodeFront(window);
+        }
+        if (this->DeleteBack.rect.getGlobalBounds().contains(mousePos))
+        {
+            this->DeleteNodeBack(window);
+        }
+        if (this->DeleteMid.rect.getGlobalBounds().contains(mousePos))
+        {
+            // this->DeleteNodeMid(window);
+        }
         break;
     default:
         break;
     }
-    SLL_Node* curr = this->NodeArray;
-    while (curr != nullptr) {
-        std::cout << curr->data << " ";
-        curr = curr->next;
-    }
-    std::cout << std::endl;
 }
 
 void DataVisualization_3::drawNodes(sf::RenderWindow &window)
@@ -379,14 +394,9 @@ void DataVisualization_3::drawNodes(sf::RenderWindow &window)
     {
         if (temp->next != nullptr)
         {
-            sf::Vector2f first(temp->circle.getPosition().x + 60, temp->circle.getPosition().y + 30);
-            sf::Vector2f second(temp->next->circle.getPosition().x, temp->next->circle.getPosition().y + 30);
-            sf::VertexArray line(sf::Lines, 2);
-            line[0].position = first;
-            line[1].position = second;
-            line[0].color = sf::Color::Red;
-            line[1].color = sf::Color::Red;
-            window.draw(line);
+            sf::Vector2f first(temp->circle.getPosition());
+            sf::Vector2f second(temp->next->circle.getPosition());
+            drawArrow(window, first, second);
         }
         window.draw(temp->circle);
         window.draw(temp->text);
@@ -398,6 +408,323 @@ DataVisualization_3::~DataVisualization_3()
 {
     DeleteSLL(this->NodeArray);
 }
+
+void DataVisualization_3::InsertNodeFront(sf::RenderWindow &window)
+{
+    if (this->NodeArray == nullptr)
+    {
+        this->NodeArray = createNode(250, 250, 30, font, 69);
+        return;
+    }
+    SLL_Node* newNode = createNode(this->NodeArray->circle.getPosition().x, this->NodeArray->circle.getPosition().y + 150, 30, this->font, 69);
+    window.draw(newNode->circle);
+    window.draw(newNode->text);
+    window.display();
+    sleep(1.25);
+    for (int i = 0; i < 25; i++)
+    {
+        SLL_Node* temp = this->NodeArray;
+        while (temp != nullptr)
+        {
+            window.clear(sf::Color(22, 73, 154));
+            temp->circle.move(6, 0);
+            temp->text.move(6, 0);
+            temp = temp->next;
+        }
+        newNode->circle.move(0, -6);
+        newNode->text.move(0, -6);
+        drawArrow(window, newNode->circle.getPosition(), this->NodeArray->circle.getPosition());
+        this->drawNodes(window);
+        this->display(window);
+        window.draw(newNode->circle);
+        window.draw(newNode->text);
+        window.display();
+    }
+    newNode->next = this->NodeArray;
+    this->NodeArray = newNode;
+    this->size++;
+}
+
+void DataVisualization_3::InsertNodeBack(sf::RenderWindow &window)
+{
+    std::chrono::milliseconds delayTime(500); // 0.5 seconds
+    // std::this_thread::sleep_for(delayTime); 
+    if (this->NodeArray == nullptr)
+    {
+        this->NodeArray = createNode(250, 250, 30, font, 69);
+        return;
+    }
+    SLL_Node* LastNode = this->NodeArray;
+    while (LastNode->next != nullptr) LastNode = LastNode->next;
+    SLL_Node* newNode = createNode(LastNode->circle.getPosition().x + 150, LastNode->circle.getPosition().y + 150, 30, this->font, 69);
+    window.draw(newNode->circle);
+    window.draw(newNode->text);
+    window.display();
+    std::this_thread::sleep_for(delayTime);
+
+    SLL_Node* temp = this->NodeArray;
+    while (temp != nullptr)
+    {
+        window.clear(sf::Color(22, 73, 154));
+        temp->circle.setFillColor(sf::Color::Green);
+        this->drawNodes(window);
+        this->display(window);
+        window.draw(newNode->circle);
+        window.draw(newNode->text);
+        window.display();
+        std::this_thread::sleep_for(delayTime);
+        temp = temp->next;
+    }
+    LastNode->next = newNode;
+    window.draw(newNode->circle);
+    window.draw(newNode->text);
+    window.display();
+
+    // moving
+    for (int i = 0; i < 25; i++)
+    {
+        window.clear(sf::Color(22, 73, 154));
+        newNode->circle.move(0, -6);
+        newNode->text.move(0, -6);
+        this->drawNodes(window);
+        this->display(window);
+        window.display();
+    }
+    std::this_thread::sleep_for(delayTime);
+
+    // Recolor the node
+    SLL_Node* cur = this->NodeArray;
+    while (cur != nullptr)
+    {
+        cur->circle.setFillColor(sf::Color::Yellow);
+        cur = cur->next;
+    }
+    window.clear(sf::Color(22, 73, 154));
+    this->drawNodes(window);
+    this->display(window);
+    window.display();
+    this->size++;
+}
+
+void DataVisualization_3::InsertNodeMid(sf::RenderWindow &window)
+{
+    std::chrono::milliseconds delayTime(500); // 0.5 seconds
+    // std::this_thread::sleep_for(delayTime); 
+    // special case
+    if (this->NodeArray == nullptr)
+    {
+        this->NodeArray = createNode(250, 250, 30, font, 69);
+        return;
+    }
+    int index = 1 + rand() % (this->getSLLSize());
+    // std::cout << index << std::endl;
+    if (index == 1) 
+    {
+        this->InsertNodeFront(window);
+        return;
+    }
+    if (index == this->size) 
+    {
+        this->InsertNodeBack(window);
+        return;
+    }
+    //
+    SLL_Node* iteratorNode = this->NodeArray;
+    SLL_Node* pre = iteratorNode;
+    for (int i = 1; i < index; i++)
+    {
+        pre = iteratorNode;
+        iteratorNode = iteratorNode->next;
+    }
+    SLL_Node* newNode = createNode(pre->circle.getPosition().x + 150, pre->circle.getPosition().y + 150, 30, this->font, 69);
+    window.draw(newNode->circle);
+    window.draw(newNode->text);
+    window.display();
+    std::this_thread::sleep_for(delayTime); 
+
+    SLL_Node* temp = this->NodeArray;
+    do {
+        window.clear(sf::Color(22, 73, 154));
+        temp->circle.setFillColor(sf::Color::Green);
+        this->drawNodes(window);
+        this->display(window);
+        window.draw(newNode->circle);
+        window.draw(newNode->text);
+        window.display();
+        std::this_thread::sleep_for(delayTime); 
+        temp = temp->next;
+    }
+    while (temp != iteratorNode);
+
+
+    pre->next = newNode;
+    newNode->next = iteratorNode;
+    window.draw(newNode->circle);
+    window.draw(newNode->text);
+    window.display();
+
+    // moving
+    for (int i = 0; i < 25; i++)
+    {
+        window.clear(sf::Color(22, 73, 154));
+        newNode->circle.move(0, -6);
+        newNode->text.move(0, -6);
+        temp = iteratorNode;
+        while (temp != nullptr)
+        {
+            temp->circle.move(6, 0);
+            temp->text.move(6, 0);
+            temp = temp->next;
+        }
+        this->drawNodes(window);
+        this->display(window);
+        window.display();
+    }
+    std::this_thread::sleep_for(delayTime); 
+
+    // Recolor the node
+    SLL_Node* cur = this->NodeArray;
+    while (cur != newNode)
+    {
+        cur->circle.setFillColor(sf::Color::Yellow);
+        cur = cur->next;
+    }
+    window.clear(sf::Color(22, 73, 154));
+    this->drawNodes(window);
+    this->display(window);
+    window.display();
+    this->size++;
+}
+
+int DataVisualization_3::getSLLSize()
+{
+    SLL_Node* temp = this->NodeArray;
+    int cnt = 0;
+    while (temp != nullptr)
+    {
+        cnt++;
+        temp = temp->next;
+    }
+    return cnt;
+}
+
+void DataVisualization_3::DeleteNodeFront(sf::RenderWindow &window)
+{   
+    std::chrono::milliseconds delayTime(1000); // 0.5 seconds
+    std::chrono::milliseconds delayTime1(50); // 0.05
+    SLL_Node* cur = this->NodeArray;
+
+    window.clear(sf::Color(22, 73, 154));
+    cur->circle.setFillColor(sf::Color::Green);
+    drawArrow(window, cur->circle.getPosition(), this->NodeArray->circle.getPosition());
+    this->drawNodes(window);
+    this->display(window);
+    window.display();
+
+    std::this_thread::sleep_for(delayTime); 
+    while (cur->circle.getRadius() > 16)
+    {
+        float radius = cur->circle.getRadius();
+        radius = radius * 0.75;
+        cur->circle.setRadius(radius);
+        cur->circle.setOrigin(radius, radius);
+        cur->text.setCharacterSize(radius / 3.f * 2.f);
+        cur->text.setOrigin(cur->text.getLocalBounds().width / 2.f, cur->text.getLocalBounds().height / 2.f);
+        window.clear(sf::Color(22, 73, 154));
+        drawArrow(window, cur->circle.getPosition(), this->NodeArray->circle.getPosition());
+        window.draw(cur->circle);
+        window.draw(cur->text);
+        this->drawNodes(window);
+        this->display(window);
+        window.display();
+        std::this_thread::sleep_for(delayTime1); 
+    }
+    this->NodeArray = this->NodeArray->next;
+    delete cur;
+    cur = nullptr;
+    window.clear(sf::Color(22, 73, 154));   
+    this->drawNodes(window);
+    this->display(window);
+    window.display();
+    // move left after delete
+    for (int i = 0; i < 25; i++)
+    {
+        SLL_Node* temp = this->NodeArray;
+        while (temp != nullptr)
+        {
+            window.clear(sf::Color(22, 73, 154));
+            temp->circle.move(-6, 0);
+            temp->text.move(-6, 0);
+            temp = temp->next;
+        }
+        this->drawNodes(window);
+        this->display(window);
+        window.display();
+    }
+    window.clear(sf::Color(22, 73, 154));
+    this->drawNodes(window);
+    this->display(window);
+    window.display();
+    this->size--;
+}   
+
+void DataVisualization_3::DeleteNodeBack(sf::RenderWindow &window)
+{   
+    std::chrono::milliseconds delayTime(1000); // 1 second
+    std::chrono::milliseconds delayTime1(50); // 0.05
+    std::chrono::milliseconds delayTime2(500);
+    SLL_Node* cur = this->NodeArray;
+    SLL_Node* pre = cur;
+    sf::Vector2f Pos = cur->circle.getPosition();
+
+    while (cur->next != nullptr)
+    {
+        window.clear(sf::Color(22, 73, 154));
+        cur->circle.setFillColor(sf::Color::Green);
+        this->drawNodes(window);
+        this->display(window);
+        window.display();
+        std::this_thread::sleep_for(delayTime2); 
+        pre = cur;
+        cur = cur->next;
+    }
+
+    while (cur->circle.getRadius() > 16)
+    {
+        float radius = cur->circle.getRadius();
+        radius = radius * 0.75;
+        cur->circle.setRadius(radius);
+        cur->circle.setOrigin(radius, radius);
+        cur->text.setCharacterSize(radius / 3.f * 2.f);
+        cur->text.setOrigin(cur->text.getLocalBounds().width / 2.f, cur->text.getLocalBounds().height / 2.f);
+        window.clear(sf::Color(22, 73, 154));
+        this->drawNodes(window);
+        this->display(window);
+        window.display();
+        std::this_thread::sleep_for(delayTime1); 
+    }
+    pre->next = nullptr;
+    delete cur;
+    cur = nullptr;
+    window.clear(sf::Color(22, 73, 154));   
+    this->drawNodes(window);
+    this->display(window);
+    window.display();
+    std::this_thread::sleep_for(delayTime2); 
+    cur = this->NodeArray;
+    while (cur != nullptr)
+    {
+        cur->circle.setFillColor(sf::Color::Yellow);
+        cur = cur->next;
+    }
+
+    this->size--;
+}   
+
+void DataVisualization_3::DeleteNodeMid(sf::RenderWindow &window)
+{   
+
+}   
 
 DataVisualization_4::DataVisualization_4()
 {
@@ -484,3 +811,4 @@ void DataVisualization_7::display(sf::RenderWindow &window)
 }
 
 // Testing------------------------------------------------------
+

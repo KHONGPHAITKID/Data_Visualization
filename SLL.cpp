@@ -109,21 +109,25 @@ int randNumNode() {
     return rand() % 99 + 1;
 }
 
+
 //--------------
 SLL_Node* createNode(float x, float y, float radius, sf::Font &font, int value) 
 {
     SLL_Node* nc = new SLL_Node;
     nc->data = value;
+    std::string str = std::to_string(value);
     nc->next = nullptr;
     nc->circle.setRadius(radius);
     nc->circle.setPosition(x, y);
     nc->circle.setFillColor(sf::Color::Yellow);
+    nc->circle.setOrigin(nc->circle.getRadius(), nc->circle.getRadius());
+
     nc->text.setFont(font);
-    nc->text.setString(std::to_string(value));
-    nc->text.setCharacterSize(20);
-    // nc.text.setOrigin(nc.text.getLocalBounds().height / 2.f, nc.text.getLocalBounds().width / 2.f);
-    nc->text.setPosition(x + radius/2, y + radius/2);
+    nc->text.setString(str);
+    nc->text.setCharacterSize(radius / 3.f * 2.f);
     nc->text.setFillColor(sf::Color::Black);
+    nc->text.setOrigin(nc->text.getLocalBounds().width / 2.f, nc->text.getLocalBounds().height / 2.f);
+    nc->text.setPosition(nc->circle.getPosition().x - 0, nc->circle.getPosition().y - 7);
     return nc;
 }
 
@@ -139,7 +143,7 @@ void CreateRandomNodes(SLL_Node* &v, int &n, sf::Font &font)
     }
 }
 
-void drawArrow(sf::RenderWindow window, sf::Vector2f first, sf::Vector2f second)
+void drawArrow(sf::RenderWindow &window, sf::Vector2f first, sf::Vector2f second)
 {
     sf::VertexArray line(sf::Lines, 2);
     line[0].position = first;
