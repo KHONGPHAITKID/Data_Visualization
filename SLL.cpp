@@ -92,7 +92,6 @@ void CreateRandomSortSLL(SLL_Node* &head, int &n, sf::Font &font)
         i->data = min_ptr->data;
         min_ptr->data = temp;
         i = i->next;
-
     }
 
     // update text 
@@ -129,6 +128,17 @@ SLL_Node* createNode(float x, float y, float radius, sf::Font &font, int value)
     nc->text.setOrigin(nc->text.getLocalBounds().width / 2.f, nc->text.getLocalBounds().height / 2.f);
     nc->text.setPosition(nc->circle.getPosition().x - 0, nc->circle.getPosition().y - 7);
     return nc;
+}
+
+void CreateFixedNodes(SLL_Node* &v, int &n, sf::Font &font)
+{
+    DeleteSLL(v);
+    for (int i = 0; i < n; i++)
+    {
+        int value = 1 + rand() % 99;
+        SLL_Node* temp = createNode(250 + i * 150, 250, 30, font, value);
+        addBack(v, temp);
+    }
 }
 
 void CreateRandomNodes(SLL_Node* &v, int &n, sf::Font &font)

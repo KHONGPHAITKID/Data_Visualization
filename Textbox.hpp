@@ -1,30 +1,59 @@
-#ifndef TEXTBOX_HPP
-#define TEXTBOX_HPP
+#ifndef _TEXTBOX_HPP_
+#define _TEXTBOX_HPP_
 
+#include <iostream>
+#include <sstream>
 #include <SFML/Graphics.hpp>
 
-class Textbox : public sf::Transformable, public sf::Drawable {
+// Define keys:
+#define DELETE_KEY 8
+#define ENTER_KEY 13
+#define ESCAPE_KEY 27
+
+class Textbox {
 public:
-    Textbox(unsigned int maxChars);
+    sf::Text textbox;
 
-    const std::string getText() const;
+    std::string message = "";
 
-    void setPosition(float x, float y) override;
+    std::ostringstream text;
+    bool isSelected = false;
+    bool hasLimit = true;
+    int limit;
 
-    bool contains(sf::Vector2f point) const;
+    // Delete the last character of the text:
+    void deleteLastChar();
 
-    void setFocus(bool focus);
+    // Get user input:
+    void inputLogic(int charTyped);
 
-    void handleInput(sf::Event e);
+    void ExportString(std::string &destination);
+//-----------------
+    Textbox();
 
-private:
-    unsigned int m_size;
-    sf::Font m_font;
-    std::string m_text;
-    sf::RectangleShape m_rect;
-    bool m_hasfocus;
+    void TextboxHandleEvent(sf::Event event, std::string &Mes);
 
-    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+    void setFont(sf::Font& fonts);
+
+    void setPosition(sf::Vector2f point);
+
+    void setSize(int size);
+
+    void Coloring(sf::Color color);
+
+    void setLimit(bool ToF);
+
+    void setLimit(bool ToF, int lim);
+
+    void setSelected(bool sel);
+
+    std::string getText();
+
+    void drawTo(sf::RenderWindow& window);
+
+    void typedOn(sf::Event input);
 };
 
-#endif // TEXTBOX_HPP
+void InitTextbox(Textbox &box, int size, sf::Color color, bool sel);
+
+#endif 

@@ -31,6 +31,8 @@ SLL_Node* createNode(float x, float y, float radius, sf::Font &font, int value);
 // Create many Node
 void CreateRandomNodes(SLL_Node* &v, int &n, sf::Font &font);
 
+void CreateFixedNodes(SLL_Node* &v, int &n, sf::Font &font);
+
 void drawArrow(sf::RenderWindow &window, sf::Vector2f first, sf::Vector2f second);
 
 

@@ -7,6 +7,7 @@
 #include <ctime>
 #include <sstream>
 #include <vector>
+#include <functional>
 #include <windows.h>
 //---
 #include <chrono> // for std::chrono
@@ -15,7 +16,8 @@
 #include <unistd.h>
 #include "Button.hpp"
 #include "SLL.hpp"
-// #include "Textbox.hpp"
+#include "Textbox.hpp"
+#include "Globals.hpp"
 
 
 int randNum();
@@ -25,7 +27,6 @@ struct Node {
     sf::CircleShape circle;
     sf::Text text;
 };
-
 
 class MenuPage
 {
@@ -37,6 +38,7 @@ public:
     Button settingsButton;
     MenuPage();
     void display(sf::RenderWindow &window);
+    void handleEvent(sf::RenderWindow &window, sf::Vector2f mousePos, sf::Event &event);
 };
 
 class SettingPage
@@ -48,6 +50,7 @@ public:
     Button backButton;
     SettingPage();
     void display(sf::RenderWindow &window);
+    void handleEvent(sf::RenderWindow &window, sf::Vector2f mousePos, sf::Event &event);
 };
 
 class StartingPage
@@ -67,6 +70,7 @@ public:
 
     StartingPage();
     void display(sf::RenderWindow &window);
+    void handleEvent(sf::RenderWindow &window, sf::Vector2f mousePos, sf::Event &event);
 };
 
 class DataVisualization_1
@@ -78,6 +82,7 @@ public:
     Button backButton;
     DataVisualization_1();
     void display(sf::RenderWindow &window);
+    void handleEvent(sf::RenderWindow &window, sf::Vector2f mousePos, sf::Event &event);
 };
 
 class DataVisualization_2
@@ -89,6 +94,7 @@ public:
     Button backButton;
     DataVisualization_2();
     void display(sf::RenderWindow &window);
+    void handleEvent(sf::RenderWindow &window, sf::Vector2f mousePos, sf::Event &event);
 };
 
 class DataVisualization_3
@@ -106,7 +112,7 @@ public:
     Button CreateRandomSort;
     Button CreateRandomFixedSize;
     Button CreateUserDefinedList;
-    // Textbox FixedSizeTextBox;
+    Textbox CreateRandomFixedSize_Textbox;
 
     // ADD button
     Button ControlMenu_btn2;
@@ -138,6 +144,9 @@ public:
     void display(sf::RenderWindow &window);
     void drawNodes(sf::RenderWindow &window);
 
+    bool checkSize(sf::RenderWindow &window);
+
+    void CreateRandomFixedSizeSLL(sf::RenderWindow &window, sf::Event &event);
     int getSLLSize();
     void InsertNodeFront(sf::RenderWindow &window);
     void InsertNodeBack(sf::RenderWindow &window);
@@ -156,6 +165,7 @@ public:
     Button backButton;
     DataVisualization_4();
     void display(sf::RenderWindow &window);
+    void handleEvent(sf::RenderWindow &window, sf::Vector2f mousePos, sf::Event &event);
 };
 
 class DataVisualization_5
@@ -167,6 +177,7 @@ public:
     Button backButton;
     DataVisualization_5();
     void display(sf::RenderWindow &window);
+    void handleEvent(sf::RenderWindow &window, sf::Vector2f mousePos, sf::Event &event);
 };
 
 class DataVisualization_6
@@ -178,6 +189,7 @@ public:
     Button backButton;
     DataVisualization_6();
     void display(sf::RenderWindow &window);
+    void handleEvent(sf::RenderWindow &window, sf::Vector2f mousePos, sf::Event &event);
 };
 
 class DataVisualization_7
@@ -189,6 +201,7 @@ public:
     Button backButton;
     DataVisualization_7();
     void display(sf::RenderWindow &window);
+    void handleEvent(sf::RenderWindow &window, sf::Vector2f mousePos, sf::Event &event);
 };
 
 #endif
