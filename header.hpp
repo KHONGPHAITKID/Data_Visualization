@@ -111,25 +111,32 @@ public:
     Button CreateRadom;
     Button CreateRandomSort;
     Button CreateRandomFixedSize;
-    Button CreateUserDefinedList;
     Textbox CreateRandomFixedSize_Textbox;
+    Button CreateUserDefinedListButton;
+    Textbox CreateUserDefinedList_Textbox; // Input many times
 
     // ADD button
     Button ControlMenu_btn2;
     Button InsertHead;
+    Textbox InsertHead_Textbox;
     Button InsertBack;
+    Textbox InsertBack_Textbox;
     Button InsertMid;
+    Textbox InsertMid_Textbox; // 2 input: index, value
 
     Button ControlMenu_btn3;
     Button DeleteHead;
     Button DeleteBack;
     Button DeleteMid;
+    Textbox DeleteMid_Textbox;
 
     Button ControlMenu_btn4;
-    Button UpdateNode;
+    Button UpdateNodeButton;
+    Textbox UpdateNode_Textbox; // index + value
 
     Button ControlMenu_btn5;
-    Button SearchNode;
+    Button SearchNodeButton; // value
+    Textbox SearchNode_Textbox;
 
     int size;
 
@@ -144,16 +151,34 @@ public:
     void display(sf::RenderWindow &window);
     void drawNodes(sf::RenderWindow &window);
 
-    bool checkSize(sf::RenderWindow &window);
+    bool checkSize(sf::RenderWindow &window, int size);
 
     void CreateRandomFixedSizeSLL(sf::RenderWindow &window, sf::Event &event);
+
+    void CreateUserDefinedList(sf::RenderWindow &window, std::vector<int> &values);
+    void CreateUserDefinedListSLL(sf::RenderWindow &window, sf::Event &event);
+
     int getSLLSize();
-    void InsertNodeFront(sf::RenderWindow &window);
-    void InsertNodeBack(sf::RenderWindow &window);
-    void InsertNodeMid(sf::RenderWindow &window);
+    void InsertNodeFront(sf::RenderWindow &window, int data);
+    void InsertNodeFrontSLL(sf::RenderWindow &window, sf::Event &event);
+    void InsertNodeBack(sf::RenderWindow &window, int data);
+    void InsertNodeBackSLL(sf::RenderWindow &window, sf::Event &event);
+    void InsertNodeMid(sf::RenderWindow &window, int data, int index);
+    void InsertNodeMidSLL(sf::RenderWindow &window, sf::Event &event);
+    
+
     void DeleteNodeFront(sf::RenderWindow &window);
     void DeleteNodeBack(sf::RenderWindow &window);
-    void DeleteNodeMid(sf::RenderWindow &window);
+    void DeleteNodeMid(sf::RenderWindow &window, int index);
+    void DeleteNodeMidSLL(sf::RenderWindow &window, sf::Event &event);
+
+    void UpdateNode(sf::RenderWindow &window, int index, int value);
+    void UpdateNodeSLL(sf::RenderWindow &window, sf::Event &event);
+
+    void SearchNode(sf::RenderWindow &window, int value);
+    void SearchNodeSLL(sf::RenderWindow &window, sf::Event &event);
+
+    bool printMessage(sf::RenderWindow &window, std::string message);
 };
 
 class DataVisualization_4

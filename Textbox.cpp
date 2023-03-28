@@ -14,7 +14,6 @@ Textbox::Textbox()
     //     textbox.setString("");
 }
 
-// Make sure font is passed by reference:
 void Textbox::setFont(sf::Font& fonts) 
 {
     textbox.setFont(fonts);
@@ -25,7 +24,6 @@ void Textbox::setPosition(sf::Vector2f point)
     textbox.setPosition(point);
 }
 
-// Set char limits:
 void Textbox::setLimit(bool ToF) 
 {
     hasLimit = ToF;
@@ -37,7 +35,6 @@ void Textbox::setLimit(bool ToF, int lim)
     limit = lim - 1;
 }
 
-// Change selected state:
 void Textbox::setSelected(bool sel) 
 {
     isSelected = sel;
@@ -63,7 +60,10 @@ std::string Textbox::getText()
 void Textbox::drawTo(sf::RenderWindow& window) 
 {
     if (isSelected)
+    {
         window.draw(textbox);
+        window.draw(this->EnterMessage);
+    }
 }
 
 // Function for event loop:
@@ -76,18 +76,15 @@ void Textbox::typedOn(sf::Event input)
     {
         if (hasLimit) 
         {
-            // If there's a limit, don't go over it:
             if (text.str().length() <= limit) 
             {
                 inputLogic(charTyped);
             }
-            // But allow for char deletions:
             else if (text.str().length() > limit && charTyped == DELETE_KEY) 
             {
                 deleteLastChar();
             }
         }
-        // If no limit exists, just run the function:
         else {
             inputLogic(charTyped);
         }
@@ -126,9 +123,8 @@ void Textbox::inputLogic(int charTyped) {
     }
     else if (charTyped == ENTER_KEY) {
         if (text.str().length() > 0) {
-            std::string temp = "";
             ExportString(this->message);
-            std::cout << this->message << std::endl;
+            this->pressEnter = true;
         }
     }
     textbox.setString(text.str() + "_");
@@ -142,22 +138,6 @@ void Textbox::ExportString(std::string &destination)
 
 void Textbox::TextboxHandleEvent(sf::Event event, std::string &Mes)
 {
-    // if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
-    //     setSelected(true);
-    // }
-    // else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
-    //     setSelected(false);
-    // }
-    // switch (event.type)
-    // {
-    //     case sf::Event::TextEntered:
-    //         std::cout << 1 << std::endl;
-    //         typedOn(event);
-    //         break;
-    //     default:
-    //         std::cout << 2 << std::endl;
-    //         break;
-    // }
     if (event.type == sf::Event::TextEntered)
     {
         this->typedOn(event);
@@ -166,12 +146,6 @@ void Textbox::TextboxHandleEvent(sf::Event event, std::string &Mes)
             Mes = this->message;
         }
     } 
-    // else if (event.type == sf::Event::MouseButtonPressed) 
-    // {
-    //     // if (!textBox.shape.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {
-    //     this->isSelected = false;
-    //     std::cout << 1 << std::endl;
-    // }
 }
 
 void Textbox::setSize(int size)
@@ -179,18 +153,27 @@ void Textbox::setSize(int size)
     textbox.setCharacterSize(size);
 }
 
-void Textbox::Coloring(sf::Color color)
+void Textbox::Coloring(sf::Color &color)
 {
     textbox.setColor(color);
 }
 
-void InitTextbox(Textbox &box, int size, sf::Color color, bool sel)
+void InitTextbox(Textbox &box, int size, sf::Color color, bool sel, float PosX, float PosY, sf::Font &font, bool ToF, int lim)
 {
     box.setSize(size);
     box.Coloring(color);
     box.setSelected(sel);
+    box.setPosition({PosX, PosY});
+	box.setFont(font);
+	box.setLimit(ToF, lim);
     if (box.isSelected)
         box.textbox.setString("_");
     else
         box.textbox.setString("");
+    // box.isSelected = false;
+    box.EnterMessage.setFont(font);
+    box.EnterMessage.setFillColor(sf::Color::White);
+    box.EnterMessage.setCharacterSize(20);
+    box.EnterMessage.setPosition(PosX - 60, PosY);
 }
+

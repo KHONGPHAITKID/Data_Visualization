@@ -12,6 +12,8 @@
 
 class Textbox {
 public:
+    sf::Text EnterMessage;
+
     sf::Text textbox;
 
     std::string message = "";
@@ -19,6 +21,7 @@ public:
     std::ostringstream text;
     bool isSelected = false;
     bool hasLimit = true;
+    bool pressEnter = false;
     int limit;
 
     // Delete the last character of the text:
@@ -39,7 +42,7 @@ public:
 
     void setSize(int size);
 
-    void Coloring(sf::Color color);
+    void Coloring(sf::Color &color);
 
     void setLimit(bool ToF);
 
@@ -54,6 +57,10 @@ public:
     void typedOn(sf::Event input);
 };
 
-void InitTextbox(Textbox &box, int size, sf::Color color, bool sel);
+// void InitTextbox(Textbox &box, int size, sf::Color color, bool sel);
+// void InitTextbox(Textbox &box, int size, sf::Color color, bool sel, float PosX, float PosY, sf::Font &font);
+void InitTextbox(Textbox &box, int size, sf::Color color, bool sel, float PosX, float PosY, sf::Font &font, bool ToF, int lim);
+// void InitTextbox(Textbox &box, int size, sf::Color color, bool sel, sf::Vector2f Pos, bool ToF, int lim, sf::Font font);
+
 
 #endif 

@@ -261,45 +261,53 @@ DataVisualization_3::DataVisualization_3()
     
     //Function Key #1
     this->ControlMenu_btn1.CreateButton(200.f, 50.f, 250.f, 1080 / 2.f + 125.f, sf::Color(255, 138, 39), "Create", this->font, sf::Color::White);
-    this->ControlMenu_btn1.rect.setOutlineThickness(0);
+    // this->ControlMenu_btn1.rect.setOutlineThickness(0);
     this->CreateEmpty.CreateButton(130.f, 50.f, this->ControlMenu_btn1.rect.getPosition().x + this->ControlMenu_btn1.rect.getSize().x / 2.f + 20.f + 130/2.f + 10.f, this->ControlMenu_btn1.rect.getPosition().y, sf::Color(255, 138, 39), "Empty", this->font, sf::Color::White);
     this->CreateRadom.CreateButton(130.f, 50.f, this->CreateEmpty.rect.getPosition().x + this->CreateEmpty.rect.getSize().x / 2.f + 130/2.f + 10.f, this->ControlMenu_btn1.rect.getPosition().y, sf::Color(255, 138, 39), "Random", this->font, sf::Color::White);
     this->CreateRandomSort.CreateButton(130.f, 50.f, this->CreateRadom.rect.getPosition().x + this->CreateRadom.rect.getSize().x / 2.f + 130/2.f + 10.f, this->ControlMenu_btn1.rect.getPosition().y, sf::Color(255, 138, 39), "Random Sort", this->font, sf::Color::White);
     this->CreateRandomFixedSize.CreateButton(180.f, 50.f, this->CreateRandomSort.rect.getPosition().x + this->CreateRandomSort.rect.getSize().x / 2.f + 160.f / 2.f + 20.f, this->ControlMenu_btn1.rect.getPosition().y, sf::Color(255, 138, 39), "Random Fixed Size", this->font, sf::Color::White);
-    this->CreateUserDefinedList.CreateButton(130.f, 50.f, this->CreateRandomFixedSize.rect.getPosition().x + this->CreateRandomFixedSize.rect.getSize().x / 2.f + 130.f/2.f + 10.f, this->ControlMenu_btn1.rect.getPosition().y, sf::Color(255, 138, 39), "User Defined", this->font, sf::Color::White);
-    InitTextbox(this->CreateRandomFixedSize_Textbox, 20, sf::Color::White, true);
-    this->CreateRandomFixedSize_Textbox.setPosition({ this->CreateRandomFixedSize.rect.getPosition().x , this->CreateRandomFixedSize.rect.getPosition().y + 50});
-	this->CreateRandomFixedSize_Textbox.setLimit(true, 3);
-	this->CreateRandomFixedSize_Textbox.setFont(font);
-    this->CreateRandomFixedSize_Textbox.isSelected = false;
+    InitTextbox(this->CreateRandomFixedSize_Textbox, 20, sf::Color::White, true, this->CreateRandomFixedSize.rect.getPosition().x , this->CreateRandomFixedSize.rect.getPosition().y + 50, font, true, 3);
+    this->CreateRandomFixedSize_Textbox.EnterMessage.setString("Size: ");
+    this->CreateUserDefinedListButton.CreateButton(130.f, 50.f, this->CreateRandomFixedSize.rect.getPosition().x + this->CreateRandomFixedSize.rect.getSize().x / 2.f + 130.f/2.f + 10.f, this->ControlMenu_btn1.rect.getPosition().y, sf::Color(255, 138, 39), "User Defined", this->font, sf::Color::White);
+    InitTextbox(this->CreateUserDefinedList_Textbox, 20, sf::Color::White, true, this->CreateUserDefinedListButton.rect.getPosition().x, this->CreateUserDefinedListButton.rect.getPosition().y + 50, font, true, 3);
+    this->CreateUserDefinedList_Textbox.EnterMessage.setString("Size: ");
 
     //Function Key #2: Adding
     this->ControlMenu_btn2.CreateButton(200.f, 50.f, 250.f, 1080 / 2.f + 175.f, sf::Color(255, 138, 39), "Add", this->font, sf::Color::White);
     this->InsertHead.CreateButton(130.f, 50.f, this->ControlMenu_btn2.rect.getPosition().x + this->ControlMenu_btn2.rect.getSize().x / 2.f + 20.f + 130/2.f + 10.f, 1080 / 2.f + 175.f, sf::Color(255, 138, 39), "Head", this->font, sf::Color::White);
+    InitTextbox(this->InsertHead_Textbox, 20, sf::Color::White, true, this->InsertHead.rect.getPosition().x, this->InsertHead.rect.getPosition().y + 50, font, true, 3);
+    this->InsertHead_Textbox.EnterMessage.setString("Value: ");
     this->InsertBack.CreateButton(130.f, 50.f, this->InsertHead.rect.getPosition().x + this->InsertHead.rect.getSize().x / 2.f + 10.f + 130/2.f, 1080 / 2.f + 175.f, sf::Color(255, 138, 39), "Back", this->font, sf::Color::White);
+    InitTextbox(this->InsertBack_Textbox, 20, sf::Color::White, true, this->InsertBack.rect.getPosition().x, this->InsertBack.rect.getPosition().y + 50, font, true, 3);
+    this->InsertBack_Textbox.EnterMessage.setString("Value: ");
     this->InsertMid.CreateButton(130.f, 50.f, this->InsertBack.rect.getPosition().x + this->InsertBack.rect.getSize().x / 2.f + 10.f + 130/2.f, 1080 / 2.f + 175.f, sf::Color(255, 138, 39), "Mid", this->font, sf::Color::White);
+    InitTextbox(this->InsertMid_Textbox, 20, sf::Color::White, true, this->InsertMid.rect.getPosition().x, this->InsertMid.rect.getPosition().y + 50, font, true, 3);
+    this->InsertMid_Textbox.EnterMessage.setString("Value: ");
 
     //Function Key #3
     this->ControlMenu_btn3.CreateButton(200.f, 50.f, 250.f, 1080 / 2.f + 225.f, sf::Color(255, 138, 39), "Delete", this->font, sf::Color::White);
     this->DeleteHead.CreateButton(130.f, 50.f, this->ControlMenu_btn3.rect.getPosition().x + this->ControlMenu_btn3.rect.getSize().x / 2.f + 20.f + 130/2.f + 10.f, 1080 / 2.f + 225.f, sf::Color(255, 138, 39), "Head", this->font, sf::Color::White);
     this->DeleteBack.CreateButton(130.f, 50.f, this->DeleteHead.rect.getPosition().x + this->DeleteHead.rect.getSize().x / 2.f + 10.f + 130/2.f, 1080 / 2.f + 225.f, sf::Color(255, 138, 39), "Back", this->font, sf::Color::White);
     this->DeleteMid.CreateButton(130.f, 50.f, this->DeleteBack.rect.getPosition().x + this->DeleteBack.rect.getSize().x / 2.f + 10.f + 130/2.f, 1080 / 2.f + 225.f, sf::Color(255, 138, 39), "Mid", this->font, sf::Color::White);
-    
+    InitTextbox(this->DeleteMid_Textbox, 20, sf::Color::White, true, this->DeleteMid.rect.getPosition().x, this->DeleteMid.rect.getPosition().y + 50, font, true, 3);
+    this->DeleteMid_Textbox.EnterMessage.setString("Index: ");
+
     //Function Key #4
     this->ControlMenu_btn4.CreateButton(200.f, 50.f, 250.f, 1080 / 2.f + 275.f, sf::Color(255, 138, 39), "Update", this->font, sf::Color::White);
-    
+    this->UpdateNodeButton.CreateButton(130.f, 50.f, this->ControlMenu_btn4.rect.getPosition().x + this->ControlMenu_btn4.rect.getSize().x / 2.f + 20.f + 130/2.f + 10.f, 1080 / 2.f + 275.f, sf::Color(255, 138, 39), "Update", this->font, sf::Color::White);
+    InitTextbox(this->UpdateNode_Textbox, 20, sf::Color::White, true, this->UpdateNodeButton.rect.getPosition().x, this->UpdateNodeButton.rect.getPosition().y + 50, font, true, 3);
+    this->UpdateNode_Textbox.EnterMessage.setString("Index: ");
+
     //Function Key #5
     this->ControlMenu_btn5.CreateButton(200.f, 50.f, 250.f, 1080 / 2.f + 325.f, sf::Color(255, 138, 39), "Search", this->font, sf::Color::White);
+    this->SearchNodeButton.CreateButton(130.f, 50.f, this->ControlMenu_btn5.rect.getPosition().x + this->ControlMenu_btn5.rect.getSize().x / 2.f + 20.f + 130/2.f + 10.f, 1080 / 2.f + 325.f, sf::Color(255, 138, 39), "Search", this->font, sf::Color::White);
+    InitTextbox(this->SearchNode_Textbox, 20, sf::Color::White, true, this->SearchNodeButton.rect.getPosition().x, this->SearchNodeButton.rect.getPosition().y + 50, font, true, 3);
+    this->SearchNode_Textbox.EnterMessage.setString("Value: ");
 
     this->size = 0;
     this->NodeArray = nullptr;
 
     funcstate = 0;
-}
-
-void DataVisualization_3::CreateRandomFixedSizeSLL(sf::RenderWindow &window, sf::Event &event)
-{
-    this->CreateRandomFixedSize_Textbox.isSelected = !this->CreateRandomFixedSize_Textbox.isSelected;
 }
 
 void DataVisualization_3::display(sf::RenderWindow &window)
@@ -318,22 +326,31 @@ void DataVisualization_3::display(sf::RenderWindow &window)
         this->CreateRadom.displayButton(window);;
         this->CreateRandomSort.displayButton(window);
         this->CreateRandomFixedSize.displayButton(window);
-        this->CreateUserDefinedList.displayButton(window);
+        this->CreateUserDefinedListButton.displayButton(window);
         this->CreateRandomFixedSize_Textbox.drawTo(window);
+        this->CreateUserDefinedList_Textbox.drawTo(window);
         break;
     case 2:
-        this->InsertBack.displayButton(window);
+        this->InsertHead_Textbox.drawTo(window);
         this->InsertHead.displayButton(window);
+        this->InsertBack.displayButton(window);
+        this->InsertBack_Textbox.drawTo(window);
         this->InsertMid.displayButton(window);
+        this->InsertMid_Textbox.drawTo(window);
         break;
     case 3:
         this->DeleteBack.displayButton(window);
         this->DeleteHead.displayButton(window);
         this->DeleteMid.displayButton(window);
+        this->DeleteMid_Textbox.drawTo(window);
         break;
     case 4:
+        this->UpdateNodeButton.displayButton(window);
+        this->UpdateNode_Textbox.drawTo(window);
         break;
     case 5:
+        this->SearchNodeButton.displayButton(window);
+        this->SearchNode_Textbox.drawTo(window);
         break;
     default: // NONE - 0
         break;
@@ -368,12 +385,24 @@ void DataVisualization_3::handleEvent(sf::RenderWindow &window, sf::Vector2f &mo
         {
             this->funcstate = 5;
         }
+        else {
+            this->CreateRandomFixedSize_Textbox.isSelected = false;
+            this->InsertBack_Textbox.isSelected = false;
+            this->InsertHead_Textbox.isSelected = false;
+            this->DeleteMid_Textbox.isSelected = false;
+            this->SearchNode_Textbox.isSelected = false;
+            this->InsertMid_Textbox.isSelected = false;
+            this->CreateUserDefinedList_Textbox.isSelected = false;
+            this->UpdateNode_Textbox.isSelected = false;
+        }
         switch (this->funcstate)
         {
         case 1:
             if (this->CreateEmpty.rect.getGlobalBounds().contains(mousePos))
             {
                 DeleteSLL(this->NodeArray);
+                this->NodeArray = nullptr;
+                this->size = 0;
             }
             if (this->CreateRadom.rect.getGlobalBounds().contains(mousePos))
             {
@@ -385,28 +414,37 @@ void DataVisualization_3::handleEvent(sf::RenderWindow &window, sf::Vector2f &mo
             }
             if (this->CreateRandomFixedSize.rect.getGlobalBounds().contains(mousePos))
             {
-                CreateRandomFixedSizeSLL(window, ev);
+                this->CreateRandomFixedSize_Textbox.isSelected = !this->CreateRandomFixedSize_Textbox.isSelected;
             } else {
                 this->CreateRandomFixedSize_Textbox.isSelected = false;
             }
-            if (this->CreateUserDefinedList.rect.getGlobalBounds().contains(mousePos))
+            if (this->CreateUserDefinedListButton.rect.getGlobalBounds().contains(mousePos))
             {
-
+                this->CreateUserDefinedList_Textbox.isSelected = !this->CreateUserDefinedList_Textbox.isSelected;
+            } else {
+                this->CreateUserDefinedList_Textbox.isSelected = false;
             }
             break;  
             
         case 2:
             if (this->InsertHead.rect.getGlobalBounds().contains(mousePos))
             {
-                this->InsertNodeFront(window);
+                this->InsertHead_Textbox.isSelected = !this->InsertHead_Textbox.isSelected;
+            } else {
+                this->InsertHead_Textbox.isSelected = false;
             }
             if (this->InsertBack.rect.getGlobalBounds().contains(mousePos))
             {
-                this->InsertNodeBack(window);
+                this->InsertBack_Textbox.isSelected = !this->InsertBack_Textbox.isSelected;
+            } else {
+                this->InsertBack_Textbox.isSelected = false;
             }
             if (this->InsertMid.rect.getGlobalBounds().contains(mousePos))
             {
-                this->InsertNodeMid(window);
+                // this->InsertNodeMid(window, 69);
+                this->InsertMid_Textbox.isSelected = !this->InsertMid_Textbox.isSelected;
+            } else {
+                this->InsertMid_Textbox.isSelected = false;
             }
             break;
         case 3:
@@ -420,25 +458,39 @@ void DataVisualization_3::handleEvent(sf::RenderWindow &window, sf::Vector2f &mo
             }
             if (this->DeleteMid.rect.getGlobalBounds().contains(mousePos))
             {
-                this->DeleteNodeMid(window);
+                this->DeleteMid_Textbox.isSelected = !this->DeleteMid_Textbox.isSelected;
+            } else {
+                this->DeleteMid_Textbox.isSelected = false;
             }
             break;
+        case 4:
+            if (this->UpdateNodeButton.rect.getGlobalBounds().contains(mousePos))
+            {
+                this->UpdateNode_Textbox.isSelected = !this->UpdateNode_Textbox.isSelected;
+            } else {
+                this->UpdateNode_Textbox.isSelected = false;
+            }
+        case 5:
+            if (this->SearchNodeButton.rect.getGlobalBounds().contains(mousePos))
+            {
+                this->SearchNode_Textbox.isSelected = !this->SearchNode_Textbox.isSelected;
+            } else {
+                this->SearchNode_Textbox.isSelected = false;
+            }
         default:
             break;
         }
     }
     else if (ev.type == sf::Event::TextEntered)
     {
-        if (this->CreateRandomFixedSize_Textbox.isSelected)
-        {
-            std::string str = "";
-            this->CreateRandomFixedSize_Textbox.TextboxHandleEvent(ev, str);
-            if (str != "")
-            {
-                this->size = std::stoi(str);
-                CreateFixedNodes(this->NodeArray, this->size, this->font);
-            }
-        }
+        CreateRandomFixedSizeSLL(window, ev); 
+        CreateUserDefinedListSLL(window, ev);
+        InsertNodeFrontSLL(window, ev);
+        InsertNodeBackSLL(window, ev);
+        InsertNodeMidSLL(window, ev);
+        DeleteNodeMidSLL(window, ev);
+        SearchNodeSLL(window, ev);
+        UpdateNodeSLL(window, ev);
     }
     else if (ev.type == sf::Event::MouseMoved)
     {
@@ -474,9 +526,137 @@ void DataVisualization_3::handleEvent(sf::RenderWindow &window, sf::Vector2f &mo
         }
     }
     // free
-    // else if (ev.type != sf::Event::MouseMoved){
-    //     this->CreateRandomFixedSize_Textbox.isSelected = false;
-    // }
+}
+
+void DataVisualization_3::CreateRandomFixedSizeSLL(sf::RenderWindow &window, sf::Event &event)
+{
+    if (this->CreateRandomFixedSize_Textbox.isSelected)
+    {
+        std::string str = "";
+        // recieve Input String
+        this->CreateRandomFixedSize_Textbox.TextboxHandleEvent(event, str);
+        // check if input is valid
+        if (str != "" && this->CreateRandomFixedSize_Textbox.pressEnter == true)
+        {
+            int size = std::stoi(str);
+            if (size <= 10)
+            {
+                this->size = size;
+                CreateFixedNodes(this->NodeArray, this->size, this->font);
+            } else {
+                checkSize(window, size);
+            }
+        }
+        this->CreateRandomFixedSize_Textbox.pressEnter = false;
+    }
+}
+
+void DataVisualization_3::CreateUserDefinedListSLL(sf::RenderWindow &window, sf::Event &event)
+{
+    if (this->CreateUserDefinedList_Textbox.isSelected)
+    {
+        static std::vector<int> values;
+        static int num_values = 0;
+
+        std::string str = "";
+        this->CreateUserDefinedList_Textbox.TextboxHandleEvent(event, str);
+
+        if (str != "" && this->CreateUserDefinedList_Textbox.pressEnter == true)
+        {
+            if (num_values == 0) {
+                num_values = std::stoi(str);
+                this->CreateUserDefinedList_Textbox.EnterMessage.setString("Value: ");
+            }
+            else {
+                values.push_back(std::stoi(str));
+                num_values--;
+                if (num_values == 0) {
+                    this->CreateUserDefinedList(window, values);
+                    values.clear();
+                    this->CreateUserDefinedList_Textbox.EnterMessage.setString("Size: ");
+                }
+                else {
+                    this->CreateUserDefinedList_Textbox.EnterMessage.setString("Value:");
+                }
+            }
+            this->CreateUserDefinedList_Textbox.pressEnter = false;
+        }
+    }
+}
+
+void DataVisualization_3::CreateUserDefinedList(sf::RenderWindow &window, std::vector<int> &values)
+{
+    DeleteSLL(this->NodeArray);
+    int n = values.size();
+    for (int i = 0; i < n; i++)
+    {
+        SLL_Node* temp = createNode(250 + i * 150, 250, 30, this->font, values[i]);
+        addBack(this->NodeArray, temp);
+    }
+}
+
+void DataVisualization_3::InsertNodeFrontSLL(sf::RenderWindow &window, sf::Event &event)
+{
+    if (this->InsertHead_Textbox.isSelected)
+    {
+        std::string str = "";
+        // recieve Input String
+        this->InsertHead_Textbox.TextboxHandleEvent(event, str);
+        // check if input is valid
+        if (str != "" && this->InsertHead_Textbox.pressEnter == true)
+        {
+            int value = std::stoi(str);
+            this->InsertNodeFront(window, value);
+        }
+        this->InsertHead_Textbox.pressEnter = false;
+    }
+}
+
+void DataVisualization_3::InsertNodeBackSLL(sf::RenderWindow &window, sf::Event &event)
+{
+    if (this->InsertBack_Textbox.isSelected)
+    {
+        std::string str = "";
+        // recieve Input String
+        this->InsertBack_Textbox.TextboxHandleEvent(event, str);
+        // check if input is valid
+        if (str != "" && this->InsertBack_Textbox.pressEnter == true)
+        {
+            int value = std::stoi(str);
+            this->InsertNodeBack(window, value);
+        }
+        this->InsertBack_Textbox.pressEnter = false;
+    }
+}
+
+void DataVisualization_3::InsertNodeMidSLL(sf::RenderWindow& window, sf::Event& event)
+{
+    if (this->InsertMid_Textbox.isSelected)
+    {
+        static int value = -1;
+        static int index = -1;
+
+        // Receive input string
+        std::string str = "";
+        this->InsertMid_Textbox.TextboxHandleEvent(event, str);
+
+        // Check if input is valid
+        if (str != "" && this->InsertMid_Textbox.pressEnter == true)
+        {
+            if (value == -1) {
+                value = std::stoi(str);
+                this->InsertMid_Textbox.EnterMessage.setString("Index: ");
+            }
+            else {
+                index = std::stoi(str);
+                this->InsertNodeMid(window, value, index);
+                this->InsertMid_Textbox.EnterMessage.setString("Value: ");
+                value = -1;
+                index = -1;
+            }
+            this->InsertMid_Textbox.pressEnter = false;
+        }
+    }
 }
 
 void DataVisualization_3::drawNodes(sf::RenderWindow &window)
@@ -501,9 +681,9 @@ DataVisualization_3::~DataVisualization_3()
     DeleteSLL(this->NodeArray);
 }
 
-bool DataVisualization_3::checkSize(sf::RenderWindow &window)
+bool DataVisualization_3::checkSize(sf::RenderWindow &window, int size)
 {
-    if (this->size < 10) return true;
+    if (size < 10) return true;
     std::chrono::milliseconds delayTime(750);
     sf::Text message;
     message.setString("Size must be from 0 to 10");
@@ -520,15 +700,16 @@ bool DataVisualization_3::checkSize(sf::RenderWindow &window)
     return false;
 }
 
-void DataVisualization_3::InsertNodeFront(sf::RenderWindow &window)
+void DataVisualization_3::InsertNodeFront(sf::RenderWindow &window, int data)
 {
     if (this->NodeArray == nullptr)
     {
-        this->NodeArray = createNode(250, 250, 30, font, 69);
+        this->NodeArray = createNode(250, 250, 30, font, data);
+        this->size = 1;
         return;
     }
-    if (checkSize(window) == false) return;
-    SLL_Node* newNode = createNode(this->NodeArray->circle.getPosition().x, this->NodeArray->circle.getPosition().y + 150, 30, this->font, 69);
+    if (checkSize(window, this->size) == false) return;
+    SLL_Node* newNode = createNode(this->NodeArray->circle.getPosition().x, this->NodeArray->circle.getPosition().y + 150, 30, this->font, data);
     window.draw(newNode->circle);
     window.draw(newNode->text);
     window.display();
@@ -557,19 +738,20 @@ void DataVisualization_3::InsertNodeFront(sf::RenderWindow &window)
     this->size++;
 }
 
-void DataVisualization_3::InsertNodeBack(sf::RenderWindow &window)
+void DataVisualization_3::InsertNodeBack(sf::RenderWindow &window, int data)
 {
     std::chrono::milliseconds delayTime(500); // 0.5 seconds
     // std::this_thread::sleep_for(delayTime); 
     if (this->NodeArray == nullptr)
     {
-        this->NodeArray = createNode(250, 250, 30, font, 69);
+        this->NodeArray = createNode(250, 250, 30, font, data);
+        this->size = 1;
         return;
     }
-    if (checkSize(window) == false) return;
+    if (checkSize(window, this->size) == false) return;
     SLL_Node* LastNode = this->NodeArray;
     while (LastNode->next != nullptr) LastNode = LastNode->next;
-    SLL_Node* newNode = createNode(LastNode->circle.getPosition().x + 150, LastNode->circle.getPosition().y + 150, 30, this->font, 69);
+    SLL_Node* newNode = createNode(LastNode->circle.getPosition().x + 150, LastNode->circle.getPosition().y + 150, 30, this->font, data);
     window.draw(newNode->circle);
     window.draw(newNode->text);
     window.display();
@@ -619,26 +801,31 @@ void DataVisualization_3::InsertNodeBack(sf::RenderWindow &window)
     this->size++;
 }
 
-void DataVisualization_3::InsertNodeMid(sf::RenderWindow &window)
+void DataVisualization_3::InsertNodeMid(sf::RenderWindow &window, int data, int index)
 {
     std::chrono::milliseconds delayTime(500); // 0.5 seconds
     // special case
     if (this->NodeArray == nullptr)
     {
-        this->NodeArray = createNode(250, 250, 30, font, 69);
+        this->NodeArray = createNode(250, 250, 30, font, data);
         return;
     }
-    if (checkSize(window) == false) return;
-    int index = 1 + rand() % (this->getSLLSize());
-    // std::cout << index << std::endl;
+    if (checkSize(window, this->size) == false) return;
+    if (index > this->size) 
+    {
+        std::string str = "Index must be from 1 to " + std::to_string(this->size);
+        printMessage(window, str);
+        return;
+    }
+    // index = 1 + rand() % (this->getSLLSize());
     if (index == 1) 
     {
-        this->InsertNodeFront(window);
+        this->InsertNodeFront(window, data);
         return;
     }
     if (index == this->size) 
     {
-        this->InsertNodeBack(window);
+        this->InsertNodeBack(window, data);
         return;
     }
     //
@@ -649,7 +836,7 @@ void DataVisualization_3::InsertNodeMid(sf::RenderWindow &window)
         pre = iteratorNode;
         iteratorNode = iteratorNode->next;
     }
-    SLL_Node* newNode = createNode(pre->circle.getPosition().x + 150, pre->circle.getPosition().y + 150, 30, this->font, 69);
+    SLL_Node* newNode = createNode(pre->circle.getPosition().x + 150, pre->circle.getPosition().y + 150, 30, this->font, data);
     window.draw(newNode->circle);
     window.draw(newNode->text);
     window.display();
@@ -668,7 +855,6 @@ void DataVisualization_3::InsertNodeMid(sf::RenderWindow &window)
         temp = temp->next;
     }
     while (temp != iteratorNode);
-
 
     pre->next = newNode;
     newNode->next = iteratorNode;
@@ -723,7 +909,11 @@ int DataVisualization_3::getSLLSize()
 
 void DataVisualization_3::DeleteNodeFront(sf::RenderWindow &window)
 {   
-    if (this->NodeArray == nullptr) return;
+    if (this->NodeArray == nullptr)
+    {
+        printMessage(window, "There is no Node to be deleted!");
+        return;
+    }
     std::chrono::milliseconds delayTime(1000); // 0.5 seconds
     std::chrono::milliseconds delayTime1(50); // 0.05
     SLL_Node* cur = this->NodeArray;
@@ -784,7 +974,11 @@ void DataVisualization_3::DeleteNodeFront(sf::RenderWindow &window)
 
 void DataVisualization_3::DeleteNodeBack(sf::RenderWindow &window)
 {   
-    if (this->NodeArray == nullptr) return;
+    if (this->NodeArray == nullptr) 
+    {
+        printMessage(window, "There is no Node to be deleted!");
+        return;
+    }
     std::chrono::milliseconds delayTime(1000); // 1 second
     std::chrono::milliseconds delayTime1(50); // 0.05
     std::chrono::milliseconds delayTime2(500);
@@ -828,6 +1022,11 @@ void DataVisualization_3::DeleteNodeBack(sf::RenderWindow &window)
 
     // delete
     pre->next = nullptr;
+    if (cur == NodeArray) {
+        delete cur;
+        NodeArray = nullptr;
+        return;
+    }
     delete cur;
     cur = nullptr;
     window.clear(sf::Color(22, 73, 154));   
@@ -844,11 +1043,21 @@ void DataVisualization_3::DeleteNodeBack(sf::RenderWindow &window)
     this->size--;
 }   
 
-void DataVisualization_3::DeleteNodeMid(sf::RenderWindow &window)
+void DataVisualization_3::DeleteNodeMid(sf::RenderWindow &window, int index)
 {   
-    int index = 1 + rand() % (this->getSLLSize());
+    if (this->NodeArray == nullptr) 
+    {
+        printMessage(window, "There is no Node to be deleted!");
+        return;
+    }
+    // int index = 1 + rand() % (this->getSLLSize());
+    if (index <= 0 || index > this->getSLLSize())
+    {
+        std::string mess = "Index must be from 1 to " + std::to_string(this->getSLLSize());
+        printMessage(window, mess);
+        return;
+    }
     // handle special event
-    if (this->NodeArray == nullptr) return;
     if (index == 1) 
     {
         DeleteNodeFront(window);
@@ -856,6 +1065,7 @@ void DataVisualization_3::DeleteNodeMid(sf::RenderWindow &window)
     } else if (index == this->getSLLSize())
     {
         DeleteNodeBack(window);
+        return;
     }
 
     std::chrono::milliseconds delayTime(1000); // 1 second
@@ -943,6 +1153,214 @@ void DataVisualization_3::DeleteNodeMid(sf::RenderWindow &window)
     window.display();
     this->size--;
 }   
+
+void DataVisualization_3::DeleteNodeMidSLL(sf::RenderWindow &window, sf::Event &event)
+{
+    if (this->DeleteMid_Textbox.isSelected)
+    {
+        std::string str = "";
+        // recieve Input String
+        this->DeleteMid_Textbox.TextboxHandleEvent(event, str);
+        // check if input is valid
+        if (str != "" && this->DeleteMid_Textbox.pressEnter == true)
+        {
+            int index = std::stoi(str);
+            this->DeleteNodeMid(window, index);
+        }
+        this->DeleteMid_Textbox.pressEnter = false;
+    }
+}
+
+void DataVisualization_3::UpdateNode(sf::RenderWindow &window, int index, int value)
+{
+    if (index <= 0 || index > this->size)
+    {
+        std::string str = "Index must be from 1 to " + std::to_string(this->size);
+        printMessage(window, str);
+        return;
+    } 
+
+    std::chrono::milliseconds delayTime(1000); // 1 second
+    std::chrono::milliseconds delayTime1(50); // 0.05
+    std::chrono::milliseconds delayTime2(500);
+
+    // std::cout << "Update success" << std::endl;
+    // std::cout << "Index: " << index << std::endl;
+    // std::cout << "Value: " << value << std::endl;
+    SLL_Node* temp = this->NodeArray;
+    for (int i = 1; i < index; i++)
+    {
+        temp->circle.setFillColor(sf::Color::Green);
+        this->drawNodes(window);
+        this->display(window);
+        window.display();
+        std::this_thread::sleep_for(delayTime2); 
+        temp = temp->next;
+    }
+
+    temp->circle.setFillColor(sf::Color::Red);
+    window.clear(sf::Color(22, 73, 154));
+    this->drawNodes(window);
+    this->display(window);
+    window.display();
+    std::this_thread::sleep_for(delayTime2);
+
+    while (temp->circle.getRadius() < 40)
+    {
+        float radius = temp->circle.getRadius();
+        radius = radius + 2;
+        temp->circle.setRadius(radius);
+        temp->circle.setOrigin(radius, radius);
+        temp->text.setCharacterSize(radius / 3.f * 2.f);
+        temp->text.setOrigin(temp->text.getLocalBounds().width / 2.f, temp->text.getLocalBounds().height / 2.f);
+        window.clear(sf::Color(22, 73, 154));
+        this->drawNodes(window);
+        this->display(window);
+        window.display();
+        std::this_thread::sleep_for(delayTime1); 
+    }
+    temp->text.setString(std::to_string(value));
+    while (temp->circle.getRadius() > 30)
+    {
+        float radius = temp->circle.getRadius();
+        radius = radius - 2;
+        temp->circle.setRadius(radius);
+        temp->circle.setOrigin(radius, radius);
+        temp->text.setCharacterSize(radius / 3.f * 2.f);
+        temp->text.setOrigin(temp->text.getLocalBounds().width / 2.f, temp->text.getLocalBounds().height / 2.f);
+        window.clear(sf::Color(22, 73, 154));
+        this->drawNodes(window);
+        this->display(window);
+        window.display();
+        std::this_thread::sleep_for(delayTime1); 
+    }
+    //recoloring
+    temp = this->NodeArray;
+    while (temp != nullptr)
+    {
+        temp->circle.setFillColor(sf::Color::Yellow);
+        temp = temp->next;
+    }
+}
+
+void DataVisualization_3::UpdateNodeSLL(sf::RenderWindow &window, sf::Event &event)
+{
+    if (this->UpdateNode_Textbox.isSelected)
+    {
+        static int value = -1;
+        static int index = -1;
+
+        // Receive input string
+        std::string str = "";
+        this->UpdateNode_Textbox.TextboxHandleEvent(event, str);
+
+        // Check if input is valid
+        if (str != "" && this->UpdateNode_Textbox.pressEnter == true)
+        {
+            if (index == -1) {
+                index = std::stoi(str);
+                this->UpdateNode_Textbox.EnterMessage.setString("Value: ");
+            }
+            else {
+                value = std::stoi(str);
+                this->UpdateNode(window, index, value);
+                this->UpdateNode_Textbox.EnterMessage.setString("Index: ");
+                value = -1;
+                index = -1;
+            }
+            this->UpdateNode_Textbox.pressEnter = false;
+        }
+    }
+}
+
+void DataVisualization_3::SearchNode(sf::RenderWindow &window, int value)
+{
+    if (NodeArray == nullptr)
+    {
+        printMessage(window, "There is no Node to be searched");
+        return;
+    }
+    SLL_Node* temp = NodeArray;
+    std::chrono::milliseconds delayTime(1000); // 1 second
+    std::chrono::milliseconds delayTime1(50); // 0.05
+    std::chrono::milliseconds delayTime2(500);
+    int index = 0;
+
+    while (temp != nullptr)
+    {
+        index++;
+        temp->circle.setFillColor(sf::Color::Green);
+        window.clear(sf::Color(22, 73, 154));
+        this->drawNodes(window);
+        this->display(window);
+        window.display();
+        std::this_thread::sleep_for(delayTime2);
+
+        if (temp->data == value) {
+            std::string mess = "Founded at index " + std::to_string(index);
+            temp->circle.setFillColor(sf::Color::Red);
+            window.clear(sf::Color(22, 73, 154));
+            this->drawNodes(window);
+            this->display(window);
+            window.display();
+            std::this_thread::sleep_for(delayTime2);
+            printMessage(window, mess);
+            break;
+        }
+        temp = temp->next;
+    }
+    if (temp == nullptr) // case that value not found
+    {
+        printMessage(window, "Value not found!");
+    }
+    // recolor yellow again
+    temp = NodeArray;
+    while (temp != nullptr)
+    {
+        temp->circle.setFillColor(sf::Color::Yellow);
+        temp = temp->next;
+    }
+    window.clear(sf::Color(22, 73, 154));
+    this->drawNodes(window);
+    this->display(window);
+    window.display();
+}
+
+void DataVisualization_3::SearchNodeSLL(sf::RenderWindow &window, sf::Event &event)
+{
+    if (this->SearchNode_Textbox.isSelected)
+    {
+        std::string str = "";
+        // recieve Input String
+        this->SearchNode_Textbox.TextboxHandleEvent(event, str);
+        // check if input is valid
+        if (str != "" && this->SearchNode_Textbox.pressEnter == true)
+        {
+            int value = std::stoi(str);
+            this->SearchNode(window, value);
+        }
+        this->SearchNode_Textbox.pressEnter = false;
+    }
+}
+
+bool DataVisualization_3::printMessage(sf::RenderWindow &window, std::string message/*, int min_range, int max_range, int value*/)
+{
+    // if (size < 10) return true;
+    std::chrono::milliseconds delayTime(750);
+    sf::Text WarningMessage;
+    WarningMessage.setString(message);
+    WarningMessage.setCharacterSize(50);
+    WarningMessage.setFillColor(sf::Color::White);
+    WarningMessage.setOutlineColor(sf::Color::Red);
+    WarningMessage.setOutlineThickness(5);
+    WarningMessage.setFont(this->font);
+    WarningMessage.setOrigin(WarningMessage.getLocalBounds().width/2.f, WarningMessage.getLocalBounds().height/2.f);
+    WarningMessage.setPosition(window.getSize().x / 2.f, window.getSize().y / 2.f);
+    window.draw(WarningMessage);
+    window.display();
+    std::this_thread::sleep_for(delayTime);
+    return true;
+}
 
 DataVisualization_4::DataVisualization_4()
 {

@@ -108,7 +108,6 @@ int randNumNode() {
     return rand() % 99 + 1;
 }
 
-
 //--------------
 SLL_Node* createNode(float x, float y, float radius, sf::Font &font, int value) 
 {
@@ -158,8 +157,8 @@ void drawArrow(sf::RenderWindow &window, sf::Vector2f first, sf::Vector2f second
     sf::VertexArray line(sf::Lines, 2);
     line[0].position = first;
     line[1].position = second;
-    line[0].color = sf::Color::Red;
-    line[1].color = sf::Color::Red;
+    line[0].color = sf::Color::White;
+    line[1].color = sf::Color::White;
     line[0].color.a = 200;
     line[1].color.a = 200;
     line[0].texCoords = sf::Vector2f(0, 0);
