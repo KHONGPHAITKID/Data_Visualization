@@ -5,6 +5,7 @@
 #include <string>
 #include <SFML/Graphics.hpp>
 #include <ctime>
+#include <cmath>
 #include <sstream>
 #include <vector>
 #include <functional>
@@ -18,6 +19,7 @@
 #include "SLL.hpp"
 #include "Textbox.hpp"
 #include "Globals.hpp"
+#include "SLLArrow.hpp"
 
 
 int randNum();

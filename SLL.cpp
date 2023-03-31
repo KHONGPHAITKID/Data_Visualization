@@ -1,4 +1,5 @@
 #include "SLL.hpp"
+#include "SLLArrow.hpp"
 
 int randNum() 
 {
@@ -154,39 +155,18 @@ void CreateRandomNodes(SLL_Node* &v, int &n, sf::Font &font)
 
 void drawArrow(sf::RenderWindow &window, sf::Vector2f first, sf::Vector2f second)
 {
-    sf::VertexArray line(sf::Lines, 2);
-    line[0].position = first;
-    line[1].position = second;
-    line[0].color = sf::Color::White;
-    line[1].color = sf::Color::White;
-    line[0].color.a = 200;
-    line[1].color.a = 200;
-    line[0].texCoords = sf::Vector2f(0, 0);
-    line[1].texCoords = sf::Vector2f(5.f, 5.f);
-    window.draw(line);
-}
+    // sf::VertexArray line(sf::Lines, 2);
+    // line[0].position = first;
+    // line[1].position = second;
+    // line[0].color = sf::Color::White;
+    // line[1].color = sf::Color::White;
+    // line[0].color.a = 200;
+    // line[1].color.a = 200;
+    // line[0].texCoords = sf::Vector2f(0, 0);
+    // line[1].texCoords = sf::Vector2f(5.f, 5.f);
+    SLLArrow arrow(first, second, sf::Color::White);
 
-// void addSort(SLL_Node* &pHead, SLL_Node* &temp)
-// {
-//     if (pHead == nullptr)
-//     {
-//         pHead = temp;
-//         return;
-//     }
-//     if (temp->data < pHead->data)
-//     {
-//         temp->next = pHead;
-//         pHead = temp;
-//         return;
-//     }
-//     SLL_Node* cur = pHead;
-//     while (cur->next != nullptr)
-//     {
-//         if (temp->data > cur->next->data)
-//             cur = cur->next;
-//         else 
-//             break;
-//     }
-//     temp->next = cur->next;
-//     cur->next = temp;
-// }
+
+    window.draw(arrow);
+    // window.draw(line);
+}

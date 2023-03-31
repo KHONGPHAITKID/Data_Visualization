@@ -18,6 +18,11 @@ int main()
         std::cerr << "Failed to load Fonts" << "\n";
         return 1;
     }
+    //Testing
+
+
+    // SLLArrow arrow(sf::Vector2f(360, 250), 80, -5, sf::Color::White);
+    // origin at the giao of hcn and hình tam giác
 
     MenuPage menu;
     SettingPage setting;
@@ -77,7 +82,9 @@ int main()
             {
                 window.close();
             }
-            //-----------------
+        }
+        //-----------------
+        //-----------------
         window.clear(BackGroundColor);
         switch (currentState)
         {
@@ -115,8 +122,8 @@ int main()
             default:
                 break;
         }
-        window.display();
-        }
+    // window.draw(arrow);
+    window.display();
     }
     return 0;
 }

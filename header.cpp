@@ -572,8 +572,9 @@ void DataVisualization_3::CreateUserDefinedListSLL(sf::RenderWindow &window, sf:
                 num_values--;
                 if (num_values == 0) {
                     this->CreateUserDefinedList(window, values);
-                    values.clear();
+                    values.clear(); // delete Vector
                     this->CreateUserDefinedList_Textbox.EnterMessage.setString("Size: ");
+                    this->CreateUserDefinedList_Textbox.isSelected = false;
                 }
                 else {
                     this->CreateUserDefinedList_Textbox.EnterMessage.setString("Value:");
@@ -588,6 +589,10 @@ void DataVisualization_3::CreateUserDefinedList(sf::RenderWindow &window, std::v
 {
     DeleteSLL(this->NodeArray);
     int n = values.size();
+    if (n < 0 || n > 10)
+    {
+        printMessage(window, "Size be must from 1 to 10");
+    }
     for (int i = 0; i < n; i++)
     {
         SLL_Node* temp = createNode(250 + i * 150, 250, 30, this->font, values[i]);
@@ -917,10 +922,13 @@ void DataVisualization_3::DeleteNodeFront(sf::RenderWindow &window)
     std::chrono::milliseconds delayTime(1000); // 0.5 seconds
     std::chrono::milliseconds delayTime1(50); // 0.05
     SLL_Node* cur = this->NodeArray;
+    this->NodeArray = this->NodeArray->next;
 
     window.clear(sf::Color(22, 73, 154));
     cur->circle.setFillColor(sf::Color::Red);
     drawArrow(window, cur->circle.getPosition(), this->NodeArray->circle.getPosition());
+    window.draw(cur->circle);
+    window.draw(cur->text);
     this->drawNodes(window);
     this->display(window);
     window.display();
@@ -943,7 +951,6 @@ void DataVisualization_3::DeleteNodeFront(sf::RenderWindow &window)
         window.display();
         std::this_thread::sleep_for(delayTime1); 
     }
-    this->NodeArray = this->NodeArray->next;
     delete cur;
     cur = nullptr;
     window.clear(sf::Color(22, 73, 154));   
@@ -1103,6 +1110,7 @@ void DataVisualization_3::DeleteNodeMid(sf::RenderWindow &window, int index)
         this->display(window);
         window.display();
     }
+
     std::this_thread::sleep_for(delayTime2); 
     pre->next = cur->next;
     window.clear(sf::Color(22, 73, 154));
@@ -1130,7 +1138,7 @@ void DataVisualization_3::DeleteNodeMid(sf::RenderWindow &window, int index)
         window.draw(cur->text);
         window.display();
     }
-    std::this_thread::sleep_for(delayTime); 
+    std::this_thread::sleep_for(delayTime2); 
     
     delete cur;
     cur = nullptr;
