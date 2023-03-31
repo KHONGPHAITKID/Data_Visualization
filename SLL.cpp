@@ -55,17 +55,6 @@ void addBack(SLL_Node* &pHead, SLL_Node* &temp)
     cur->next = temp;
 }
 
-// void CreateRandomSLL(SLL_Node* &pHead)
-// {
-//     DeleteSLL(pHead);
-//     int n = 4 + srand() % 6;
-//     while (n--)
-//     {
-//         int randomValue = 1 + srand() % 99;
-//         addBack(pHead, randomValue);
-//     }
-// }
-
 void CreateRandomSortSLL(SLL_Node* &head, int &n, sf::Font &font)
 {
     DeleteSLL(head);
@@ -109,7 +98,6 @@ int randNumNode() {
     return rand() % 99 + 1;
 }
 
-//--------------
 SLL_Node* createNode(float x, float y, float radius, sf::Font &font, int value) 
 {
     SLL_Node* nc = new SLL_Node;
@@ -155,18 +143,6 @@ void CreateRandomNodes(SLL_Node* &v, int &n, sf::Font &font)
 
 void drawArrow(sf::RenderWindow &window, sf::Vector2f first, sf::Vector2f second)
 {
-    // sf::VertexArray line(sf::Lines, 2);
-    // line[0].position = first;
-    // line[1].position = second;
-    // line[0].color = sf::Color::White;
-    // line[1].color = sf::Color::White;
-    // line[0].color.a = 200;
-    // line[1].color.a = 200;
-    // line[0].texCoords = sf::Vector2f(0, 0);
-    // line[1].texCoords = sf::Vector2f(5.f, 5.f);
     SLLArrow arrow(first, second, sf::Color::White);
-
-
     window.draw(arrow);
-    // window.draw(line);
 }
