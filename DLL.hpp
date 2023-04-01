@@ -1,5 +1,5 @@
-#ifndef _SLL_HPP_
-#define _SLL_HPP_
+#ifndef _DLL_HPP_
+#define _DLL_HPP_
 #include <iostream>
 #include <cmath>
 #include <ctime>
@@ -8,39 +8,39 @@
 
 // int randNumNode();
 
-struct SLL_Node
+struct DLL_Node
 {
     int data;
-    SLL_Node* next;
+    DLL_Node* next;
     sf::CircleShape circle;
     sf::Text text;
-    void DeleteSLL(SLL_Node* &pHead);
+    void DeleteDLL(DLL_Node* &pHead);
 
-    void SortSLL(SLL_Node* &pHead);
+    void SortDLL(DLL_Node* &pHead);
 
-    void addBack(SLL_Node* &pHead, SLL_Node* &temp);
+    void addBack(DLL_Node* &pHead, DLL_Node* &temp);
 
-    // void addSort(SLL_Node* &pHead, SLL_Node* &temp);
+    // void addSort(DLL_Node* &pHead, DLL_Node* &temp);
 
-    void CreateRandomSortSLL(SLL_Node* &head, int &n, sf::Font &font); // chua
+    void CreateRandomSortDLL(DLL_Node* &head, int &n, sf::Font &font); // chua
 
     // create a Node
-    SLL_Node* createNode(float x, float y, float radius, sf::Font &font, int value);
+    DLL_Node* createNode(float x, float y, float radius, sf::Font &font, int value);
 
     // Create many Node
-    void CreateRandomNodes(SLL_Node* &v, int &n, sf::Font &font);
+    void CreateRandomNodes(DLL_Node* &v, int &n, sf::Font &font);
 
-    void CreateFixedNodes(SLL_Node* &v, int &n, sf::Font &font);
+    void CreateFixedNodes(DLL_Node* &v, int &n, sf::Font &font);
 
     void drawArrow(sf::RenderWindow &window, sf::Vector2f first, sf::Vector2f second);
 };
 
-class SLLArrow : public sf::Drawable
+class DLLArrow : public sf::Drawable
 {
 public:
-    SLLArrow();
-    SLLArrow(sf::Vector2f position1, sf::Vector2f position2, sf::Color color);
-    ~SLLArrow();
+    DLLArrow();
+    DLLArrow(sf::Vector2f position1, sf::Vector2f position2, sf::Color color);
+    ~DLLArrow();
 
     void setLength(float length);
     void setAngle(float angle);
@@ -59,8 +59,10 @@ public:
 private:    
     sf::RectangleShape body;
     sf::ConvexShape head;
+    sf::ConvexShape tail;
     sf::Vector2f position;
     sf::Vector2f HeadPosition;
+    sf::Vector2f TailPosition;
     float length;
     float angle;
     sf::Color color;

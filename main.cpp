@@ -35,7 +35,7 @@ int main()
     {
         sf::Event event;
         while (window.pollEvent(event))
-        {   
+        {
             //----
             sf::Vector2f mousePos = sf::Vector2f(sf::Mouse::getPosition(window));
             switch (currentState)
@@ -79,7 +79,6 @@ int main()
             }
         }
         //-----------------
-        //-----------------
         window.clear(BackGroundColor);
         switch (currentState)
         {
@@ -104,6 +103,7 @@ int main()
                 break;
             case DV4: // Doubly LL
                 dv4.display(window);
+                dv4.drawNodes(window);
                 break;
             case DV5: // Circular LL
                 dv5.display(window);

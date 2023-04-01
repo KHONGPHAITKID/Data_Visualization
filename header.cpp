@@ -120,9 +120,9 @@ StartingPage::StartingPage()
     // #1. Static array rectangle
     this->rect1.CreateButton(rectWidth, rectHeight, startX1, startY1, sf::Color(0, 154, 172), "Static Array", font, sf::Color::White);
     // #2. Dynamic array rectangle
-    rect2.CreateButton(rectWidth, rectHeight, startX1, startY1 + rectHeight + padding, sf::Color(218, 83, 44), "Dynamic array", font, sf::Color::White);
+    rect2.CreateButton(rectWidth, rectHeight, startX1, startY1 + rectHeight + padding, sf::Color(218, 83, 44), "Dynamic Array", font, sf::Color::White);
     // #3. Singly linked list rectangle
-    rect3.CreateButton(rectWidth, rectHeight, startX1, startY1 + (rectHeight + padding) * 2.f, sf::Color(160, 0, 167), "Singly linked list", font, sf::Color::White);
+    rect3.CreateButton(rectWidth, rectHeight, startX1, startY1 + (rectHeight + padding) * 2.f, sf::Color(160, 0, 167), "Singly Linked List", font, sf::Color::White);
     // #4. Doubly linked list rectangle
     rect4.CreateButton(rectWidth, rectHeight, startX2, startY2, sf::Color(186, 29, 71), "Doubly Linked List", font, sf::Color::White);
     // #5. Circular linked list rectangle
@@ -243,37 +243,37 @@ void DataVisualization_2::handleEvent(sf::RenderWindow &window, sf::Vector2f mou
     }
 }
 
-DataVisualization_4::DataVisualization_4()
-{
-    if (!this->font.loadFromFile("Fonts/arial.ttf"))
-    {
-        std::cerr << "Failed to load Fonts" << "\n";
-        return;
-    }
-    //Title
-    sf::Text DV4Title("Doubly Linked List", this->font, 90);
-    CreateTitle(DV4Title, 1920 / 2.f, 50.f);
-    this->Title = DV4Title;
-    //Back button
-    this->backButton.CreateButton(100.f, 50.f, 70.f, 45.f, sf::Color(128, 128, 128), "Back", font, sf::Color::White);
-}
+// DataVisualization_4::DataVisualization_4()
+// {
+//     if (!this->font.loadFromFile("Fonts/arial.ttf"))
+//     {
+//         std::cerr << "Failed to load Fonts" << "\n";
+//         return;
+//     }
+//     //Title
+//     sf::Text DV4Title("Doubly Linked List", this->font, 90);
+//     CreateTitle(DV4Title, 1920 / 2.f, 50.f);
+//     this->Title = DV4Title;
+//     //Back button
+//     this->backButton.CreateButton(100.f, 50.f, 70.f, 45.f, sf::Color(128, 128, 128), "Back", font, sf::Color::White);
+// }
 
-void DataVisualization_4::display(sf::RenderWindow &window)
-{
-    this->backButton.displayButton(window);
-    window.draw(this->Title);
-}
+// void DataVisualization_4::display(sf::RenderWindow &window)
+// {
+//     this->backButton.displayButton(window);
+//     window.draw(this->Title);
+// }
 
-void DataVisualization_4::handleEvent(sf::RenderWindow &window, sf::Vector2f mousePos, sf::Event &event)
-{
-    if (event.type == sf::Event::MouseButtonPressed)
-    {
-        if (this->backButton.rect.getGlobalBounds().contains(mousePos))
-        {
-            currentState = Start;
-        }
-    }
-}
+// void DataVisualization_4::handleEvent(sf::RenderWindow &window, sf::Vector2f mousePos, sf::Event &event)
+// {
+//     if (event.type == sf::Event::MouseButtonPressed)
+//     {
+//         if (this->backButton.rect.getGlobalBounds().contains(mousePos))
+//         {
+//             currentState = Start;
+//         }
+//     }
+// }
 
 DataVisualization_5::DataVisualization_5()
 {

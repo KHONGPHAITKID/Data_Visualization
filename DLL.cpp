@@ -1,13 +1,8 @@
-#include "SLL.hpp"
+#include "DLL.hpp"
 
-int randNum() 
+void DLL_Node::DeleteDLL(DLL_Node* &pHead)
 {
-    return rand() % 99 + 1;
-}
-
-void SLL_Node::DeleteSLL(SLL_Node* &pHead)
-{
-    SLL_Node* temp = pHead;
+    DLL_Node* temp = pHead;
     while (pHead != nullptr)
     {
         pHead = pHead->next;
@@ -17,13 +12,13 @@ void SLL_Node::DeleteSLL(SLL_Node* &pHead)
     pHead = nullptr;
 }
 
-void SLL_Node::SortSLL(SLL_Node* &pHead)
+void DLL_Node::SortDLL(DLL_Node* &pHead)
 {
-    SLL_Node* i = pHead;
+    DLL_Node* i = pHead;
     while (i->next != nullptr)
     {
-        SLL_Node* min_ptr = i;
-        SLL_Node* j = i->next;
+        DLL_Node* min_ptr = i;
+        DLL_Node* j = i->next;
         while (j != nullptr)
         {
             if (j->data < min_ptr->data)
@@ -39,14 +34,14 @@ void SLL_Node::SortSLL(SLL_Node* &pHead)
     }
 }
 
-void SLL_Node::addBack(SLL_Node* &pHead, SLL_Node* &temp)
+void DLL_Node::addBack(DLL_Node* &pHead, DLL_Node* &temp)
 {
     if (pHead == nullptr)
     {
         pHead = temp;
         return;
     }
-    SLL_Node* cur = pHead;
+    DLL_Node* cur = pHead;
     while (cur->next != nullptr)
     {
         cur = cur->next;
@@ -54,21 +49,21 @@ void SLL_Node::addBack(SLL_Node* &pHead, SLL_Node* &temp)
     cur->next = temp;
 }
 
-void SLL_Node::CreateRandomSortSLL(SLL_Node* &head, int &n, sf::Font &font)
+void DLL_Node::CreateRandomSortDLL(DLL_Node* &head, int &n, sf::Font &font)
 {
-    DeleteSLL(head);
+    DeleteDLL(head);
     n = 5 + rand() % 5;
     for (int i = 0; i < n; i++)
     {
         int value = 1 + rand() % 99;
-        SLL_Node* tmp = createNode(250 + i * 150, 250, 30, font, value);
+        DLL_Node* tmp = createNode(250 + i * 150, 250, 30, font, value);
         addBack(head, tmp);
     }
-    SLL_Node* i = head;
+    DLL_Node* i = head;
     while (i->next != nullptr)
     {
-        SLL_Node* min_ptr = i;
-        SLL_Node* j = i->next;
+        DLL_Node* min_ptr = i;
+        DLL_Node* j = i->next;
         while (j != nullptr)
         {
             if (j->data < min_ptr->data)
@@ -92,15 +87,15 @@ void SLL_Node::CreateRandomSortSLL(SLL_Node* &head, int &n, sf::Font &font)
     }
 }
 
-// int SLL_Node::randNumNode() 
+// int DLL_Node::randNumNode() 
 // {
 //     srand(time(NULL));
 //     return rand() % 99 + 1;
 // }
 
-SLL_Node* SLL_Node::createNode(float x, float y, float radius, sf::Font &font, int value) 
+DLL_Node* DLL_Node::createNode(float x, float y, float radius, sf::Font &font, int value) 
 {
-    SLL_Node* nc = new SLL_Node;
+    DLL_Node* nc = new DLL_Node;
     nc->data = value;
     std::string str = std::to_string(value);
     nc->next = nullptr;
@@ -118,38 +113,38 @@ SLL_Node* SLL_Node::createNode(float x, float y, float radius, sf::Font &font, i
     return nc;
 }
 
-void SLL_Node::CreateFixedNodes(SLL_Node* &v, int &n, sf::Font &font)
+void DLL_Node::CreateFixedNodes(DLL_Node* &v, int &n, sf::Font &font)
 {
-    DeleteSLL(v);
+    DeleteDLL(v);
     for (int i = 0; i < n; i++)
     {
         int value = 1 + rand() % 99;
-        SLL_Node* temp = createNode(250 + i * 150, 250, 30, font, value);
+        DLL_Node* temp = createNode(250 + i * 150, 250, 30, font, value);
         addBack(v, temp);
     }
 }
 
-void SLL_Node::CreateRandomNodes(SLL_Node* &v, int &n, sf::Font &font)
+void DLL_Node::CreateRandomNodes(DLL_Node* &v, int &n, sf::Font &font)
 {
-    DeleteSLL(v);
+    DeleteDLL(v);
     n = 5 + rand() % 5;
     for (int i = 0; i < n; i++)
     {
         int value = 1 + rand() % 99;
-        SLL_Node* temp = createNode(250 + i * 150, 250, 30, font, value);
+        DLL_Node* temp = createNode(250 + i * 150, 250, 30, font, value);
         addBack(v, temp);
     }
 }
 
-void SLL_Node::drawArrow(sf::RenderWindow &window, sf::Vector2f first, sf::Vector2f second)
+void DLL_Node::drawArrow(sf::RenderWindow &window, sf::Vector2f first, sf::Vector2f second)
 {
-    SLLArrow arrow(first, second, sf::Color::White);
+    DLLArrow arrow(first, second, sf::Color::White);
     window.draw(arrow);
 }
 
 //=============================
 
-SLLArrow::SLLArrow()
+DLLArrow::DLLArrow()
 {
     this->length = 0;
     this->angle = 0;
@@ -158,7 +153,7 @@ SLLArrow::SLLArrow()
     this->update();
 }
 
-SLLArrow::SLLArrow(sf::Vector2f position1, sf::Vector2f position2, sf::Color color)
+DLLArrow::DLLArrow(sf::Vector2f position1, sf::Vector2f position2, sf::Color color)
 {
     this->color = color;
     // not in the same line
@@ -172,90 +167,95 @@ SLLArrow::SLLArrow(sf::Vector2f position1, sf::Vector2f position2, sf::Color col
         truePos2.x = position2.x - 30*cos(this->angle);
         truePos2.y = position2.y - 30*sin(this->angle);
 
-        this->length = sqrt(pow(truePos2.x - truePos1.x, 2) + pow(truePos2.y - truePos1.y, 2)) - 20;
-        this->position.x = truePos1.x;
-        this->position.y = truePos1.y;
-        this->HeadPosition.x = truePos1.x + length*cos(this->angle);
-        this->HeadPosition.y = truePos1.y + length*sin(this->angle);
+        this->length = sqrt(pow(truePos2.x - truePos1.x, 2) + pow(truePos2.y - truePos1.y, 2)) - 40;
+        this->position.x = truePos1.x + 20*cos(this->angle);
+        this->position.y = truePos1.y + 20*sin(this->angle);
+        this->TailPosition.x = truePos1.x + 20*cos(this->angle);
+        this->TailPosition.y = truePos1.y + 20*sin(this->angle);
+        this->HeadPosition.x = truePos1.x + (length + 20)*cos(this->angle);
+        this->HeadPosition.y = truePos1.y + (length + 20)*sin(this->angle);
     } else { 
         position1.x += 30;
         position2.x -= 30;
         this->angle = 0;
-        this->length = position2.x - position1.x - 20;
-        this->HeadPosition.x = position1.x + length;
-        this->HeadPosition.y = position1.y;
-        this->position.x = position1.x;
+        this->length = position2.x - position1.x - 40;
+        this->position.x = position1.x + 20;
         this->position.y = position1.y;
+        this->HeadPosition.x = position1.x + length + 20;
+        this->HeadPosition.y = position1.y;
+        this->TailPosition.x = position1.x + 20;
+        this->TailPosition.y = position1.y;
     }
     this->update();
 }
 
-SLLArrow::~SLLArrow()
+DLLArrow::~DLLArrow()
 {
 }
 
-void SLLArrow::setLength(float length)
+void DLLArrow::setLength(float length)
 {
     this->length = length;
     this->update();
 }
 
-void SLLArrow::setAngle(float angle)
+void DLLArrow::setAngle(float angle)
 {
     this->angle = angle;
     this->update();
 }
 
-void SLLArrow::setColor(sf::Color color)
+void DLLArrow::setColor(sf::Color color)
 {
     this->color = color;
     this->update();
 }
 
-void SLLArrow::setPosition(sf::Vector2f position)
+void DLLArrow::setPosition(sf::Vector2f position)
 {
     this->position = position;
     this->update();
 }
 
-void SLLArrow::setHeadPosition(sf::Vector2f HeadPosition)
+void DLLArrow::setHeadPosition(sf::Vector2f HeadPosition)
 {
     this->HeadPosition = HeadPosition;
     this->update();
 }
 
-float SLLArrow::getLength() const
+float DLLArrow::getLength() const
 {
     return this->length;
 }
 
-float SLLArrow::getAngle() const
+float DLLArrow::getAngle() const
 {
     return this->angle;
 }
 
-sf::Color SLLArrow::getColor() const
+sf::Color DLLArrow::getColor() const
 {
     return this->color;
 }
 
-sf::Vector2f SLLArrow::getPosition() const
+sf::Vector2f DLLArrow::getPosition() const
 {
     return this->position;
 }
 
-sf::Vector2f SLLArrow::getHeadPosition() const
+sf::Vector2f DLLArrow::getHeadPosition() const
 {
     return this->HeadPosition;
 }
 
-void SLLArrow::draw(sf::RenderTarget& target, sf::RenderStates states) const
+void DLLArrow::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     target.draw(this->body);
     target.draw(this->head);
+    target.draw(this->tail);
 }
 
-void SLLArrow::update()
+void DLLArrow::update()
 {
     this->body.setSize(sf::Vector2f(this->length, 5));
     this->body.setOrigin(sf::Vector2f(0, 2.5));
@@ -271,4 +271,13 @@ void SLLArrow::update()
     this->head.setPosition(this->HeadPosition);
     this->head.setRotation(this->angle * 180 / 3.1415);
     this->head.setFillColor(this->color);
+
+    this->tail.setPointCount(3);
+    this->tail.setPoint(0, sf::Vector2f(0, 10));
+    this->tail.setPoint(1, sf::Vector2f(20, 0));
+    this->tail.setPoint(2, sf::Vector2f(20, 20));
+    this->tail.setOrigin(sf::Vector2f(20, 10));
+    this->tail.setPosition(this->TailPosition);
+    this->tail.setRotation(this->angle * 180 / 3.1415);
+    this->tail.setFillColor(this->color);
 }
