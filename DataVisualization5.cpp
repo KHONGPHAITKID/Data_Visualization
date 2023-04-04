@@ -469,13 +469,15 @@ void DataVisualization_5::drawNodes(sf::RenderWindow &window)
 
             LastArrow2.setSize(sf::Vector2f(LastArrow1.getPosition().y - (this->NodeArray->circle.getPosition().y) + 100, 5));
             LastArrow2.setOrigin(sf::Vector2f(0, 2.5));
-            LastArrow2.setPosition({LastArrow1.getPosition().x + 50, LastArrow1.getPosition().y + 2.5});
+            // LastArrow2.setPosition({LastArrow1.getPosition().x + 50, LastArrow1.getPosition().y + 2.5});
+            LastArrow2.setPosition({LastArrow1.getPosition().x + 50, static_cast<float>(LastArrow1.getPosition().y + 2.5)});
             LastArrow2.setRotation(270);
             LastArrow2.setFillColor(sf::Color::White);
             
             LastArrow3.setSize(sf::Vector2f( LastArrow2.getPosition().x - this->NodeArray->circle.getPosition().x, 5));
             LastArrow3.setOrigin(sf::Vector2f(0, 2.5));
-            LastArrow3.setPosition({LastArrow2.getPosition().x + 2.5, LastArrow2.getPosition().y - (LastArrow1.getPosition().y - (this->NodeArray->circle.getPosition().y) + 100)});
+            // LastArrow3.setPosition({LastArrow2.getPosition().x + 2.5, LastArrow2.getPosition().y - (LastArrow1.getPosition().y - (this->NodeArray->circle.getPosition().y) + 100)});
+            LastArrow3.setPosition({static_cast<float>(LastArrow2.getPosition().x + 2.5), static_cast<float>(LastArrow2.getPosition().y - (LastArrow1.getPosition().y - (this->NodeArray->circle.getPosition().y) + 100))});
             LastArrow3.setRotation(180);
             LastArrow3.setFillColor(sf::Color::White);
 

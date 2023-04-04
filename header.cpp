@@ -307,37 +307,37 @@ void DataVisualization_2::handleEvent(sf::RenderWindow &window, sf::Vector2f mou
 //     }
 // }
 
-DataVisualization_6::DataVisualization_6()
-{
-    if (!this->font.loadFromFile("Fonts/arial.ttf"))
-    {
-        std::cerr << "Failed to load Fonts" << "\n";
-        return;
-    }
-    //Title
-    sf::Text DV6Title("Stack", this->font, 90);
-    CreateTitle(DV6Title, 1920 / 2.f, 50.f);
-    this->Title = DV6Title;
-    //Back button
-    this->backButton.CreateButton(100.f, 50.f, 70.f, 45.f, sf::Color(128, 128, 128), "Back", font, sf::Color::White);
-}
+// DataVisualization_6::DataVisualization_6()
+// {
+//     if (!this->font.loadFromFile("Fonts/arial.ttf"))
+//     {
+//         std::cerr << "Failed to load Fonts" << "\n";
+//         return;
+//     }
+//     //Title
+//     sf::Text DV6Title("Stack", this->font, 90);
+//     CreateTitle(DV6Title, 1920 / 2.f, 50.f);
+//     this->Title = DV6Title;
+//     //Back button
+//     this->backButton.CreateButton(100.f, 50.f, 70.f, 45.f, sf::Color(128, 128, 128), "Back", font, sf::Color::White);
+// }
 
-void DataVisualization_6::display(sf::RenderWindow &window)
-{
-    this->backButton.displayButton(window);
-    window.draw(this->Title);
-}
+// void DataVisualization_6::display(sf::RenderWindow &window)
+// {
+//     this->backButton.displayButton(window);
+//     window.draw(this->Title);
+// }
 
-void DataVisualization_6::handleEvent(sf::RenderWindow &window, sf::Vector2f mousePos, sf::Event &event)
-{
-    if (event.type == sf::Event::MouseButtonPressed)
-    {
-        if (this->backButton.rect.getGlobalBounds().contains(mousePos))
-        {
-            currentState = Start;
-        }
-    }
-}
+// void DataVisualization_6::handleEvent(sf::RenderWindow &window, sf::Vector2f mousePos, sf::Event &event)
+// {
+//     if (event.type == sf::Event::MouseButtonPressed)
+//     {
+//         if (this->backButton.rect.getGlobalBounds().contains(mousePos))
+//         {
+//             currentState = Start;
+//         }
+//     }
+// }
 
 DataVisualization_7::DataVisualization_7()
 {

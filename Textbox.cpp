@@ -1,18 +1,6 @@
 #include "Textbox.hpp"
 
-Textbox::Textbox() 
-{
-    //int size, sf::Color color, bool sel
-    // textbox.setCharacterSize(size);
-    // textbox.setColor(color);
-    // isSelected = sel;
-
-    // Check if the textbox is selected upon creation and display it accordingly:
-    // if (isSelected)
-    //     textbox.setString("_");
-    // else
-    //     textbox.setString("");
-}
+Textbox::Textbox() {}
 
 void Textbox::setFont(sf::Font& fonts) 
 {
@@ -155,7 +143,7 @@ void Textbox::setSize(int size)
 
 void Textbox::ColoringBox(sf::Color &color)
 {
-    textbox.setColor(color);
+    textbox.setFillColor(color);
 }
 
 void InitTextbox(Textbox &box, int size, sf::Color color, bool sel, float PosX, float PosY, sf::Font &font, bool ToF, int lim)

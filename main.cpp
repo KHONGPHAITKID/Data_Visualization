@@ -115,6 +115,7 @@ int main()
                 break;
             case DV6: // Stack
                 dv6.display(window);
+                dv6.drawNodes(window);
                 break;
             case DV7: // Queue
                 dv7.display(window);
