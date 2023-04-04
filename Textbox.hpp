@@ -42,7 +42,7 @@ public:
 
     void setSize(int size);
 
-    void Coloring(sf::Color &color);
+    void ColoringBox(sf::Color &color);
 
     void setLimit(bool ToF);
 

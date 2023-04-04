@@ -1,5 +1,5 @@
-#ifndef _DATAVISUALIZATION3_HPP_
-#define _DATAVISUALIZATION3_HPP_
+#ifndef _DATAVISUALIZATION5_HPP_
+#define _DATAVISUALIZATION5_HPP_
 
 #include <iostream>
 #include <string>
@@ -14,14 +14,13 @@
 #include <thread> // for std::this_thread::sleep_for
 #include <unistd.h>
 #include "Button.hpp"
-#include "SLL.hpp"
+#include "CLL.hpp"
 #include "Textbox.hpp"
 #include "Globals.hpp"
-// #include "SLLArrow.hpp"
 
-void CreateTitle3(sf::Text &Title, float PosX, float PosY);
+void CreateTitle5(sf::Text &Title, float PosX, float PosY);
 
-class DataVisualization_3
+class DataVisualization_5
 {
 private:
 public:
@@ -64,12 +63,12 @@ public:
 
     int size;
 
-    SLL_Node* NodeArray;
+    CLL_Node* NodeArray;
 
     int funcstate;
 
-    DataVisualization_3();
-    ~DataVisualization_3();
+    DataVisualization_5();
+    ~DataVisualization_5();
 
     void handleEvent(sf::RenderWindow &window, sf::Vector2f &mousePos, sf::Event &ev);
     void display(sf::RenderWindow &window);
@@ -77,30 +76,30 @@ public:
 
     bool checkSize(sf::RenderWindow &window, int size);
 
-    void CreateRandomFixedSizeSLL(sf::RenderWindow &window, sf::Event &event);
+    void CreateRandomFixedSizeCLL(sf::RenderWindow &window, sf::Event &event);
 
     void CreateUserDefinedList(sf::RenderWindow &window, std::vector<int> &values);
-    void CreateUserDefinedListSLL(sf::RenderWindow &window, sf::Event &event);
+    void CreateUserDefinedListCLL(sf::RenderWindow &window, sf::Event &event);
 
-    int getSLLSize();
+    int getCLLSize();
     void InsertNodeFront(sf::RenderWindow &window, int data);
-    void InsertNodeFrontSLL(sf::RenderWindow &window, sf::Event &event);
+    void InsertNodeFrontCLL(sf::RenderWindow &window, sf::Event &event);
     void InsertNodeBack(sf::RenderWindow &window, int data);
-    void InsertNodeBackSLL(sf::RenderWindow &window, sf::Event &event);
+    void InsertNodeBackCLL(sf::RenderWindow &window, sf::Event &event);
     void InsertNodeMid(sf::RenderWindow &window, int data, int index);
-    void InsertNodeMidSLL(sf::RenderWindow &window, sf::Event &event);
+    void InsertNodeMidCLL(sf::RenderWindow &window, sf::Event &event);
     
 
     void DeleteNodeFront(sf::RenderWindow &window);
     void DeleteNodeBack(sf::RenderWindow &window);
     void DeleteNodeMid(sf::RenderWindow &window, int index);
-    void DeleteNodeMidSLL(sf::RenderWindow &window, sf::Event &event);
+    void DeleteNodeMidCLL(sf::RenderWindow &window, sf::Event &event);
 
     void UpdateNode(sf::RenderWindow &window, int index, int value);
-    void UpdateNodeSLL(sf::RenderWindow &window, sf::Event &event);
+    void UpdateNodeCLL(sf::RenderWindow &window, sf::Event &event);
 
     void SearchNode(sf::RenderWindow &window, int value);
-    void SearchNodeSLL(sf::RenderWindow &window, sf::Event &event);
+    void SearchNodeCLL(sf::RenderWindow &window, sf::Event &event);
 
     bool printMessage(sf::RenderWindow &window, std::string message);
 };

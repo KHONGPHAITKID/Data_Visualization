@@ -19,6 +19,10 @@ int main()
         return 1;
     }
 
+    //----------TESTING------------
+
+    //----------TESTING------------
+
     MenuPage menu;
     SettingPage setting;
     StartingPage StartMenu;
@@ -107,6 +111,7 @@ int main()
                 break;
             case DV5: // Circular LL
                 dv5.display(window);
+                dv5.drawNodes(window);
                 break;
             case DV6: // Stack
                 dv6.display(window);

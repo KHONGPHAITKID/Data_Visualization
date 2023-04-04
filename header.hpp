@@ -20,7 +20,9 @@
 #include "Globals.hpp"
 #include "DataVisualization3.hpp"
 #include "DataVisualization4.hpp"
+#include "DataVisualization5.hpp"
 
+#include <regex>
 int randNum();
 void CreateTitle(sf::Text &Title, float PosX, float PosY);
 
@@ -105,17 +107,17 @@ public:
 //     void handleEvent(sf::RenderWindow &window, sf::Vector2f mousePos, sf::Event &event);
 // };
 
-class DataVisualization_5
-{
-private:
-public:
-    sf::Font font;
-    sf::Text Title;
-    Button backButton;
-    DataVisualization_5();
-    void display(sf::RenderWindow &window);
-    void handleEvent(sf::RenderWindow &window, sf::Vector2f mousePos, sf::Event &event);
-};
+// class DataVisualization_5
+// {
+// private:
+// public:
+//     sf::Font font;
+//     sf::Text Title;
+//     Button backButton;
+//     DataVisualization_5();
+//     void display(sf::RenderWindow &window);
+//     void handleEvent(sf::RenderWindow &window, sf::Vector2f mousePos, sf::Event &event);
+// };
 
 class DataVisualization_6
 {

@@ -153,7 +153,7 @@ void Textbox::setSize(int size)
     textbox.setCharacterSize(size);
 }
 
-void Textbox::Coloring(sf::Color &color)
+void Textbox::ColoringBox(sf::Color &color)
 {
     textbox.setColor(color);
 }
@@ -161,7 +161,7 @@ void Textbox::Coloring(sf::Color &color)
 void InitTextbox(Textbox &box, int size, sf::Color color, bool sel, float PosX, float PosY, sf::Font &font, bool ToF, int lim)
 {
     box.setSize(size);
-    box.Coloring(color);
+    box.ColoringBox(color);
     box.setSelected(sel);
     box.setPosition({PosX, PosY});
 	box.setFont(font);

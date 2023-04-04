@@ -692,6 +692,38 @@ void DataVisualization_3::DeleteNodeFront(sf::RenderWindow &window)
     }
     std::chrono::milliseconds delayTime(1000); // 0.5 seconds
     std::chrono::milliseconds delayTime1(50); // 0.05
+
+    if (this->NodeArray->next == nullptr)
+    {
+        this->NodeArray->circle.setFillColor(sf::Color::Red);
+        window.clear(sf::Color(22, 73, 154));
+        this->drawNodes(window);
+        this->display(window);
+        window.display();
+        std::this_thread::sleep_for(delayTime); 
+        while (this->NodeArray->circle.getRadius() > 16)
+        {
+            float radius = this->NodeArray->circle.getRadius();
+            radius = radius * 0.75;
+            this->NodeArray->circle.setRadius(radius);
+            this->NodeArray->circle.setOrigin(radius, radius);
+            this->NodeArray->text.setCharacterSize(radius / 3.f * 2.f);
+            this->NodeArray->text.setOrigin(this->NodeArray->text.getLocalBounds().width / 2.f, this->NodeArray->text.getLocalBounds().height / 2.f);
+            window.clear(sf::Color(22, 73, 154));
+            window.draw(this->NodeArray->circle);
+            window.draw(this->NodeArray->text);
+            this->drawNodes(window);
+            this->display(window);
+            window.display();
+            std::this_thread::sleep_for(delayTime1); 
+        }
+        SLL_Node* temp = this->NodeArray;
+        this->NodeArray = nullptr;
+        delete temp;
+        this->size = 0;
+        return;
+    }
+
     SLL_Node* cur = this->NodeArray;
     this->NodeArray = this->NodeArray->next;
 
@@ -998,6 +1030,7 @@ void DataVisualization_3::UpdateNode(sf::RenderWindow &window, int index, int va
         std::this_thread::sleep_for(delayTime1); 
     }
     temp->text.setString(std::to_string(value));
+    temp->data = value;
     while (temp->circle.getRadius() > 30)
     {
         float radius = temp->circle.getRadius();
