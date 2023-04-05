@@ -22,6 +22,7 @@
 #include "DataVisualization4.hpp"
 #include "DataVisualization5.hpp"
 #include "DataVisualization6.hpp"
+#include "DataVisualization7.hpp"
 
 #include <regex>
 // int randNum();
@@ -92,54 +93,6 @@ public:
     sf::Text Title;
     Button backButton;
     DataVisualization_2();
-    void display(sf::RenderWindow &window);
-    void handleEvent(sf::RenderWindow &window, sf::Vector2f mousePos, sf::Event &event);
-};
-
-// class DataVisualization_4
-// {
-// private:
-// public:
-//     sf::Font font;
-//     sf::Text Title;
-//     Button backButton;
-//     DataVisualization_4();
-//     void display(sf::RenderWindow &window);
-//     void handleEvent(sf::RenderWindow &window, sf::Vector2f mousePos, sf::Event &event);
-// };
-
-// class DataVisualization_5
-// {
-// private:
-// public:
-//     sf::Font font;
-//     sf::Text Title;
-//     Button backButton;
-//     DataVisualization_5();
-//     void display(sf::RenderWindow &window);
-//     void handleEvent(sf::RenderWindow &window, sf::Vector2f mousePos, sf::Event &event);
-// };
-
-// class DataVisualization_6
-// {
-// private:
-// public:
-//     sf::Font font;
-//     sf::Text Title;
-//     Button backButton;
-//     DataVisualization_6();
-//     void display(sf::RenderWindow &window);
-//     void handleEvent(sf::RenderWindow &window, sf::Vector2f mousePos, sf::Event &event);
-// };
-
-class DataVisualization_7
-{
-private:
-public:
-    sf::Font font;
-    sf::Text Title;
-    Button backButton;
-    DataVisualization_7();
     void display(sf::RenderWindow &window);
     void handleEvent(sf::RenderWindow &window, sf::Vector2f mousePos, sf::Event &event);
 };

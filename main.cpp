@@ -119,6 +119,7 @@ int main()
                 break;
             case DV7: // Queue
                 dv7.display(window);
+                dv7.drawNodes(window);
                 break;
             default:
                 break;
