@@ -18,6 +18,8 @@
 #include "Button.hpp"
 #include "Textbox.hpp"
 #include "Globals.hpp"
+#include "DataVisualization1.hpp"
+#include "DataVisualization2.hpp"
 #include "DataVisualization3.hpp"
 #include "DataVisualization4.hpp"
 #include "DataVisualization5.hpp"
@@ -26,7 +28,7 @@
 
 #include <regex>
 // int randNum();
-void CreateTitle(sf::Text &Title, float PosX, float PosY);
+// void CreateTitle(sf::Text &Title, float PosX, float PosY);
 
 class MenuPage
 {
@@ -69,30 +71,6 @@ public:
     Button rect7;
 
     StartingPage();
-    void display(sf::RenderWindow &window);
-    void handleEvent(sf::RenderWindow &window, sf::Vector2f mousePos, sf::Event &event);
-};
-
-class DataVisualization_1
-{
-private:
-public:
-    sf::Font font;
-    sf::Text Title;
-    Button backButton;
-    DataVisualization_1();
-    void display(sf::RenderWindow &window);
-    void handleEvent(sf::RenderWindow &window, sf::Vector2f mousePos, sf::Event &event);
-};
-
-class DataVisualization_2
-{
-private:
-public:
-    sf::Font font;
-    sf::Text Title;
-    Button backButton;
-    DataVisualization_2();
     void display(sf::RenderWindow &window);
     void handleEvent(sf::RenderWindow &window, sf::Vector2f mousePos, sf::Event &event);
 };
