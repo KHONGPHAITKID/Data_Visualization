@@ -24,9 +24,29 @@ DataVisualization_6::DataVisualization_6()
     //Back button
     this->backButton.CreateButton(100.f, 50.f, 70.f, 45.f, sf::Color(128, 128, 128), "Back", this->font, sf::Color::White);
     
+    //build the stack image
+    this->Stackbody1.setSize(sf::Vector2f(470.f, 20.f));
+    this->Stackbody1.setFillColor(sf::Color::White);
+    this->Stackbody1.setRotation(270);
+    this->Stackbody1.setOrigin(sf::Vector2f(0, 10));
+    this->Stackbody1.setPosition(sf::Vector2f(798, 675));
+
+    this->Stackbody2.setSize(sf::Vector2f(344.f, 20.f));
+    this->Stackbody2.setFillColor(sf::Color::White);
+    this->Stackbody2.setRotation(0);
+    this->Stackbody2.setOrigin(sf::Vector2f(172.f, 10));
+    // this->Stackbody2.setPosition(sf::Vector2f(960, 660));
+    this->Stackbody2.setPosition(sf::Vector2f(960, 675));
+
+    this->Stackbody3.setSize(sf::Vector2f(470.f, 20.f));
+    this->Stackbody3.setFillColor(sf::Color::White);
+    this->Stackbody3.setRotation(270);
+    this->Stackbody3.setOrigin(sf::Vector2f(0, 10));
+    this->Stackbody3.setPosition(sf::Vector2f(1122, 675));
+
+
     //Function Key #1
     this->ControlMenu_btn1.CreateButton(200.f, 50.f, 250.f, 1080 / 2.f + 225.f, sf::Color(255, 138, 39), "Create", this->font, sf::Color::White);
-    // this->ControlMenu_btn1.rect.setOutlineThickness(0);
     this->CreateEmpty.CreateButton(130.f, 50.f, this->ControlMenu_btn1.rect.getPosition().x + this->ControlMenu_btn1.rect.getSize().x / 2.f + 20.f + 130/2.f + 10.f, this->ControlMenu_btn1.rect.getPosition().y, sf::Color(255, 138, 39), "Empty", this->font, sf::Color::White);
     this->CreateRadom.CreateButton(130.f, 50.f, this->CreateEmpty.rect.getPosition().x + this->CreateEmpty.rect.getSize().x / 2.f + 130/2.f + 10.f, this->ControlMenu_btn1.rect.getPosition().y, sf::Color(255, 138, 39), "Random", this->font, sf::Color::White);
     this->CreateRandomSort.CreateButton(130.f, 50.f, this->CreateRadom.rect.getPosition().x + this->CreateRadom.rect.getSize().x / 2.f + 130/2.f + 10.f, this->ControlMenu_btn1.rect.getPosition().y, sf::Color(255, 138, 39), "Random Sort", this->font, sf::Color::White);
@@ -63,6 +83,10 @@ void DataVisualization_6::display(sf::RenderWindow &window)
     this->ControlMenu_btn2.displayButton(window);
     this->ControlMenu_btn3.displayButton(window);
     this->ControlMenu_btn4.displayButton(window);
+    window.draw(Stackbody1);
+    window.draw(Stackbody3);
+    window.draw(Stackbody2);
+
     switch (this->funcstate)
     {
     case 1:
@@ -129,6 +153,7 @@ void DataVisualization_6::handleEvent(sf::RenderWindow &window, sf::Vector2f &mo
         } else {
             this->InsertHead_Textbox.isSelected = false;
         }
+
         //-----------
         switch (this->funcstate)
         {
@@ -269,7 +294,7 @@ void DataVisualization_6::CreateUserDefinedList(sf::RenderWindow &window, std::v
     }
     for (int i = 0; i < n; i++)
     { //createNode(960, 200 + 75 * i, 20, font, value);
-        Stack_Node* temp = this->NodeArray->createNode(960, 200 + 75 * i, 20, this->font, values[i]);
+        Stack_Node* temp = this->NodeArray->createNode(960, 627.5 - 75 * i, 75, 300, this->font, values[i]);
         this->NodeArray->addBack(this->NodeArray, temp);
     }
     this->size = n;
@@ -294,34 +319,43 @@ void DataVisualization_6::InsertNodeFrontStack(sf::RenderWindow &window, sf::Eve
 
 void DataVisualization_6::InsertNodeFront(sf::RenderWindow &window, int data)
 {
+    std::chrono::milliseconds delayTime(750);
     if (this->NodeArray == nullptr)
     {
-        this->NodeArray = this->NodeArray->createNode(960, 200, 20, font, data);
+        this->NodeArray = this->NodeArray->createNode(960, 627.5, 75, 300, font, data);
         this->size = 1;
         return;
     }
     if (checkSize(window, this->size) == false) return; // 960 200
-    Stack_Node* newNode = this->NodeArray->createNode(460, 400, 20, this->font, data);
-    window.draw(newNode->circle);
+    Stack_Node* newNode = this->NodeArray->createNode(480, 172.5, 75, 300, this->font, data);
+    window.draw(newNode->rec);
     window.draw(newNode->text);
     window.display();
-    sleep(1.25);
+    // sleep(1);
+    std::this_thread::sleep_for(delayTime);
     for (int i = 0; i < 25; i++)
     {
-        Stack_Node* temp = this->NodeArray;
-        while (temp != nullptr) // the other nodes
-        {
-            window.clear(sf::Color(22, 73, 154));
-            temp->circle.move(0, 3);
-            temp->text.move(0, 3);
-            temp = temp->next;
-        }
-        newNode->circle.move(20, -8);
-        newNode->text.move(20, -8);
-        this->NodeArray->drawArrow(window, newNode->circle.getPosition(), this->NodeArray->circle.getPosition());
+        newNode->rec.move(19.2, 0);
+        newNode->text.move(19.2, 0);
+        window.clear(sf::Color(22, 73, 154));
+        // this->NodeArray->drawArrow(window, newNode->rec.getPosition(), this->NodeArray->rec.getPosition());
         this->drawNodes(window);
         this->display(window);
-        window.draw(newNode->circle);
+        window.draw(newNode->rec);
+        window.draw(newNode->text);
+        window.display();
+    }
+    // first node is currently at the bottom so it cause the fking bug!!!
+    float distance = (this->NodeArray->rec.getPosition().y - 75 - newNode->rec.getPosition().y) / 25.0;
+    for (int i = 0; i < 25; i++)
+    {
+        newNode->rec.move(0, distance);
+        newNode->text.move(0, distance);
+        window.clear(sf::Color(22, 73, 154));
+        // this->NodeArray->drawArrow(window, newNode->rec.getPosition(), this->NodeArray->rec.getPosition());
+        this->drawNodes(window);
+        this->display(window);
+        window.draw(newNode->rec);
         window.draw(newNode->text);
         window.display();
     }
@@ -337,11 +371,11 @@ void DataVisualization_6::drawNodes(sf::RenderWindow &window)
     {
         if (temp->next != nullptr)
         {
-            sf::Vector2f first(temp->circle.getPosition());
-            sf::Vector2f second(temp->next->circle.getPosition());
-            this->NodeArray->drawArrow(window, first, second);
+            sf::Vector2f first(temp->rec.getPosition());
+            sf::Vector2f second(temp->next->rec.getPosition());
+            // this->NodeArray->drawArrow(window, first, second);
         }
-        window.draw(temp->circle);
+        window.draw(temp->rec);
         window.draw(temp->text);
         temp = temp->next;
     }
@@ -393,93 +427,103 @@ void DataVisualization_6::DeleteNodeFront(sf::RenderWindow &window)
     std::chrono::milliseconds delayTime(1000); // 0.5 seconds
     std::chrono::milliseconds delayTime1(50); // 0.05
 
-    if (this->NodeArray->next == nullptr)
-    {
-        this->NodeArray->circle.setFillColor(sf::Color::Red);
+    // if (this->NodeArray->next == nullptr) // one element case
+    // {
+        this->NodeArray->rec.setFillColor(sf::Color::Red);
         window.clear(sf::Color(22, 73, 154));
         this->drawNodes(window);
         this->display(window);
         window.display();
         std::this_thread::sleep_for(delayTime); 
-        while (this->NodeArray->circle.getRadius() > 16)
+        
+        float movePerFrame = (this->NodeArray->rec.getPosition().y - 172.5) / 25.f;
+        for (int i = 0; i < 25; i++)
         {
-            float radius = this->NodeArray->circle.getRadius();
-            radius = radius * 0.75;
-            this->NodeArray->circle.setRadius(radius);
-            this->NodeArray->circle.setOrigin(radius, radius);
-            this->NodeArray->text.setCharacterSize(radius / 3.f * 2.f);
-            this->NodeArray->text.setOrigin(this->NodeArray->text.getLocalBounds().width / 2.f, this->NodeArray->text.getLocalBounds().height / 2.f);
+            this->NodeArray->rec.move(0, -1 * movePerFrame);
+            this->NodeArray->text.move(0, -1 * movePerFrame);
             window.clear(sf::Color(22, 73, 154));
-            window.draw(this->NodeArray->circle);
-            window.draw(this->NodeArray->text);
             this->drawNodes(window);
             this->display(window);
             window.display();
-            std::this_thread::sleep_for(delayTime1); 
+            // std::this_thread::sleep_for(delayTime); 
         }
-        Stack_Node* temp = this->NodeArray;
-        this->NodeArray = nullptr;
-        delete temp;
-        this->size = 0;
-        return;
-    }
-
-    Stack_Node* cur = this->NodeArray;
-    this->NodeArray = this->NodeArray->next;
-
-    window.clear(sf::Color(22, 73, 154));
-    cur->circle.setFillColor(sf::Color::Red);
-    this->NodeArray->drawArrow(window, cur->circle.getPosition(), this->NodeArray->circle.getPosition());
-    window.draw(cur->circle);
-    window.draw(cur->text);
-    this->drawNodes(window);
-    this->display(window);
-    window.display();
-
-    std::this_thread::sleep_for(delayTime); 
-    while (cur->circle.getRadius() > 16)
-    {
-        float radius = cur->circle.getRadius();
-        radius = radius * 0.75;
-        cur->circle.setRadius(radius);
-        cur->circle.setOrigin(radius, radius);
-        cur->text.setCharacterSize(radius / 3.f * 2.f);
-        cur->text.setOrigin(cur->text.getLocalBounds().width / 2.f, cur->text.getLocalBounds().height / 2.f);
-        window.clear(sf::Color(22, 73, 154));
-        this->NodeArray->drawArrow(window, cur->circle.getPosition(), this->NodeArray->circle.getPosition());
-        window.draw(cur->circle);
-        window.draw(cur->text);
-        this->drawNodes(window);
-        this->display(window);
-        window.display();
-        std::this_thread::sleep_for(delayTime1); 
-    }
-    delete cur;
-    cur = nullptr;
-    window.clear(sf::Color(22, 73, 154));   
-    this->drawNodes(window);
-    this->display(window);
-    window.display();
-    // move up after delete
-    for (int i = 0; i < 25; i++)
-    {
-        Stack_Node* temp = this->NodeArray;
-        while (temp != nullptr)
+        for (int i = 0; i < 25; i++)
         {
+            this->NodeArray->rec.move(19.2f, 0);
+            this->NodeArray->text.move(19.2f, 0);
             window.clear(sf::Color(22, 73, 154));
-            temp->circle.move(0, -3);
-            temp->text.move(0, -3);
-            temp = temp->next;
+            this->drawNodes(window);
+            this->display(window);
+            window.display();
+            // std::this_thread::sleep_for(delayTime); 
         }
+        Stack_Node* temp = this->NodeArray;
+        this->NodeArray = this->NodeArray->next;
+        delete temp;
+        window.clear(sf::Color(22, 73, 154));
         this->drawNodes(window);
         this->display(window);
         window.display();
-    }
-    window.clear(sf::Color(22, 73, 154));
-    this->drawNodes(window);
-    this->display(window);
-    window.display();
-    this->size--;
+        this->size--;
+        return;
+    // }
+
+    // Stack_Node* cur = this->NodeArray;
+    // this->NodeArray = this->NodeArray->next;
+
+    // window.clear(sf::Color(22, 73, 154));
+    // cur->rec.setFillColor(sf::Color::Red);
+    // // this->NodeArray->drawArrow(window, cur->rec.getPosition(), this->NodeArray->rec.getPosition());
+    // window.draw(cur->rec);
+    // window.draw(cur->text);
+    // this->drawNodes(window);
+    // this->display(window);
+    // window.display();
+
+    // std::this_thread::sleep_for(delayTime); 
+    // while (cur->rec.getRadius() > 16)
+    // {
+    //     float radius = cur->rec.getRadius();
+    //     radius = radius * 0.75;
+    //     cur->rec.setRadius(radius);
+    //     cur->rec.setOrigin(radius, radius);
+    //     cur->text.setCharacterSize(radius / 3.f * 2.f);
+    //     cur->text.setOrigin(cur->text.getLocalBounds().width / 2.f, cur->text.getLocalBounds().height / 2.f);
+    //     window.clear(sf::Color(22, 73, 154));
+    //     // this->NodeArray->drawArrow(window, cur->rec.getPosition(), this->NodeArray->rec.getPosition());
+    //     window.draw(cur->rec);
+    //     window.draw(cur->text);
+    //     this->drawNodes(window);
+    //     this->display(window);
+    //     window.display();
+    //     std::this_thread::sleep_for(delayTime1); 
+    // }
+    // delete cur;
+    // cur = nullptr;
+    // window.clear(sf::Color(22, 73, 154));   
+    // this->drawNodes(window);
+    // this->display(window);
+    // window.display();
+    // // move up after delete
+    // for (int i = 0; i < 25; i++)
+    // {
+    //     Stack_Node* temp = this->NodeArray;
+    //     while (temp != nullptr)
+    //     {
+    //         window.clear(sf::Color(22, 73, 154));
+    //         temp->rec.move(0, -3);
+    //         temp->text.move(0, -3);
+    //         temp = temp->next;
+    //     }
+    //     this->drawNodes(window);
+    //     this->display(window);
+    //     window.display();
+    // }
+    // window.clear(sf::Color(22, 73, 154));
+    // this->drawNodes(window);
+    // this->display(window);
+    // window.display();
+    // this->size--;
 }   
 
 void DataVisualization_6::PeekNode(sf::RenderWindow &window)
@@ -492,7 +536,7 @@ void DataVisualization_6::PeekNode(sf::RenderWindow &window)
     }
     std::chrono::milliseconds delayTime(1000); // 0.5 seconds
     std::chrono::milliseconds delayTime1(50); // 0.05
-    this->NodeArray->circle.setFillColor(sf::Color::Red);
+    this->NodeArray->rec.setFillColor(sf::Color::Red);
     window.clear(sf::Color(22, 73, 154));
     this->drawNodes(window);
     this->display(window);
@@ -500,7 +544,7 @@ void DataVisualization_6::PeekNode(sf::RenderWindow &window)
     std::this_thread::sleep_for(delayTime); 
     std::string mess = "stack.top() = " + std::to_string(this->NodeArray->data);
     printMessage(window, mess);
-    this->NodeArray->circle.setFillColor(sf::Color::Yellow);
+    this->NodeArray->rec.setFillColor(sf::Color::Yellow);
     window.clear(sf::Color(22, 73, 154));
     this->drawNodes(window);
     this->display(window);

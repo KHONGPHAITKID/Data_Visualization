@@ -1,4 +1,5 @@
 #include "Stack.hpp"
+//circle
 
 void Stack_Node::DeleteStack(Stack_Node* &pHead)
 {
@@ -41,12 +42,14 @@ void Stack_Node::addBack(Stack_Node* &pHead, Stack_Node* &temp)
         pHead = temp;
         return;
     }
-    Stack_Node* cur = pHead;
-    while (cur->next != nullptr)
-    {
-        cur = cur->next;
-    }
-    cur->next = temp;
+    // Stack_Node* cur = pHead;
+    // while (cur->next != nullptr)
+    // {
+    //     cur = cur->next;
+    // }
+    // cur->next = temp;
+    temp->next = pHead;
+    pHead = temp;
 }
 
 void Stack_Node::CreateRandomSortStack(Stack_Node* &head, int &n, sf::Font &font)
@@ -56,7 +59,7 @@ void Stack_Node::CreateRandomSortStack(Stack_Node* &head, int &n, sf::Font &font
     for (int i = 0; i < n; i++)
     {
         int value = 1 + rand() % 99;
-        Stack_Node* tmp = createNode(960, 200 + 75 * i, 20, font, value);
+        Stack_Node* tmp = createNode(960, 627.5f - 75 * i, 75, 300, font, value);
         addBack(head, tmp);
     }
     Stack_Node* i = head;
@@ -87,23 +90,27 @@ void Stack_Node::CreateRandomSortStack(Stack_Node* &head, int &n, sf::Font &font
     }
 }
 
-Stack_Node* Stack_Node::createNode(float x, float y, float radius, sf::Font &font, int value) 
+Stack_Node* Stack_Node::createNode(float x, float y, float height, float width, sf::Font &font, int value) 
 {
     Stack_Node* nc = new Stack_Node;
     nc->data = value;
     std::string str = std::to_string(value);
     nc->next = nullptr;
-    nc->circle.setRadius(radius);
-    nc->circle.setPosition(x, y);
-    nc->circle.setFillColor(sf::Color::Yellow);
-    nc->circle.setOrigin(nc->circle.getRadius(), nc->circle.getRadius());
+
+    nc->rec.setSize(sf::Vector2f(width, height));
+    nc->rec.setFillColor(sf::Color::Yellow);
+    nc->rec.setOrigin(sf::Vector2f(150, 75 / 2.f));
+    nc->rec.setOutlineThickness(2);
+    nc->rec.setOutlineColor(sf::Color::Black);
+    nc->rec.setPosition(sf::Vector2f(x, y));
 
     nc->text.setFont(font);
     nc->text.setString(str);
-    nc->text.setCharacterSize(radius / 3.f * 2.f);
+    nc->text.setCharacterSize(40.f);
     nc->text.setFillColor(sf::Color::Black);
-    nc->text.setOrigin(nc->text.getLocalBounds().width / 2.f, nc->text.getLocalBounds().height / 2.f);
-    nc->text.setPosition(nc->circle.getPosition().x - 0, nc->circle.getPosition().y - 7);
+    nc->text.setOrigin(sf::Vector2f(nc->text.getLocalBounds().width/2.f, nc->text.getLocalBounds().height/2.f));
+    nc->text.setPosition(nc->rec.getPosition().x, nc->rec.getPosition().y - nc->text.getLocalBounds().height / 2.f);
+
     return nc;
 }
 
@@ -113,7 +120,7 @@ void Stack_Node::CreateFixedNodes(Stack_Node* &v, int &n, sf::Font &font)
     for (int i = 0; i < n; i++)
     {
         int value = 1 + rand() % 99;
-        Stack_Node* temp = createNode(960, 200 + 75 * i, 20, font, value);
+        Stack_Node* temp = createNode(960, 627.5f - 75 * i, 75, 300, font, value);
         addBack(v, temp);
     }
 }
@@ -125,7 +132,7 @@ void Stack_Node::CreateRandomNodes(Stack_Node* &v, int &n, sf::Font &font)
     for (int i = 0; i < n; i++)
     {
         int value = 1 + rand() % 99;
-        Stack_Node* temp = createNode(960, 200 + 75 * i, 20, font, value);
+        Stack_Node* temp = createNode(960, 627.5f - 75 * i, 75, 300, font, value);
         addBack(v, temp);
     }
 }

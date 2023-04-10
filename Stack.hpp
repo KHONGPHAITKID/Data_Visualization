@@ -12,7 +12,8 @@ struct Stack_Node
 {
     int data;
     Stack_Node* next;
-    sf::CircleShape circle;
+    // sf::CircleShape circle;
+    sf::RectangleShape rec;
     sf::Text text;
     void DeleteStack(Stack_Node* &pHead);
 
@@ -25,7 +26,7 @@ struct Stack_Node
     void CreateRandomSortStack(Stack_Node* &head, int &n, sf::Font &font); // chua
 
     // create a Node
-    Stack_Node* createNode(float x, float y, float radius, sf::Font &font, int value);
+    Stack_Node* createNode(float x, float y, float height, float width, sf::Font &font, int value);
 
     // Create many Node
     void CreateRandomNodes(Stack_Node* &v, int &n, sf::Font &font);

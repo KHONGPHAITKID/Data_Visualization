@@ -38,6 +38,11 @@ public:
     Button CreateUserDefinedListButton;
     Textbox CreateUserDefinedList_Textbox; 
 
+    //building the stack image
+    sf::RectangleShape Stackbody1;
+    sf::RectangleShape Stackbody2;
+    sf::RectangleShape Stackbody3;
+
     // ADD button
     Button ControlMenu_btn2; //push
     Textbox InsertHead_Textbox;

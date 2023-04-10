@@ -1,23 +1,41 @@
 #include "header.hpp"
 
-sf::Font font;
-sf::Color BackGroundColor = sf::Color(22, 73, 154);
-const sf::Color Pink1(253, 0, 112);
-const sf::Color Purple1(104, 0, 120);
+// sf::Font font;
+// sf::Color BackGroundColor = sf::Color(22, 73, 154);
+// sf::Sprite DefaultBackground;
 
 int main()
 {
+    currentState = Menu;
     srand(time(NULL)); // Random number generate
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "Data Visualization", sf::Style::Titlebar | sf::Style::Close);
     window.setFramerateLimit(60);
 
-    currentState = Menu;
-
-    if (!font.loadFromFile("Fonts/arial.ttf"))
+// Set icon
+    sf::Image icon;
+    if (!icon.loadFromFile("media/img/binary.png"))
     {
-        std::cerr << "Failed to load Fonts" << "\n";
+        std::cerr << "Failed to load image" << "\n";
         return 1;
     }
+    window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
+
+// Load Font
+    // if (!font.loadFromFile("Fonts/arial.ttf"))
+    // {
+    //     std::cerr << "Failed to load Fonts" << "\n";
+    //     return 1;
+    // }
+
+// Load background1
+    sf::Texture backgroundTexture1;
+    if (!backgroundTexture1.loadFromFile("media/img/background1.jpg")) // Replace "background.jpg" with the path to your image file
+    {
+        std::cerr << "Failed to load BackGround" << "\n";
+        return 1;
+    }
+    DefaultBackground.setTexture(backgroundTexture1);    
+
 
     //----------TESTING------------
 
@@ -83,7 +101,8 @@ int main()
             }
         }
         //-----------------
-        window.clear(BackGroundColor);
+        window.clear();
+        window.draw(DefaultBackground);
         switch (currentState)
         {
             case Menu:

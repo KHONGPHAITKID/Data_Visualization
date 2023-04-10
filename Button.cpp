@@ -31,3 +31,10 @@ void Button::displayButton(sf::RenderWindow &window)
         window.draw(this->rect);
         window.draw(this->text);
 }
+
+void Button::setSize(float size)
+{
+    this->text.setCharacterSize(size);
+    this->text.setOrigin(this->text.getLocalBounds().width / 2.f, this->text.getLocalBounds().height / 2.f);
+    this->text.setPosition(this->rect.getPosition().x , this->rect.getPosition().y - this->text.getLocalBounds().height / 2.f);
+}

@@ -6,6 +6,10 @@
 
 extern ScreenState currentState;
 
+extern sf::Font font;
+extern sf::Color BackGroundColor;
+extern sf::Sprite DefaultBackground;
+
 void CreateTitle(sf::Text &Title, float PosX, float PosY);
 
 

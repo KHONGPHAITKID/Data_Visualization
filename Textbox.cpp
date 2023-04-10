@@ -162,6 +162,7 @@ void InitTextbox(Textbox &box, int size, sf::Color color, bool sel, float PosX, 
     box.EnterMessage.setFont(font);
     box.EnterMessage.setFillColor(sf::Color::White);
     box.EnterMessage.setCharacterSize(20);
-    box.EnterMessage.setPosition(PosX - 60, PosY);
+    box.EnterMessage.setOrigin(sf::Vector2f(box.EnterMessage.getLocalBounds().width, box.EnterMessage.getLocalBounds().height/2.f)); 
+    box.EnterMessage.setPosition(PosX - 70, PosY);
 }
 

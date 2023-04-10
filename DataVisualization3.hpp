@@ -26,9 +26,14 @@ class DataVisualization_3
 private:
 public:
     sf::Font font;
+    sf::Font titlefont;
     sf::Text Title;
 
     Button backButton;
+
+    sf::Texture page2texture;
+
+    sf::RectangleShape menuTable;
 
     Button ControlMenu_btn1;
     Button CreateEmpty;
@@ -42,11 +47,16 @@ public:
     // ADD button
     Button ControlMenu_btn2;
     Button InsertHead;
+    sf::Texture InsertHeadImg;
+    sf::Sprite InsertHeadSprite;
     Textbox InsertHead_Textbox;
     Button InsertBack;
+    sf::Texture InsertBackImg;
     Textbox InsertBack_Textbox;
     Button InsertMid;
     Textbox InsertMid_Textbox; // 2 input: index, value
+    sf::Texture InsertMidImg;
+
 
     Button ControlMenu_btn3;
     Button DeleteHead;
