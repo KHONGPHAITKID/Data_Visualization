@@ -17,31 +17,60 @@ DataVisualization_3::DataVisualization_3()
         std::cerr << "Failed to load Fonts" << "\n";
         return;
     }
-
     if (!this->titlefont.loadFromFile("Fonts/SVN_Blade_runner.ttf"))
     {
         std::cerr << "Failed to load Fonts" << "\n";
         return;
     }
-
     if (!page2texture.loadFromFile("media/img/menubackground.jpg")) // Replace "background.jpg" with the path to your image file
     {
         std::cerr << "Failed to load BackGround" << "\n";
         return;
     }
-
     if (!InsertHeadImg.loadFromFile("media/DataVisualization3/InsertHead.png"))
     {
         std::cerr << "Failed to load InsertHeadImg" << "\n";
         return;
     }
 
+    this->speed = 1;
+    speedText.setCharacterSize(20);
+    speedText.setFont(font);
+    speedText.setFillColor(sf::Color::White);
+    speedText.setString("Speed: x" + std::to_string(speed));
+    speedText.setOrigin(sf::Vector2f(speedText.getLocalBounds().width / 2.f, speedText.getLocalBounds().height / 2.f));
+    speedText.setPosition(sf::Vector2f(250, 1010));
+
+    FlowControlMenu.setFillColor(sf::Color::Black);
+    FlowControlMenu.setOutlineColor(sf::Color::White);
+    FlowControlMenu.setOutlineThickness(2);
+    FlowControlMenu.setSize(sf::Vector2f(1920, 100));
+    FlowControlMenu.setPosition(sf::Vector2f(0, 980));
+    PauseButton.setImage("media/img/pause_button.png");
+    PauseButton.setPosition(sf::Vector2f(960, 1010));
+    ReplayButton.setImage("media/img/play_button.png");
+    ReplayButton.setPosition(sf::Vector2f(960, 1010));
+    NextButton.setImage("media/img/next_button.png");
+    NextButton.setPosition(sf::Vector2f(1010, 1010));
+    SkipButton.setImage("media/img/skip_button.png");
+    SkipButton.setPosition(sf::Vector2f(1060, 1010));
+    NextButtonReverse.setImage("media/img/next_button_reverse.png");
+    NextButtonReverse.setPosition(sf::Vector2f(910, 1010));
+    SkipButtonReverse.setImage("media/img/skip_button_reverse.png");
+    SkipButtonReverse.setPosition(sf::Vector2f(860, 1010));
+    IncreaseSpeedButton.setImage("media/img/add_button.png");
+    IncreaseSpeedButton.setPosition(sf::Vector2f(330, 1018));
+    DecreaseSpeedButton.setImage("media/img/minus_btn.png");
+    DecreaseSpeedButton.setPosition(sf::Vector2f(380, 1018));
+    isPause = true;
+
     //Title
-    sf::Text DV3Title("Singly Linked List", this->titlefont, 40);
-    CreateTitle(DV3Title, 350, 60.f);
+    sf::Text DV3Title("Singly Linked List", this->titlefont, 35);
+    CreateTitle(DV3Title, 400, 60.f);
     this->Title = DV3Title;
+
     //Back button
-    this->backButton.CreateButton(100.f, 50.f, 70.f, 45.f, sf::Color(128, 128, 128), "Back", this->font, sf::Color::White);
+    this->backButton.CreateButton(100.f, 50.f, 70.f, 72.5f, sf::Color(128, 128, 128), "Back", this->font, sf::Color::White);
     
     // Menu table
     this->menuTable.setSize(sf::Vector2f(200.f, 250.f));
@@ -49,6 +78,12 @@ DataVisualization_3::DataVisualization_3()
     this->menuTable.setOutlineColor(sf::Color(106, 231, 255));
     this->menuTable.setOutlineThickness(5.f);
     this->menuTable.setPosition(150.f, 1080 / 2.f + 100.f);
+
+    // CodeScript.setScale(static_cast<float>(static_cast<int>(450 * static_cast<float>(InsertHeadImg.getSize().y) / InsertHeadImg.getSize().x)) / InsertHeadImg.getSize().x, static_cast<float>(450) / InsertHeadImg.getSize().y);
+    // CodeScript.setPosition(sf::Vector2f(1000, 665));
+
+    // CodeHighLight.setSize(450, 50);
+    // CodeHighLight.setFillColor(sf::Color())
 
     //Function Key #1
     this->ControlMenu_btn1.CreateButton(200.f, 50.f, 250.f, 1080 / 2.f + 125.f, sf::Color(106, 231, 255, 0), "Create", this->font, sf::Color(106, 231, 255));
@@ -88,8 +123,7 @@ DataVisualization_3::DataVisualization_3()
     InitTextbox(this->InsertHead_Textbox, 20, sf::Color::White, true, this->InsertHead.rect.getPosition().x, this->InsertHead.rect.getPosition().y + 50, font, true, 3);
     this->InsertHead_Textbox.EnterMessage.setString("Value: ");
     // int desiredHeight = static_cast<int>(450 * static_cast<float>(InsertHeadImg.getSize().y) / InsertHeadImg.getSize().x);
-    InsertHeadSprite.setScale(static_cast<float>(static_cast<int>(450 * static_cast<float>(InsertHeadImg.getSize().y) / InsertHeadImg.getSize().x)) / InsertHeadImg.getSize().x, static_cast<float>(450) / InsertHeadImg.getSize().y);
-    InsertHeadSprite.setPosition(sf::Vector2f(1000, 665));
+    
     
     this->InsertBack.CreateButton(130.f, 50.f, this->InsertHead.rect.getPosition().x + this->InsertHead.rect.getSize().x / 2.f + 10.f + 130/2.f, 1080 / 2.f + 175.f, sf::Color(106, 231, 255, 0), "Back", this->font, sf::Color(106, 231, 255));
     this->InsertBack.rect.setOutlineThickness(2.f);
@@ -135,6 +169,11 @@ DataVisualization_3::DataVisualization_3()
     InitTextbox(this->SearchNode_Textbox, 20, sf::Color::White, true, this->SearchNodeButton.rect.getPosition().x, this->SearchNodeButton.rect.getPosition().y + 50, font, true, 3);
     this->SearchNode_Textbox.EnterMessage.setString("Value:");
 
+    this->HeadText.setString("Head");
+    this->HeadText.setFont(this->font);
+    this->HeadText.setCharacterSize(20);
+    this->HeadText.setOrigin(sf::Vector2f(this->HeadText.getLocalBounds().width / 2.f , this->HeadText.getLocalBounds().height / 2.f));
+
     this->size = 0;
     this->NodeArray = nullptr;
     funcstate = 0;
@@ -145,11 +184,33 @@ void DataVisualization_3::display(sf::RenderWindow &window)
     this->backButton.displayButton(window);
     window.draw(this->Title);
     window.draw(this->menuTable);
+    speedText.setString("Speed: x" + std::to_string(speed));
+    window.draw(speedText);
+    if (this->NodeArray != nullptr)
+    {
+        this->HeadText.setPosition(sf::Vector2f(this->NodeArray->circle.getPosition().x, this->NodeArray->circle.getPosition().y + 50));
+        window.draw(this->HeadText);
+    }
     this->ControlMenu_btn1.displayButton(window);
     this->ControlMenu_btn2.displayButton(window);
     this->ControlMenu_btn3.displayButton(window);
     this->ControlMenu_btn4.displayButton(window);
-    this->ControlMenu_btn5.displayButton(window);   
+    this->ControlMenu_btn5.displayButton(window); 
+
+    window.draw(FlowControlMenu);
+    this->NextButtonReverse.drawImage(window);
+    this->SkipButtonReverse.drawImage(window);
+    this->NextButton.drawImage(window);
+    this->SkipButton.drawImage(window);
+    this->IncreaseSpeedButton.drawImage(window);
+    this->DecreaseSpeedButton.drawImage(window);
+    if (this->isPause)
+        this->PauseButton.drawImage(window);
+    else 
+        this->ReplayButton.drawImage(window);
+    speedText.setString("Speed: x" + std::to_string(speed));
+    window.draw(speedText);
+
     switch (this->funcstate)
     {
     case 1:
@@ -200,6 +261,7 @@ void DataVisualization_3::handleEvent(sf::RenderWindow &window, sf::Vector2f &mo
             this->NodeArray = nullptr;
             this->size = 0;
             this->funcstate = 0;
+            this->speed = 1;
         }
         else if (this->ControlMenu_btn1.rect.getGlobalBounds().contains(mousePos))
         {
@@ -220,6 +282,22 @@ void DataVisualization_3::handleEvent(sf::RenderWindow &window, sf::Vector2f &mo
         else if (this->ControlMenu_btn5.rect.getGlobalBounds().contains(mousePos))
         {
             this->funcstate = 5;
+        } 
+        else if (this->PauseButton.ImageHolder.getGlobalBounds().contains(mousePos))
+        {
+            this->isPause = !this->isPause;
+        }
+        else if (this->IncreaseSpeedButton.ImageHolder.getGlobalBounds().contains(mousePos))
+        {
+            if (this->speed < 4) {
+                this->speed++;
+            }
+        }
+        else if (this->DecreaseSpeedButton.ImageHolder.getGlobalBounds().contains(mousePos))
+        {
+            if (this->speed > 1) {
+                this->speed--;
+            }
         }
         else {
             this->CreateRandomFixedSize_Textbox.isSelected = false;
@@ -563,6 +641,7 @@ bool DataVisualization_3::checkSize(sf::RenderWindow &window, int size)
 
 void DataVisualization_3::InsertNodeFront(sf::RenderWindow &window, int data)
 {
+    std::chrono::milliseconds delayTime(1000 / speed);
     if (this->NodeArray == nullptr)
     {
         this->NodeArray = this->NodeArray->createNode(250, 250, 30, font, data);
@@ -574,7 +653,7 @@ void DataVisualization_3::InsertNodeFront(sf::RenderWindow &window, int data)
     window.draw(newNode->circle);
     window.draw(newNode->text);
     window.display();
-    sleep(1.25);
+    std::this_thread::sleep_for(delayTime);
     for (int i = 0; i < 25; i++)
     {
         SLL_Node* temp = this->NodeArray;
@@ -602,8 +681,7 @@ void DataVisualization_3::InsertNodeFront(sf::RenderWindow &window, int data)
 
 void DataVisualization_3::InsertNodeBack(sf::RenderWindow &window, int data)
 {
-    std::chrono::milliseconds delayTime(500); // 0.5 seconds
-    // std::this_thread::sleep_for(delayTime); 
+    std::chrono::milliseconds delayTime(500 / speed); // 0.5 seconds
     if (this->NodeArray == nullptr)
     {
         this->NodeArray = this->NodeArray->createNode(250, 250, 30, font, data);
@@ -670,7 +748,7 @@ void DataVisualization_3::InsertNodeBack(sf::RenderWindow &window, int data)
 
 void DataVisualization_3::InsertNodeMid(sf::RenderWindow &window, int data, int index)
 {
-    std::chrono::milliseconds delayTime(500); // 0.5 seconds
+    std::chrono::milliseconds delayTime(500 / speed);
     // special case
     if (this->NodeArray == nullptr)
     {
@@ -684,7 +762,6 @@ void DataVisualization_3::InsertNodeMid(sf::RenderWindow &window, int data, int 
         printMessage(window, str);
         return;
     }
-    // index = 1 + rand() % (this->getSLLSize());
     if (index == 1) 
     {
         this->InsertNodeFront(window, data);
@@ -695,7 +772,6 @@ void DataVisualization_3::InsertNodeMid(sf::RenderWindow &window, int data, int 
         this->InsertNodeBack(window, data);
         return;
     }
-    //
     SLL_Node* iteratorNode = this->NodeArray;
     SLL_Node* pre = iteratorNode;
     for (int i = 1; i < index; i++)
@@ -786,8 +862,8 @@ void DataVisualization_3::DeleteNodeFront(sf::RenderWindow &window)
         printMessage(window, "There is no Node to be deleted!");
         return;
     }
-    std::chrono::milliseconds delayTime(1000); // 0.5 seconds
-    std::chrono::milliseconds delayTime1(50); // 0.05
+    std::chrono::milliseconds delayTime(1000 / speed); 
+    std::chrono::milliseconds delayTime1(50); 
 
     if (this->NodeArray->next == nullptr)
     {
@@ -807,7 +883,7 @@ void DataVisualization_3::DeleteNodeFront(sf::RenderWindow &window)
             this->NodeArray->text.setCharacterSize(radius / 3.f * 2.f);
             this->NodeArray->text.setOrigin(this->NodeArray->text.getLocalBounds().width / 2.f, this->NodeArray->text.getLocalBounds().height / 2.f);
             window.clear();
-        window.draw(DefaultBackground);
+            window.draw(DefaultBackground);
             window.draw(this->NodeArray->circle);
             window.draw(this->NodeArray->text);
             this->drawNodes(window);
@@ -892,9 +968,9 @@ void DataVisualization_3::DeleteNodeBack(sf::RenderWindow &window)
         printMessage(window, "There is no Node to be deleted!");
         return;
     }
-    std::chrono::milliseconds delayTime(1000); // 1 second
-    std::chrono::milliseconds delayTime1(50); // 0.05
-    std::chrono::milliseconds delayTime2(500);
+    std::chrono::milliseconds delayTime(1000 / speed);
+    std::chrono::milliseconds delayTime1(50); 
+    std::chrono::milliseconds delayTime2(500 / speed);
     SLL_Node* cur = this->NodeArray;
     SLL_Node* pre = cur;
     sf::Vector2f Pos = cur->circle.getPosition();
@@ -912,8 +988,8 @@ void DataVisualization_3::DeleteNodeBack(sf::RenderWindow &window)
         pre = cur;
         cur = cur->next;
     }
-    cur->circle.setFillColor(sf::Color::Black);
-    cur->text.setFillColor(sf::Color(106, 231, 255));
+    cur->circle.setFillColor(sf::Color::Red);
+    cur->text.setFillColor(sf::Color::Black);
     window.clear();
     window.draw(DefaultBackground);
     this->drawNodes(window);
@@ -987,9 +1063,9 @@ void DataVisualization_3::DeleteNodeMid(sf::RenderWindow &window, int index)
         return;
     }
 
-    std::chrono::milliseconds delayTime(1000); // 1 second
-    std::chrono::milliseconds delayTime1(50); // 0.05
-    std::chrono::milliseconds delayTime2(500);
+    std::chrono::milliseconds delayTime(1000 / speed); // 1 second
+    std::chrono::milliseconds delayTime1(50); // 05
+    std::chrono::milliseconds delayTime2(500 / speed);
     
     // color Green
     SLL_Node* cur = this->NodeArray;
@@ -1109,13 +1185,10 @@ void DataVisualization_3::UpdateNode(sf::RenderWindow &window, int index, int va
         return;
     } 
 
-    std::chrono::milliseconds delayTime(1000); // 1 second
-    std::chrono::milliseconds delayTime1(50); // 0.05
-    std::chrono::milliseconds delayTime2(500);
+    std::chrono::milliseconds delayTime(1000 / speed); // 1 second
+    std::chrono::milliseconds delayTime1(50); // 05
+    std::chrono::milliseconds delayTime2(500 / speed);
 
-    // std::cout << "Update success" << std::endl;
-    // std::cout << "Index: " << index << std::endl;
-    // std::cout << "Value: " << value << std::endl;
     SLL_Node* temp = this->NodeArray;
     for (int i = 1; i < index; i++)
     {
@@ -1218,9 +1291,9 @@ void DataVisualization_3::SearchNode(sf::RenderWindow &window, int value)
         return;
     }
     SLL_Node* temp = NodeArray;
-    std::chrono::milliseconds delayTime(1000); // 1 second
-    std::chrono::milliseconds delayTime1(50); // 0.05
-    std::chrono::milliseconds delayTime2(500);
+    std::chrono::milliseconds delayTime(1000 / speed); 
+    std::chrono::milliseconds delayTime1(50);
+    std::chrono::milliseconds delayTime2(500 / speed);
     int index = 0;
 
     while (temp != nullptr)

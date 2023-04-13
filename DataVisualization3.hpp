@@ -17,7 +17,7 @@
 #include "SLL.hpp"
 #include "Textbox.hpp"
 #include "Globals.hpp"
-// #include "SLLArrow.hpp"
+#include "Image.hpp"
 
 void CreateTitle3(sf::Text &Title, float PosX, float PosY);
 
@@ -31,7 +31,27 @@ public:
 
     Button backButton;
 
+    //Flow Control
+    sf::RectangleShape FlowControlMenu;
+    Image PauseButton;
+    Image ReplayButton;
+    Image NextButton;
+    Image SkipButton;
+    Image NextButtonReverse;
+    Image SkipButtonReverse;
+    bool isPause;
+
+    int speed;
+    sf::Text speedText;
+
+    Image IncreaseSpeedButton;
+    Image DecreaseSpeedButton;
+
+    // background
     sf::Texture page2texture;
+
+    sf::Sprite CodeScript;
+    sf::RectangleShape CodeHighLight;
 
     sf::RectangleShape menuTable;
 
@@ -48,7 +68,6 @@ public:
     Button ControlMenu_btn2;
     Button InsertHead;
     sf::Texture InsertHeadImg;
-    sf::Sprite InsertHeadSprite;
     Textbox InsertHead_Textbox;
     Button InsertBack;
     sf::Texture InsertBackImg;
@@ -56,7 +75,6 @@ public:
     Button InsertMid;
     Textbox InsertMid_Textbox; // 2 input: index, value
     sf::Texture InsertMidImg;
-
 
     Button ControlMenu_btn3;
     Button DeleteHead;
@@ -75,6 +93,8 @@ public:
     int size;
 
     SLL_Node* NodeArray;
+    sf::Text HeadText;
+    // sf::Text 
 
     int funcstate;
 
@@ -100,7 +120,6 @@ public:
     void InsertNodeMid(sf::RenderWindow &window, int data, int index);
     void InsertNodeMidSLL(sf::RenderWindow &window, sf::Event &event);
     
-
     void DeleteNodeFront(sf::RenderWindow &window);
     void DeleteNodeBack(sf::RenderWindow &window);
     void DeleteNodeMid(sf::RenderWindow &window, int index);
