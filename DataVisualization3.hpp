@@ -7,7 +7,6 @@
 #include <ctime>
 #include <cmath>
 #include <sstream>
-#include <vector>
 #include <functional>
 #include <windows.h>
 #include <chrono> // for std::chrono
@@ -50,11 +49,15 @@ public:
     // background
     sf::Texture page2texture;
 
-    sf::Sprite CodeScript;
+    // sf::Sprite CodeScript;
+    // sf::RectangleShape CodeHighLight;
+    Image CodeScript;
+    sf::Vector2f CodeScriptPosition;
     sf::RectangleShape CodeHighLight;
+    sf::Vector2f CodeHighLightPosition;
 
     sf::RectangleShape menuTable;
-
+    // Create Buttons
     Button ControlMenu_btn1;
     Button CreateEmpty;
     Button CreateRadom;
@@ -63,7 +66,6 @@ public:
     Textbox CreateRandomFixedSize_Textbox;
     Button CreateUserDefinedListButton;
     Textbox CreateUserDefinedList_Textbox; // Input many times
-
     // ADD button
     Button ControlMenu_btn2;
     Button InsertHead;
@@ -75,17 +77,17 @@ public:
     Button InsertMid;
     Textbox InsertMid_Textbox; // 2 input: index, value
     sf::Texture InsertMidImg;
-
+    // #3
     Button ControlMenu_btn3;
     Button DeleteHead;
     Button DeleteBack;
     Button DeleteMid;
     Textbox DeleteMid_Textbox;
-
+    // #4
     Button ControlMenu_btn4;
     Button UpdateNodeButton;
     Textbox UpdateNode_Textbox; // index + value
-
+    // #5
     Button ControlMenu_btn5;
     Button SearchNodeButton; // value
     Textbox SearchNode_Textbox;
@@ -94,12 +96,20 @@ public:
 
     SLL_Node* NodeArray;
     sf::Text HeadText;
+    sf::Text vtxText;
+    sf::Text aftText;
+    sf::Text preText;
+    sf::Text delText;
+    sf::Text tailText;
+    sf::Text curText;
     // sf::Text 
 
     int funcstate;
 
     DataVisualization_3();
     ~DataVisualization_3();
+
+    void NodeTextsetPos(sf::Text &text, SLL_Node* &pHead);
 
     void handleEvent(sf::RenderWindow &window, sf::Vector2f &mousePos, sf::Event &ev);
     void display(sf::RenderWindow &window);

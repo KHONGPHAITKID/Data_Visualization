@@ -1,10 +1,5 @@
 #include "SLL.hpp"
 
-// int randNum() 
-// {
-//     return rand() % 99 + 1;
-// }
-
 void SLL_Node::DeleteSLL(SLL_Node* &pHead)
 {
     SLL_Node* temp = pHead;
@@ -98,12 +93,6 @@ void SLL_Node::CreateRandomSortSLL(SLL_Node* &head, int &n, sf::Font &font)
         i = i->next;
     }
 }
-
-// int SLL_Node::randNumNode() 
-// {
-//     srand(time(NULL));
-//     return rand() % 99 + 1;
-// }
 
 SLL_Node* SLL_Node::createNode(float x, float y, float radius, sf::Font &font, int value) 
 {
