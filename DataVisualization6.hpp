@@ -7,16 +7,16 @@
 #include <ctime>
 #include <cmath>
 #include <sstream>
-#include <vector>
 #include <functional>
 #include <windows.h>
-#include <chrono> // for std::chrono
-#include <thread> // for std::this_thread::sleep_for
+#include <chrono> 
+#include <thread>
 #include <unistd.h>
 #include "Button.hpp"
 #include "Stack.hpp"
 #include "Textbox.hpp"
 #include "Globals.hpp"
+#include "Image.hpp"
 
 void CreateTitle6(sf::Text &Title, float PosX, float PosY);
 
@@ -25,10 +25,38 @@ class DataVisualization_6
 private:
 public:
     sf::Font font;
+    sf::Font titlefont;
     sf::Text Title;
 
     Button backButton;
 
+    //Flow Control
+    sf::RectangleShape FlowControlMenu;
+    Image PauseButton;
+    Image ReplayButton;
+    Image NextButton;
+    Image SkipButton;
+    Image NextButtonReverse;
+    Image SkipButtonReverse;
+    bool isPause;
+
+    int speed;
+    sf::Text speedText;
+
+    Image IncreaseSpeedButton;
+    Image DecreaseSpeedButton;
+
+    // background
+    sf::Texture page2texture;
+
+    // code script
+    Image CodeScript;
+    sf::Vector2f CodeScriptPosition;
+    sf::RectangleShape CodeHighLight;
+    sf::Vector2f CodeHighLightPosition;
+
+    sf::RectangleShape menuTable;
+//----
     Button ControlMenu_btn1;
     Button CreateEmpty;
     Button CreateRadom;
@@ -55,6 +83,13 @@ public:
     int size;
 
     Stack_Node* NodeArray;
+    sf::Text HeadText;
+    sf::Text vtxText;
+    sf::Text aftText;
+    sf::Text preText;
+    sf::Text delText;
+    sf::Text tailText;
+    sf::Text curText;
 
     int funcstate;
 

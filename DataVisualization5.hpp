@@ -7,16 +7,16 @@
 #include <ctime>
 #include <cmath>
 #include <sstream>
-#include <vector>
 #include <functional>
 #include <windows.h>
-#include <chrono> // for std::chrono
-#include <thread> // for std::this_thread::sleep_for
+#include <chrono> 
+#include <thread> 
 #include <unistd.h>
 #include "Button.hpp"
 #include "CLL.hpp"
 #include "Textbox.hpp"
 #include "Globals.hpp"
+#include "Image.hpp"
 
 void CreateTitle5(sf::Text &Title, float PosX, float PosY);
 
@@ -25,10 +25,38 @@ class DataVisualization_5
 private:
 public:
     sf::Font font;
+    sf::Font titlefont;
     sf::Text Title;
 
     Button backButton;
 
+    //Flow Control
+    sf::RectangleShape FlowControlMenu;
+    Image PauseButton;
+    Image ReplayButton;
+    Image NextButton;
+    Image SkipButton;
+    Image NextButtonReverse;
+    Image SkipButtonReverse;
+    bool isPause;
+
+    int speed;
+    sf::Text speedText;
+
+    Image IncreaseSpeedButton;
+    Image DecreaseSpeedButton;
+
+    // background
+    sf::Texture page2texture;
+
+    // code script
+    Image CodeScript;
+    sf::Vector2f CodeScriptPosition;
+    sf::RectangleShape CodeHighLight;
+    sf::Vector2f CodeHighLightPosition;
+
+    sf::RectangleShape menuTable;
+    // Create Buttons
     Button ControlMenu_btn1;
     Button CreateEmpty;
     Button CreateRadom;
@@ -37,26 +65,28 @@ public:
     Textbox CreateRandomFixedSize_Textbox;
     Button CreateUserDefinedListButton;
     Textbox CreateUserDefinedList_Textbox; // Input many times
-
     // ADD button
     Button ControlMenu_btn2;
     Button InsertHead;
+    sf::Texture InsertHeadImg;
     Textbox InsertHead_Textbox;
     Button InsertBack;
+    sf::Texture InsertBackImg;
     Textbox InsertBack_Textbox;
     Button InsertMid;
     Textbox InsertMid_Textbox; // 2 input: index, value
-
+    sf::Texture InsertMidImg;
+    // #3
     Button ControlMenu_btn3;
     Button DeleteHead;
     Button DeleteBack;
     Button DeleteMid;
     Textbox DeleteMid_Textbox;
-
+    // #4
     Button ControlMenu_btn4;
     Button UpdateNodeButton;
     Textbox UpdateNode_Textbox; // index + value
-
+    // #5
     Button ControlMenu_btn5;
     Button SearchNodeButton; // value
     Textbox SearchNode_Textbox;
@@ -64,11 +94,22 @@ public:
     int size;
 
     CLL_Node* NodeArray;
+    CLL_Node* tailNode;
+    sf::Text HeadText;
+    sf::Text vtxText;
+    sf::Text aftText;
+    sf::Text preText;
+    sf::Text delText;
+    sf::Text tailText;
+    sf::Text curText;
 
     int funcstate;
 
     DataVisualization_5();
     ~DataVisualization_5();
+
+    void getTailNode();
+    void NodeTextsetPos(sf::Text &text, CLL_Node* &pHead);
 
     void handleEvent(sf::RenderWindow &window, sf::Vector2f &mousePos, sf::Event &ev);
     void display(sf::RenderWindow &window);
@@ -89,7 +130,6 @@ public:
     void InsertNodeMid(sf::RenderWindow &window, int data, int index);
     void InsertNodeMidCLL(sf::RenderWindow &window, sf::Event &event);
     
-
     void DeleteNodeFront(sf::RenderWindow &window);
     void DeleteNodeBack(sf::RenderWindow &window);
     void DeleteNodeMid(sf::RenderWindow &window, int index);

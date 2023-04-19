@@ -27,11 +27,6 @@ DataVisualization_3::DataVisualization_3()
         std::cerr << "Failed to load BackGround" << "\n";
         return;
     }
-    if (!InsertHeadImg.loadFromFile("media/DataVisualization3/InsertHead.png"))
-    {
-        std::cerr << "Failed to load InsertHeadImg" << "\n";
-        return;
-    }
 
     this->speed = 2;
     speedText.setCharacterSize(20);
@@ -303,7 +298,7 @@ void DataVisualization_3::handleEvent(sf::RenderWindow &window, sf::Vector2f &mo
             this->NodeArray = nullptr;
             this->size = 0;
             this->funcstate = 0;
-            this->speed = 1;
+            this->speed = 2;
         }
         else if (this->ControlMenu_btn1.rect.getGlobalBounds().contains(mousePos))
         {
@@ -823,6 +818,7 @@ void DataVisualization_3::InsertNodeBack(sf::RenderWindow &window, int data)
     window.display();
     std::this_thread::sleep_for(delayTime);
     temp = temp->next;
+    HeadText.setString("Head");
 
     if (temp != nullptr) {
         do
@@ -860,7 +856,6 @@ void DataVisualization_3::InsertNodeBack(sf::RenderWindow &window, int data)
             window.display();
             std::this_thread::sleep_for(delayTime);
             temp = temp->next;
-            HeadText.setString("Head");
         } while (temp != nullptr);
     }
     

@@ -42,12 +42,6 @@ void Stack_Node::addBack(Stack_Node* &pHead, Stack_Node* &temp)
         pHead = temp;
         return;
     }
-    // Stack_Node* cur = pHead;
-    // while (cur->next != nullptr)
-    // {
-    //     cur = cur->next;
-    // }
-    // cur->next = temp;
     temp->next = pHead;
     pHead = temp;
 }
@@ -86,6 +80,13 @@ void Stack_Node::CreateRandomSortStack(Stack_Node* &head, int &n, sf::Font &font
     while (i != nullptr)
     {
         i->text.setString(std::to_string(i->data));
+        i->text.setOrigin(i->text.getLocalBounds().width / 2.f, i->text.getLocalBounds().height / 2.f);
+        if (i->data < 10)
+        {
+            i->text.setPosition(i->rec.getPosition().x, i->rec.getPosition().y - 10);
+        } else {
+            i->text.setPosition(i->rec.getPosition().x - 1, i->rec.getPosition().y - 10);
+        }
         i = i->next;
     }
 }
@@ -98,7 +99,7 @@ Stack_Node* Stack_Node::createNode(float x, float y, float height, float width, 
     nc->next = nullptr;
 
     nc->rec.setSize(sf::Vector2f(width, height));
-    nc->rec.setFillColor(sf::Color::Yellow);
+    nc->rec.setFillColor(sf::Color(106, 231, 255));
     nc->rec.setOrigin(sf::Vector2f(150, 75 / 2.f));
     nc->rec.setOutlineThickness(2);
     nc->rec.setOutlineColor(sf::Color::Black);

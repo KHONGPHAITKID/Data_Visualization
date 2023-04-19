@@ -299,7 +299,7 @@ void DataVisualization_4::handleEvent(sf::RenderWindow &window, sf::Vector2f &mo
             this->NodeArray = nullptr;
             this->size = 0;
             this->funcstate = 0;
-            this->speed = 1;
+            this->speed = 2;
         }
         else if (this->ControlMenu_btn1.rect.getGlobalBounds().contains(mousePos))
         {
@@ -819,6 +819,7 @@ void DataVisualization_4::InsertNodeBack(sf::RenderWindow &window, int data)
     window.display();
     std::this_thread::sleep_for(delayTime);
     temp = temp->next;
+    HeadText.setString("Head");
 
     if (temp != nullptr) {
         do
@@ -856,7 +857,6 @@ void DataVisualization_4::InsertNodeBack(sf::RenderWindow &window, int data)
             window.display();
             std::this_thread::sleep_for(delayTime);
             temp = temp->next;
-            HeadText.setString("Head");
         } while (temp != nullptr);
     }
     
