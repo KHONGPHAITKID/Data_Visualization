@@ -9,7 +9,6 @@ void CreateTitle4(sf::Text &Title, float PosX, float PosY)
     Title.setPosition(PosX, PosY);
 }
 
-
 DataVisualization_4::DataVisualization_4()
 {
     //Fonts
@@ -28,6 +27,9 @@ DataVisualization_4::DataVisualization_4()
         std::cerr << "Failed to load BackGround" << "\n";
         return;
     }
+
+    NotificationImage.setImage("media/img/noti_board.png");
+    NotificationImage.setPosition(sf::Vector2f(1920/2.f, 1080/4.f - 150));
 
     this->speed = 2;
     speedText.setCharacterSize(20);
@@ -670,7 +672,14 @@ bool DataVisualization_4::checkSize(sf::RenderWindow &window, int size)
     message.setOutlineThickness(5);
     message.setFont(this->font);
     message.setOrigin(message.getLocalBounds().width/2.f, message.getLocalBounds().height/2.f);
-    message.setPosition(window.getSize().x / 2.f, window.getSize().y / 2.f);
+    message.setPosition(window.getSize().x / 2.f + 20, window.getSize().y / 2.f - 240.f);
+    window.clear();
+    window.draw(DefaultBackground);
+    this->display(window);
+    this->drawNodes(window);
+    if (this->funcstate != 2)
+        window.draw(CodeHighLight);
+    NotificationImage.drawImage(window);
     window.draw(message);
     window.display();
     std::this_thread::sleep_for(delayTime);
@@ -679,6 +688,8 @@ bool DataVisualization_4::checkSize(sf::RenderWindow &window, int size)
 
 void DataVisualization_4::InsertNodeFront(sf::RenderWindow &window, int data)
 {
+    CodeScript.setPosition(CodeScriptPosition);
+    CodeScript.setImage("media/DataVisualization4/InsertHead.png");
     std::chrono::milliseconds delayTime(1000 / speed);
     std::chrono::milliseconds delayTime1(500 / speed);
     CodeHighLight.setPosition(CodeHighLightPosition);
@@ -690,8 +701,6 @@ void DataVisualization_4::InsertNodeFront(sf::RenderWindow &window, int data)
         return;
     }
     if (checkSize(window, this->size) == false) return;
-    CodeScript.setPosition(CodeScriptPosition);
-    CodeScript.setImage("media/DataVisualization4/InsertHead.png");
     DLL_Node* newNode = this->NodeArray->createNode(this->NodeArray->circle.getPosition().x, this->NodeArray->circle.getPosition().y + 150, 30, this->font, data);
     window.clear();
     window.draw(DefaultBackground);
@@ -759,6 +768,8 @@ void DataVisualization_4::InsertNodeFront(sf::RenderWindow &window, int data)
 
 void DataVisualization_4::InsertNodeBack(sf::RenderWindow &window, int data)
 {
+    CodeScript.setPosition(CodeScriptPosition);
+    CodeScript.setImage("media/DataVisualization4/InsertBack.png");
     std::chrono::milliseconds delayTime(500 / speed); // 0.5 seconds
     CodeHighLight.setPosition(CodeHighLightPosition);
     if (this->NodeArray == nullptr)
@@ -768,8 +779,6 @@ void DataVisualization_4::InsertNodeBack(sf::RenderWindow &window, int data)
         return;
     }
     if (checkSize(window, this->size) == false) return;
-    CodeScript.setPosition(CodeScriptPosition);
-    CodeScript.setImage("media/DataVisualization4/InsertBack.png");
     DLL_Node* LastNode = this->NodeArray;
     while (LastNode->next != nullptr) 
     {
@@ -913,6 +922,9 @@ void DataVisualization_4::InsertNodeMid(sf::RenderWindow &window, int data, int 
 {
     CodeHighLight.setPosition(CodeHighLightPosition);
     std::chrono::milliseconds delayTime(500 / speed);
+    CodeScript.setPosition(CodeScriptPosition);
+    CodeScript.setImage("media/DataVisualization4/InsertMid.png");
+
     // special case
     if (this->NodeArray == nullptr)
     {
@@ -938,8 +950,6 @@ void DataVisualization_4::InsertNodeMid(sf::RenderWindow &window, int data, int 
     }
 
     // create the new Node
-    CodeScript.setPosition(CodeScriptPosition);
-    CodeScript.setImage("media/DataVisualization4/InsertMid.png");
     DLL_Node* iteratorNode = this->NodeArray;
     DLL_Node* pre = iteratorNode;
     for (int i = 1; i < index; i++)
@@ -1147,12 +1157,11 @@ void DataVisualization_4::DeleteNodeFront(sf::RenderWindow &window)
     std::chrono::milliseconds delayTime2(500 / speed); 
     this->HeadText.setString("Head");
     CodeHighLight.setPosition(CodeHighLightPosition);
+
+    // special case
     if (this->NodeArray == nullptr)
     {
-        window.draw(CodeHighLight);
         printMessage(window, "There is no Node to be deleted!");
-        window.display();
-        std::this_thread::sleep_for(delayTime2); 
         return;
     }
     // one Node case
@@ -1299,9 +1308,10 @@ void DataVisualization_4::DeleteNodeBack(sf::RenderWindow &window)
     CodeScript.setPosition(CodeScriptPosition);
     CodeScript.setImage("media/DataVisualization4/RemoveTail.png");
     CodeHighLight.setPosition(CodeHighLightPosition);
+
+    // special case
     if (this->NodeArray == nullptr) 
     {
-        window.draw(CodeHighLight);
         printMessage(window, "There is no Node to be deleted!");
         return;
     }
@@ -1481,9 +1491,14 @@ void DataVisualization_4::DeleteNodeBack(sf::RenderWindow &window)
 void DataVisualization_4::DeleteNodeMid(sf::RenderWindow &window, int index)
 {   
     CodeScript.setPosition(CodeScriptPosition);
+    CodeScript.setImage("media/DataVisualization4/RemoveMid.png");
+    CodeHighLight.setPosition(CodeHighLightPosition);
+    std::chrono::milliseconds delayTime(1000 / speed); // 1 second
+    std::chrono::milliseconds delayTime1(50); // 05
+    std::chrono::milliseconds delayTime2(500 / speed);
+
     if (this->NodeArray == nullptr) 
     {
-        window.draw(CodeHighLight);
         printMessage(window, "There is no Node to be deleted!");
         return;
     }
@@ -1503,11 +1518,6 @@ void DataVisualization_4::DeleteNodeMid(sf::RenderWindow &window, int index)
         DeleteNodeBack(window);
         return;
     }
-    CodeScript.setImage("media/DataVisualization4/RemoveMid.png");
-    CodeHighLight.setPosition(CodeHighLightPosition);
-    std::chrono::milliseconds delayTime(1000 / speed); // 1 second
-    std::chrono::milliseconds delayTime1(50); // 05
-    std::chrono::milliseconds delayTime2(500 / speed);
     
     // color Green
     DLL_Node* pre = this->NodeArray;
@@ -1736,12 +1746,6 @@ void DataVisualization_4::DeleteNodeMidDLL(sf::RenderWindow &window, sf::Event &
 
 void DataVisualization_4::UpdateNode(sf::RenderWindow &window, int index, int value)
 {
-    if (index <= 0 || index > this->size)
-    {
-        std::string str = "Index must be from 1 to " + std::to_string(this->size);
-        printMessage(window, str);
-        return;
-    } 
     CodeScript.setPosition(CodeScriptPosition);
     CodeScript.setImage("media/DataVisualization4/Update.png");
     CodeHighLight.setPosition(CodeHighLightPosition);
@@ -1755,6 +1759,14 @@ void DataVisualization_4::UpdateNode(sf::RenderWindow &window, int index, int va
         printMessage(window, "There is no Node to be Update");
         return;
     }
+    
+    if (index <= 0 || index > this->size)
+    {
+        std::string str = "Index must be from 1 to " + std::to_string(this->size);
+        printMessage(window, str);
+        return;
+    } 
+
 
     DLL_Node* temp = this->NodeArray;
     CodeHighLight.setPosition(CodeHighLightPosition.x, CodeHighLightPosition.y + 35);
@@ -1893,18 +1905,19 @@ void DataVisualization_4::UpdateNodeDLL(sf::RenderWindow &window, sf::Event &eve
 void DataVisualization_4::SearchNode(sf::RenderWindow &window, int value)
 {
     CodeHighLight.setPosition(CodeHighLightPosition);
-    if (NodeArray == nullptr)
-    {
-        window.draw(CodeHighLight);
-        printMessage(window, "There is no Node to be searched");
-        return;
-    }
     CodeScript.setPosition(CodeScriptPosition);
     CodeScript.setImage("media/DataVisualization4/Search.png");
     DLL_Node* temp = NodeArray;
     std::chrono::milliseconds delayTime(1000 / speed); 
     std::chrono::milliseconds delayTime1(50);
     std::chrono::milliseconds delayTime2(500 / speed);
+    
+    if (NodeArray == nullptr)
+    {
+        window.draw(CodeHighLight);
+        printMessage(window, "There is no Node to be searched");
+        return;
+    }
     int index = 0;
     HeadText.setString("Head/cur");
     while (temp != nullptr)
@@ -2016,8 +2029,7 @@ void DataVisualization_4::SearchNodeDLL(sf::RenderWindow &window, sf::Event &eve
 
 bool DataVisualization_4::printMessage(sf::RenderWindow &window, std::string message/*, int min_range, int max_range, int value*/)
 {
-    // if (size < 10) return true;
-    std::chrono::milliseconds delayTime(750);
+    std::chrono::milliseconds delayTime(1000);
     sf::Text WarningMessage;
     WarningMessage.setString(message);
     WarningMessage.setCharacterSize(50);
@@ -2026,7 +2038,13 @@ bool DataVisualization_4::printMessage(sf::RenderWindow &window, std::string mes
     WarningMessage.setOutlineThickness(5);
     WarningMessage.setFont(this->font);
     WarningMessage.setOrigin(WarningMessage.getLocalBounds().width/2.f, WarningMessage.getLocalBounds().height/2.f);
-    WarningMessage.setPosition(window.getSize().x / 2.f, window.getSize().y / 2.f);
+    WarningMessage.setPosition(window.getSize().x / 2.f + 20, window.getSize().y / 2.f - 240.f);
+    window.clear();
+    window.draw(DefaultBackground);
+    this->display(window);
+    this->drawNodes(window);
+    window.draw(CodeHighLight);
+    NotificationImage.drawImage(window);
     window.draw(WarningMessage);
     window.display();
     std::this_thread::sleep_for(delayTime);

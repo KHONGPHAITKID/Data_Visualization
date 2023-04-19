@@ -83,6 +83,13 @@ void Queue_Node::CreateRandomSortQueue(Queue_Node* &head, int &n, sf::Font &font
     while (i != nullptr)
     {
         i->text.setString(std::to_string(i->data));
+        i->text.setOrigin(i->text.getLocalBounds().width / 2.f, i->text.getLocalBounds().height / 2.f);
+        if (i->data < 10)
+        {
+            i->text.setPosition(i->circle.getPosition().x, i->circle.getPosition().y - 7);
+        } else {
+            i->text.setPosition(i->circle.getPosition().x - 1, i->circle.getPosition().y - 7);
+        }
         i = i->next;
     }
 }
@@ -95,15 +102,22 @@ Queue_Node* Queue_Node::createNode(float x, float y, float radius, sf::Font &fon
     nc->next = nullptr;
     nc->circle.setRadius(radius);
     nc->circle.setPosition(x, y);
-    nc->circle.setFillColor(sf::Color::Yellow);
+    nc->circle.setFillColor(sf::Color(106, 231, 255, 0));
     nc->circle.setOrigin(nc->circle.getRadius(), nc->circle.getRadius());
+    nc->circle.setOutlineThickness(2);
+    nc->circle.setOutlineColor(sf::Color(106, 231, 255));
 
     nc->text.setFont(font);
     nc->text.setString(str);
     nc->text.setCharacterSize(radius / 3.f * 2.f);
-    nc->text.setFillColor(sf::Color::Black);
+    nc->text.setFillColor(sf::Color(106, 231, 255));
     nc->text.setOrigin(nc->text.getLocalBounds().width / 2.f, nc->text.getLocalBounds().height / 2.f);
-    nc->text.setPosition(nc->circle.getPosition().x - 0, nc->circle.getPosition().y - 7);
+    if (nc->data < 10)
+    {
+        nc->text.setPosition(nc->circle.getPosition().x, nc->circle.getPosition().y - 7);
+    } else {
+        nc->text.setPosition(nc->circle.getPosition().x - 1, nc->circle.getPosition().y - 7);
+    }
     return nc;
 }
 

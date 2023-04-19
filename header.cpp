@@ -154,7 +154,7 @@ StartingPage::StartingPage()
     CreateTitle(StartTitle, 1920 / 2.f, 250.f);
     this->Title = StartTitle;
     //Back button
-    this->backButton.CreateButton(100.f, 50.f, 70.f, 45.f, sf::Color(128, 128, 128), "Back", font, sf::Color::White);
+    this->backButton.CreateButton(100.f, 50.f, 70.f, 72.5f, sf::Color(128, 128, 128), "Back", this->font, sf::Color::White);
 
     // Option
     // Rectangle dimensions

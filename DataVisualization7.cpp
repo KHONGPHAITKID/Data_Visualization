@@ -11,57 +11,135 @@ void CreateTitle7(sf::Text &Title, float PosX, float PosY)
 
 DataVisualization_7::DataVisualization_7()
 {
-    //Fonts
-    if (!this->font.loadFromFile("Fonts/arial.ttf"))
+if (!this->font.loadFromFile("Fonts/iCielBCCubano_Normal.otf"))
     {
         std::cerr << "Failed to load Fonts" << "\n";
         return;
     }
+    if (!this->titlefont.loadFromFile("Fonts/SVN_Blade_runner.ttf"))
+    {
+        std::cerr << "Failed to load Fonts" << "\n";
+        return;
+    }
+    if (!page2texture.loadFromFile("media/img/menubackground.jpg")) 
+    {
+        std::cerr << "Failed to load BackGround" << "\n";
+        return;
+    }
+
+    this->speed = 2;
+    speedText.setCharacterSize(20);
+    speedText.setFont(font);
+    speedText.setFillColor(sf::Color::White);
+    speedText.setString("Speed: x" + std::to_string(speed));
+    speedText.setOrigin(sf::Vector2f(speedText.getLocalBounds().width / 2.f, speedText.getLocalBounds().height / 2.f));
+    speedText.setPosition(sf::Vector2f(250, 1010));
+
+    FlowControlMenu.setFillColor(sf::Color::Black);
+    FlowControlMenu.setOutlineColor(sf::Color::White);
+    FlowControlMenu.setOutlineThickness(2);
+    FlowControlMenu.setSize(sf::Vector2f(1920, 100));
+    FlowControlMenu.setPosition(sf::Vector2f(0, 980));
+    PauseButton.setImage("media/img/pause_button.png");
+    PauseButton.setPosition(sf::Vector2f(960, 1000));
+    ReplayButton.setImage("media/img/play_button.png");
+    ReplayButton.setPosition(sf::Vector2f(960, 1000));
+    NextButton.setImage("media/img/next_button.png");
+    NextButton.setPosition(sf::Vector2f(1010, 1000));
+    SkipButton.setImage("media/img/skip_button.png");
+    SkipButton.setPosition(sf::Vector2f(1060, 1000));
+    NextButtonReverse.setImage("media/img/next_button_reverse.png");
+    NextButtonReverse.setPosition(sf::Vector2f(910, 1000));
+    SkipButtonReverse.setImage("media/img/skip_button_reverse.png");
+    SkipButtonReverse.setPosition(sf::Vector2f(860, 1000));
+    IncreaseSpeedButton.setImage("media/img/add_button.png");
+    IncreaseSpeedButton.setPosition(sf::Vector2f(330, 1002));
+    DecreaseSpeedButton.setImage("media/img/minus_btn.png");
+    DecreaseSpeedButton.setPosition(sf::Vector2f(380, 1002));
+    isPause = true;
+
+    // Code Script
+    CodeScriptPosition = sf::Vector2f(1520,640);
+    CodeHighLightPosition = sf::Vector2f(1170, 697.5f);
+    CodeScript.setPosition(CodeScriptPosition);
+    CodeHighLight.setSize(sf::Vector2f(700, 30));
+    CodeHighLight.setFillColor(sf::Color(106, 231, 255, 100));
+    CodeHighLight.setOutlineColor(sf::Color(106, 231, 255));
+    //---------------------
+    CodeHighLight.setPosition(CodeHighLightPosition); // 1170 - 697.5 ~ 35-36
+    //---------------------
+
     //Title
-    sf::Text DV7Title("Queue", this->font, 90);
-    CreateTitle7(DV7Title, 1920 / 2.f, 50.f);
+    sf::Text DV7Title("Queue", this->titlefont, 35);
+    CreateTitle7(DV7Title, 400, 60.f);
     this->Title = DV7Title;
-    //Back button
-    this->backButton.CreateButton(100.f, 50.f, 70.f, 45.f, sf::Color(128, 128, 128), "Back", this->font, sf::Color::White);
-    
+    this->Title.setOutlineThickness(0.f);
+    this->Title.setFillColor(sf::Color(106, 231, 255));
+
+    // Back button
+    // this->backButton.CreateButton(100.f, 50.f, 70.f, 45.f, sf::Color(128, 128, 128), "Back", this->font, sf::Color::White);
+    this->backButton.CreateButton(100.f, 50.f, 70.f, 72.5f, sf::Color(128, 128, 128), "Back", this->font, sf::Color::White);
+
+    // building the Queue
     this->Queue1.setSize(sf::Vector2f(850, 10));
     this->Queue1.setOrigin(sf::Vector2f(0, 5));
     this->Queue1.setPosition(sf::Vector2f(550, 400));
     this->Queue1.setFillColor(sf::Color::White);
-
     this->Queue2.setSize(sf::Vector2f(850, 10));
     this->Queue2.setOrigin(sf::Vector2f(0, 5));
     this->Queue2.setPosition(sf::Vector2f(550, 500));
     this->Queue2.setFillColor(sf::Color::White);
 
-    //Function Key #1
-    this->ControlMenu_btn1.CreateButton(200.f, 50.f, 250.f, 1080 / 2.f + 225.f, sf::Color(255, 138, 39), "Create", this->font, sf::Color::White);
-    this->CreateEmpty.CreateButton(130.f, 50.f, this->ControlMenu_btn1.rect.getPosition().x + this->ControlMenu_btn1.rect.getSize().x / 2.f + 20.f + 130/2.f + 10.f, this->ControlMenu_btn1.rect.getPosition().y, sf::Color(255, 138, 39), "Empty", this->font, sf::Color::White);
-    this->CreateRadom.CreateButton(130.f, 50.f, this->CreateEmpty.rect.getPosition().x + this->CreateEmpty.rect.getSize().x / 2.f + 130/2.f + 10.f, this->ControlMenu_btn1.rect.getPosition().y, sf::Color(255, 138, 39), "Random", this->font, sf::Color::White);
-    this->CreateRandomSort.CreateButton(130.f, 50.f, this->CreateRadom.rect.getPosition().x + this->CreateRadom.rect.getSize().x / 2.f + 130/2.f + 10.f, this->ControlMenu_btn1.rect.getPosition().y, sf::Color(255, 138, 39), "Random Sort", this->font, sf::Color::White);
-    this->CreateRandomFixedSize.CreateButton(180.f, 50.f, this->CreateRandomSort.rect.getPosition().x + this->CreateRandomSort.rect.getSize().x / 2.f + 160.f / 2.f + 20.f, this->ControlMenu_btn1.rect.getPosition().y, sf::Color(255, 138, 39), "Random Fixed Size", this->font, sf::Color::White);
+// Menu table
+    this->menuTable.setSize(sf::Vector2f(200.f, 200.f));
+    this->menuTable.setFillColor(sf::Color(106, 231, 255, 0));
+    this->menuTable.setOutlineColor(sf::Color(106, 231, 255));
+    this->menuTable.setOutlineThickness(5.f);
+    this->menuTable.setPosition(150.f, 1080 / 2.f + 200.f);
+
+// Function key #1
+    this->ControlMenu_btn1.CreateButton(200.f, 50.f, 250.f, 1080 / 2.f + 225.f, sf::Color(106, 231, 255, 0), "Create", this->font, sf::Color(106, 231, 255));
+    this->CreateEmpty.CreateButton(130.f, 50.f, this->ControlMenu_btn1.rect.getPosition().x + this->ControlMenu_btn1.rect.getSize().x / 2.f + 20.f + 130/2.f + 10.f, this->ControlMenu_btn1.rect.getPosition().y, sf::Color(106, 231, 255, 0), "Empty", this->font, sf::Color(106, 231, 255));
+    this->CreateEmpty.rect.setOutlineColor(sf::Color(106, 231, 255));
+    this->CreateEmpty.rect.setOutlineThickness(2.f);
+
+    this->CreateRadom.CreateButton(130.f, 50.f, this->CreateEmpty.rect.getPosition().x + this->CreateEmpty.rect.getSize().x / 2.f + 130/2.f + 10.f, this->ControlMenu_btn1.rect.getPosition().y, sf::Color(106, 231, 255, 0), "Random", this->font, sf::Color(106, 231, 255));
+    this->CreateRadom.rect.setOutlineColor(sf::Color(106, 231, 255));
+    this->CreateRadom.rect.setOutlineThickness(2.f);
+    
+    this->CreateRandomSort.CreateButton(130.f, 50.f, this->CreateRadom.rect.getPosition().x + this->CreateRadom.rect.getSize().x / 2.f + 130/2.f + 10.f, this->ControlMenu_btn1.rect.getPosition().y, sf::Color(106, 231, 255, 0), "Random Sort", this->font, sf::Color(106, 231, 255));
+    this->CreateRandomSort.rect.setOutlineColor(sf::Color(106, 231, 255));
+    this->CreateRandomSort.rect.setOutlineThickness(2.f);
+
+    this->CreateRandomFixedSize.CreateButton(180.f, 50.f, this->CreateRandomSort.rect.getPosition().x + this->CreateRandomSort.rect.getSize().x / 2.f + 160.f / 2.f + 20.f, this->ControlMenu_btn1.rect.getPosition().y, sf::Color(106, 231, 255, 0), "Random Fixed Size", this->font, sf::Color(106, 231, 255));
+    this->CreateRandomFixedSize.rect.setOutlineColor(sf::Color(106, 231, 255));
+    this->CreateRandomFixedSize.rect.setOutlineThickness(2.f);
     InitTextbox(this->CreateRandomFixedSize_Textbox, 20, sf::Color::White, true, this->CreateRandomFixedSize.rect.getPosition().x , this->CreateRandomFixedSize.rect.getPosition().y + 50, font, true, 3);
     this->CreateRandomFixedSize_Textbox.EnterMessage.setString("Size: ");
-    this->CreateUserDefinedListButton.CreateButton(130.f, 50.f, this->CreateRandomFixedSize.rect.getPosition().x + this->CreateRandomFixedSize.rect.getSize().x / 2.f + 130.f/2.f + 10.f, this->ControlMenu_btn1.rect.getPosition().y, sf::Color(255, 138, 39), "User Defined", this->font, sf::Color::White);
+    
+    this->CreateUserDefinedListButton.CreateButton(130.f, 50.f, this->CreateRandomFixedSize.rect.getPosition().x + this->CreateRandomFixedSize.rect.getSize().x / 2.f + 130.f/2.f + 10.f, this->ControlMenu_btn1.rect.getPosition().y, sf::Color(106, 231, 255, 0), "User Defined", this->font, sf::Color(106, 231, 255));
+    this->CreateUserDefinedListButton.rect.setOutlineColor(sf::Color(106, 231, 255));
+    this->CreateUserDefinedListButton.rect.setOutlineThickness(2.f);
     InitTextbox(this->CreateUserDefinedList_Textbox, 20, sf::Color::White, true, this->CreateUserDefinedListButton.rect.getPosition().x, this->CreateUserDefinedListButton.rect.getPosition().y + 50, font, true, 3);
     this->CreateUserDefinedList_Textbox.EnterMessage.setString("Size: ");
 
     //Function Key #2: Pushing
-    this->ControlMenu_btn2.CreateButton(200.f, 50.f, 250.f, 1080 / 2.f + 275.f, sf::Color(255, 138, 39), "Add", this->font, sf::Color::White);
+    this->ControlMenu_btn2.CreateButton(200.f, 50.f, 250.f, 1080 / 2.f + 275.f, sf::Color(106, 231, 255, 0), "Push", this->font, sf::Color(106, 231, 255));
     InitTextbox(this->InsertHead_Textbox, 20, sf::Color::White, true, this->CreateEmpty.rect.getPosition().x, this->CreateEmpty.rect.getPosition().y + 50, font, true, 3);
     this->InsertHead_Textbox.EnterMessage.setString("Value: ");
     
     //Function Key #3: Pop
-    this->ControlMenu_btn3.CreateButton(200.f, 50.f, 250.f, 1080 / 2.f + 325.f, sf::Color(255, 138, 39), "Delete", this->font, sf::Color::White);
-    this->DeleteHead.CreateButton(130.f, 50.f, this->ControlMenu_btn3.rect.getPosition().x + this->ControlMenu_btn3.rect.getSize().x / 2.f + 20.f + 130/2.f + 10.f, 1080 / 2.f + 225.f, sf::Color(255, 138, 39), "Head", this->font, sf::Color::White);
+    this->ControlMenu_btn3.CreateButton(200.f, 50.f, 250.f, 1080 / 2.f + 325.f, sf::Color(106, 231, 255, 0), "Pop", this->font, sf::Color(106, 231, 255));
+    this->DeleteHead.CreateButton(130.f, 50.f, this->ControlMenu_btn3.rect.getPosition().x + this->ControlMenu_btn3.rect.getSize().x / 2.f + 20.f + 130/2.f + 10.f, 1080 / 2.f + 225.f, sf::Color(106, 231, 255, 0), "Head", this->font, sf::Color(106, 231, 255));
 
     //Function Key #4: Peek
-    this->ControlMenu_btn4.CreateButton(200.f, 50.f, 250.f, 1080 / 2.f + 375.f, sf::Color(255, 138, 39), "Peek", this->font, sf::Color::White);
-    this->PeekFront.CreateButton(130.f, 50.f, this->ControlMenu_btn4.rect.getPosition().x + this->ControlMenu_btn4.rect.getSize().x / 2.f + 20.f + 130/2.f + 10.f, this->ControlMenu_btn4.rect.getPosition().y, sf::Color(255, 138, 39), "Front", this->font, sf::Color::White);
-    this->PeekBack.CreateButton(130.f, 50.f, this->PeekFront.rect.getPosition().x + this->CreateEmpty.rect.getSize().x / 2.f + 130/2.f + 10.f, this->ControlMenu_btn4.rect.getPosition().y, sf::Color(255, 138, 39), "Back", this->font, sf::Color::White);
-
-    // this->PeekBack
-
+    this->ControlMenu_btn4.CreateButton(200.f, 50.f, 250.f, 1080 / 2.f + 375.f, sf::Color(106, 231, 255, 0), "Peek", this->font, sf::Color(106, 231, 255));
+    this->PeekFront.CreateButton(130.f, 50.f, this->ControlMenu_btn4.rect.getPosition().x + this->ControlMenu_btn4.rect.getSize().x / 2.f + 20.f + 130/2.f + 10.f, this->ControlMenu_btn4.rect.getPosition().y, sf::Color(106, 231, 255, 0), "Front", this->font, sf::Color(106, 231, 255));
+    this->PeekFront.rect.setOutlineThickness(2.f);
+    this->PeekFront.rect.setOutlineColor(sf::Color(106, 231, 255));
+    this->PeekBack.CreateButton(130.f, 50.f, this->PeekFront.rect.getPosition().x + this->CreateEmpty.rect.getSize().x / 2.f + 130/2.f + 10.f, this->ControlMenu_btn4.rect.getPosition().y, sf::Color(106, 231, 255, 0), "Back", this->font, sf::Color(106, 231, 255));
+    this->PeekBack.rect.setOutlineThickness(2.f);
+    this->PeekBack.rect.setOutlineColor(sf::Color(106, 231, 255));
 
     this->size = 0;
     this->NodeArray = nullptr;
@@ -79,6 +157,27 @@ void DataVisualization_7::display(sf::RenderWindow &window)
     this->ControlMenu_btn4.displayButton(window);
     window.draw(this->Queue1);
     window.draw(this->Queue2);
+
+    window.draw(this->menuTable);
+    speedText.setString("Speed: x" + std::to_string(speed));
+    window.draw(speedText);
+    
+    CodeScript.drawImage(window);
+    window.draw(FlowControlMenu);
+    this->NextButtonReverse.drawImage(window);
+    this->SkipButtonReverse.drawImage(window);
+    this->NextButton.drawImage(window);
+    this->SkipButton.drawImage(window);
+    this->IncreaseSpeedButton.drawImage(window);
+    this->DecreaseSpeedButton.drawImage(window);
+    if (this->isPause)
+        this->PauseButton.drawImage(window);
+    else 
+        this->ReplayButton.drawImage(window);
+    speedText.setString("Speed: x" + std::to_string(speed));
+    window.draw(speedText);
+
+
     switch (this->funcstate)
     {
     case 1:
@@ -109,10 +208,12 @@ void DataVisualization_7::handleEvent(sf::RenderWindow &window, sf::Vector2f &mo
         if (this->backButton.rect.getGlobalBounds().contains(mousePos))
         {
             currentState = Start;
+            DefaultBackground.setTexture(this->page2texture);
             this->NodeArray->DeleteQueue(this->NodeArray);
             this->NodeArray = nullptr;
             this->size = 0;
             this->funcstate = 0;
+            this->speed = 2;
         }
         else if (this->ControlMenu_btn1.rect.getGlobalBounds().contains(mousePos))
         {
@@ -121,7 +222,8 @@ void DataVisualization_7::handleEvent(sf::RenderWindow &window, sf::Vector2f &mo
         else if (this->ControlMenu_btn3.rect.getGlobalBounds().contains(mousePos))
         { // pop
             this->funcstate = 3;
-            window.clear(sf::Color(22, 73, 154));
+            window.clear();
+            window.draw(DefaultBackground);
             this->drawNodes(window);
             this->display(window);
             window.display();
@@ -132,6 +234,22 @@ void DataVisualization_7::handleEvent(sf::RenderWindow &window, sf::Vector2f &mo
             this->funcstate = 4;
             // PeekNode(window);
         } 
+        else if (this->PauseButton.ImageHolder.getGlobalBounds().contains(mousePos))
+        {
+            this->isPause = !this->isPause;
+        }
+        else if (this->IncreaseSpeedButton.ImageHolder.getGlobalBounds().contains(mousePos))
+        {
+            if (this->speed < 4) {
+                this->speed++;
+            }
+        }
+        else if (this->DecreaseSpeedButton.ImageHolder.getGlobalBounds().contains(mousePos))
+        {
+            if (this->speed > 1) {
+                this->speed--;
+            }
+        }
         else {
             this->CreateRandomFixedSize_Textbox.isSelected = false;
             this->CreateUserDefinedList_Textbox.isSelected = false;
@@ -200,27 +318,35 @@ void DataVisualization_7::handleEvent(sf::RenderWindow &window, sf::Vector2f &mo
     {
         if (this->ControlMenu_btn1.rect.getGlobalBounds().contains(mousePos))
         {
-            this->ControlMenu_btn1.rect.setFillColor(sf::Color::Black);
+            this->ControlMenu_btn1.rect.setFillColor(sf::Color(106, 231, 255));
+            this->ControlMenu_btn1.text.setFillColor(sf::Color::Black);
         } else {
-            this->ControlMenu_btn1.rect.setFillColor(sf::Color(255, 138, 39));
+            this->ControlMenu_btn1.rect.setFillColor(sf::Color(106, 231, 255, 0));
+            this->ControlMenu_btn1.text.setFillColor(sf::Color(106, 231, 255));
         }
         if (this->ControlMenu_btn2.rect.getGlobalBounds().contains(mousePos))
         {
-            this->ControlMenu_btn2.rect.setFillColor(sf::Color::Black);
+            this->ControlMenu_btn2.rect.setFillColor(sf::Color(106, 231, 255));
+            this->ControlMenu_btn2.text.setFillColor(sf::Color::Black);
         } else {
-            this->ControlMenu_btn2.rect.setFillColor(sf::Color(255, 138, 39));
+            this->ControlMenu_btn2.rect.setFillColor(sf::Color(106, 231, 255, 0));
+            this->ControlMenu_btn2.text.setFillColor(sf::Color(106, 231, 255));
         }
         if (this->ControlMenu_btn3.rect.getGlobalBounds().contains(mousePos))
         {
-            this->ControlMenu_btn3.rect.setFillColor(sf::Color::Black);
+            this->ControlMenu_btn3.rect.setFillColor(sf::Color(106, 231, 255));
+            this->ControlMenu_btn3.text.setFillColor(sf::Color::Black);
         } else {
-            this->ControlMenu_btn3.rect.setFillColor(sf::Color(255, 138, 39));
+            this->ControlMenu_btn3.rect.setFillColor(sf::Color(106, 231, 255, 0));
+            this->ControlMenu_btn3.text.setFillColor(sf::Color(106, 231, 255));
         }
         if (this->ControlMenu_btn4.rect.getGlobalBounds().contains(mousePos))
         {
-            this->ControlMenu_btn4.rect.setFillColor(sf::Color::Black);
+            this->ControlMenu_btn4.rect.setFillColor(sf::Color(106, 231, 255));
+            this->ControlMenu_btn4.text.setFillColor(sf::Color::Black);
         } else {
-            this->ControlMenu_btn4.rect.setFillColor(sf::Color(255, 138, 39));
+            this->ControlMenu_btn4.rect.setFillColor(sf::Color(106, 231, 255, 0));
+            this->ControlMenu_btn4.text.setFillColor(sf::Color(106, 231, 255));
         }
     }
     // free
@@ -320,7 +446,7 @@ void DataVisualization_7::InsertNodeFrontQueue(sf::RenderWindow &window, sf::Eve
 
 void DataVisualization_7::InsertNodeFront(sf::RenderWindow &window, int data)
 {
-    std::chrono::milliseconds delayTime(500); // 0.5 seconds
+    std::chrono::milliseconds delayTime(1000 / speed); // 0.5 seconds
     std::chrono::milliseconds delayTime1(25); // 0.5 seconds
 
     // std::this_thread::sleep_for(delayTime); 
@@ -343,8 +469,10 @@ void DataVisualization_7::InsertNodeFront(sf::RenderWindow &window, int data)
     Queue_Node* temp = this->NodeArray;
     while (temp != nullptr)
     {
-        window.clear(sf::Color(22, 73, 154));
-        temp->circle.setFillColor(sf::Color::Green);
+        window.clear();
+        window.draw(DefaultBackground);
+        temp->circle.setFillColor(sf::Color(106, 231, 255));
+        temp->text.setFillColor(sf::Color::Black);
         this->drawNodes(window);
         this->display(window);
         window.draw(newNode->circle);
@@ -356,7 +484,8 @@ void DataVisualization_7::InsertNodeFront(sf::RenderWindow &window, int data)
  // moving right
     for (int i = 0; i < 50; i++)
     {
-        window.clear(sf::Color(22, 73, 154));
+        window.clear();
+        window.draw(DefaultBackground);
         newNode->circle.move(10, 0);
         newNode->text.move(10, 0);
         this->drawNodes(window);
@@ -369,7 +498,8 @@ void DataVisualization_7::InsertNodeFront(sf::RenderWindow &window, int data)
 //moving down
     for (int i = 0; i < 50; i++)
     {
-        window.clear(sf::Color(22, 73, 154));
+        window.clear();
+        window.draw(DefaultBackground);
         newNode->circle.move(0, 3);
         newNode->text.move(0, 3);
         this->drawNodes(window);
@@ -389,7 +519,8 @@ void DataVisualization_7::InsertNodeFront(sf::RenderWindow &window, int data)
     // moving
     for (int i = 0; i < 50; i++)
     {
-        window.clear(sf::Color(22, 73, 154));
+        window.clear();
+        window.draw(DefaultBackground);
         newNode->circle.move(moving_distance * -1, 0);
         newNode->text.move(moving_distance * -1, 0);
         this->drawNodes(window);
@@ -402,10 +533,12 @@ void DataVisualization_7::InsertNodeFront(sf::RenderWindow &window, int data)
     Queue_Node* cur = this->NodeArray;
     while (cur != nullptr)
     {
-        cur->circle.setFillColor(sf::Color::Yellow);
+        cur->circle.setFillColor(sf::Color(106, 231, 255, 0));
+        cur->text.setFillColor(sf::Color(106, 231, 255));
         cur = cur->next;
     }
-    window.clear(sf::Color(22, 73, 154));
+    window.clear();
+    window.draw(DefaultBackground);
     this->drawNodes(window);
     this->display(window);
     window.display();
@@ -472,13 +605,15 @@ void DataVisualization_7::DeleteNodeFront(sf::RenderWindow &window)
         printMessage(window, "There is no Node to be deleted!");
         return;
     }
-    std::chrono::milliseconds delayTime(1000); // 0.5 seconds
+    std::chrono::milliseconds delayTime(1500 / speed); // 0.5 seconds
     std::chrono::milliseconds delayTime1(50); // 0.05
 
     if (this->NodeArray->next == nullptr)
     {
-        this->NodeArray->circle.setFillColor(sf::Color::Red);
-        window.clear(sf::Color(22, 73, 154));
+        this->NodeArray->circle.setFillColor(sf::Color(106, 231, 255));
+        this->NodeArray->text.setFillColor(sf::Color::Black);
+        window.clear();
+        window.draw(DefaultBackground);
         this->drawNodes(window);
         this->display(window);
         window.display();
@@ -491,7 +626,8 @@ void DataVisualization_7::DeleteNodeFront(sf::RenderWindow &window)
             this->NodeArray->circle.setOrigin(radius, radius);
             this->NodeArray->text.setCharacterSize(radius / 3.f * 2.f);
             this->NodeArray->text.setOrigin(this->NodeArray->text.getLocalBounds().width / 2.f, this->NodeArray->text.getLocalBounds().height / 2.f);
-            window.clear(sf::Color(22, 73, 154));
+            window.clear();
+            window.draw(DefaultBackground);
             window.draw(this->NodeArray->circle);
             window.draw(this->NodeArray->text);
             this->drawNodes(window);
@@ -509,8 +645,10 @@ void DataVisualization_7::DeleteNodeFront(sf::RenderWindow &window)
     Queue_Node* cur = this->NodeArray;
     this->NodeArray = this->NodeArray->next;
 
-    window.clear(sf::Color(22, 73, 154));
-    cur->circle.setFillColor(sf::Color::Red);
+    window.clear();
+    window.draw(DefaultBackground);
+    cur->circle.setFillColor(sf::Color(106, 231, 255));
+    cur->text.setFillColor(sf::Color::Black );
     this->NodeArray->drawArrow(window, cur->circle.getPosition(), this->NodeArray->circle.getPosition());
     window.draw(cur->circle);
     window.draw(cur->text);
@@ -527,7 +665,8 @@ void DataVisualization_7::DeleteNodeFront(sf::RenderWindow &window)
         cur->circle.setOrigin(radius, radius);
         cur->text.setCharacterSize(radius / 3.f * 2.f);
         cur->text.setOrigin(cur->text.getLocalBounds().width / 2.f, cur->text.getLocalBounds().height / 2.f);
-        window.clear(sf::Color(22, 73, 154));
+        window.clear();
+        window.draw(DefaultBackground);
         this->NodeArray->drawArrow(window, cur->circle.getPosition(), this->NodeArray->circle.getPosition());
         window.draw(cur->circle);
         window.draw(cur->text);
@@ -538,17 +677,19 @@ void DataVisualization_7::DeleteNodeFront(sf::RenderWindow &window)
     }
     delete cur;
     cur = nullptr;
-    window.clear(sf::Color(22, 73, 154));   
+    window.clear();
+    window.draw(DefaultBackground);   
     this->drawNodes(window);
     this->display(window);
     window.display();
-    // move up after delete
+    // move the rest nodes after delete
     for (int i = 0; i < 25; i++)
     {
         Queue_Node* temp = this->NodeArray;
         while (temp != nullptr)
         {
-            window.clear(sf::Color(22, 73, 154));
+            window.clear();
+            window.draw(DefaultBackground);
             temp->circle.move(-6, 0);
             temp->text.move(-6, 0);
             temp = temp->next;
@@ -557,7 +698,8 @@ void DataVisualization_7::DeleteNodeFront(sf::RenderWindow &window)
         this->display(window);
         window.display();
     }
-    window.clear(sf::Color(22, 73, 154));
+    window.clear();
+    window.draw(DefaultBackground);
     this->drawNodes(window);
     this->display(window);
     window.display();
@@ -572,18 +714,22 @@ void DataVisualization_7::PeekFrontQueue(sf::RenderWindow &window)
         printMessage(window, "Queue is empty!");
         return;
     }
-    std::chrono::milliseconds delayTime(1000); // 0.5 seconds
+    std::chrono::milliseconds delayTime(1500 / speed); // 0.5 seconds
     std::chrono::milliseconds delayTime1(50); // 0.05
-    this->NodeArray->circle.setFillColor(sf::Color::Red);
-    window.clear(sf::Color(22, 73, 154));
+    this->NodeArray->circle.setFillColor(sf::Color(106, 231, 255));
+    this->NodeArray->text.setFillColor(sf::Color::Black);
+    window.clear();
+    window.draw(DefaultBackground);
     this->drawNodes(window);
     this->display(window);
     window.display();
     std::this_thread::sleep_for(delayTime); 
     std::string mess = "Queue.top() = " + std::to_string(this->NodeArray->data);
     printMessage(window, mess);
-    this->NodeArray->circle.setFillColor(sf::Color::Yellow);
-    window.clear(sf::Color(22, 73, 154));
+    this->NodeArray->circle.setFillColor(sf::Color(106, 231, 255, 0));
+    this->NodeArray->text.setFillColor(sf::Color(106, 231, 255));
+    window.clear();
+    window.draw(DefaultBackground);
     this->drawNodes(window);
     this->display(window);
     window.display();
@@ -596,20 +742,25 @@ void DataVisualization_7::PeekBackQueue(sf::RenderWindow &window)
         printMessage(window, "Queue is empty!");
         return;
     }
-    std::chrono::milliseconds delayTime(1000); // 0.5 seconds
+    std::chrono::milliseconds delayTime(1500 / speed); // 0.5 seconds
     std::chrono::milliseconds delayTime1(50); // 0.05
     Queue_Node* temp = this->NodeArray;
     while (temp->next != nullptr) temp = temp->next;
-    temp->circle.setFillColor(sf::Color::Red);
-    window.clear(sf::Color(22, 73, 154));
+    temp->circle.setFillColor(sf::Color(106, 231, 255));
+    temp->text.setFillColor(sf::Color::Black);
+    window.clear();
+    window.draw(DefaultBackground);
     this->drawNodes(window);
     this->display(window);
     window.display();
     std::this_thread::sleep_for(delayTime); 
     std::string mess = "Queue.back() = " + std::to_string(temp->data);
     printMessage(window, mess);
-    temp->circle.setFillColor(sf::Color::Yellow);
-    window.clear(sf::Color(22, 73, 154));
+    // temp->circle.setFillColor(sf::Color::Yellow);
+    temp->circle.setFillColor(sf::Color(106, 231, 255, 0));
+    temp->text.setFillColor(sf::Color(106, 231, 255));
+    window.clear();
+    window.draw(DefaultBackground);
     this->drawNodes(window);
     this->display(window);
     window.display();

@@ -10,20 +10,14 @@
 #include <vector>
 #include <functional>
 #include <windows.h>
-#include <chrono> // for std::chrono
-#include <thread> // for std::this_thread::sleep_for
+#include <chrono> 
+#include <thread> 
 #include <unistd.h>
 #include "Button.hpp"
 #include "Queue.hpp"
 #include "Textbox.hpp"
 #include "Globals.hpp"
-
-/*
-chinh ngang
-delete
-push
-peek - 2 buttons - front - back 
-*/
+#include "Image.hpp"
 
 void CreateTitle7(sf::Text &Title, float PosX, float PosY);
 
@@ -32,10 +26,38 @@ class DataVisualization_7
 private:
 public:
     sf::Font font;
+    sf::Font titlefont;
     sf::Text Title;
+
+    sf::RectangleShape FlowControlMenu;
+    Image PauseButton;
+    Image ReplayButton;
+    Image NextButton;
+    Image SkipButton;
+    Image NextButtonReverse;
+    Image SkipButtonReverse;
+    bool isPause;
+
+    int speed;
+    sf::Text speedText;
+
+    Image IncreaseSpeedButton;
+    Image DecreaseSpeedButton;
+
+    // background
+    sf::Texture page2texture;
+
+    // code script
+    Image CodeScript;
+    sf::Vector2f CodeScriptPosition;
+    sf::RectangleShape CodeHighLight;
+    sf::Vector2f CodeHighLightPosition;
+
+    sf::RectangleShape menuTable;
 
     Button backButton;
 
+    // building queue image
     sf::RectangleShape Queue1;
     sf::RectangleShape Queue2;
 

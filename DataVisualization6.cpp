@@ -143,42 +143,6 @@ DataVisualization_6::DataVisualization_6()
     //Function Key #4: Peek
     this->ControlMenu_btn4.CreateButton(200.f, 50.f, 250.f, 1080 / 2.f + 375.f, sf::Color(106, 231, 255, 0), "Peek", this->font, sf::Color(106, 231, 255));
 
-    this->HeadText.setString("Head");
-    this->HeadText.setFont(this->font);
-    this->HeadText.setCharacterSize(20);
-    this->HeadText.setOrigin(sf::Vector2f(this->HeadText.getLocalBounds().width / 2.f , this->HeadText.getLocalBounds().height / 2.f));
-    
-    this->vtxText.setString("vtx");
-    this->vtxText.setFont(this->font);
-    this->vtxText.setCharacterSize(20);
-    this->vtxText.setOrigin(sf::Vector2f(this->vtxText.getLocalBounds().width / 2.f , this->vtxText.getLocalBounds().height / 2.f));
-    
-    this->aftText.setString("aft");
-    this->aftText.setFont(this->font);
-    this->aftText.setCharacterSize(20);
-    this->aftText.setOrigin(sf::Vector2f(this->aftText.getLocalBounds().width / 2.f , this->aftText.getLocalBounds().height / 2.f));
-    
-    this->preText.setString("pre");
-    this->preText.setFont(this->font);
-    this->preText.setCharacterSize(20);
-    this->preText.setOrigin(sf::Vector2f(this->preText.getLocalBounds().width / 2.f , this->preText.getLocalBounds().height / 2.f));
-    
-    this->delText.setString("del");
-    this->delText.setFont(this->font);
-    this->delText.setCharacterSize(20);
-    this->delText.setOrigin(sf::Vector2f(this->delText.getLocalBounds().width / 2.f , this->delText.getLocalBounds().height / 2.f));
-    
-    this->tailText.setString("tail");
-    this->tailText.setFont(this->font);
-    this->tailText.setCharacterSize(20);
-    this->tailText.setOrigin(sf::Vector2f(this->tailText.getLocalBounds().width / 2.f , this->tailText.getLocalBounds().height / 2.f));
-    
-    this->curText.setString("cur");
-    this->curText.setFont(this->font);
-    this->curText.setCharacterSize(20);
-    this->curText.setOrigin(sf::Vector2f(this->curText.getLocalBounds().width / 2.f , this->curText.getLocalBounds().height / 2.f));
-
-
     this->size = 0;
     this->NodeArray = nullptr;
 

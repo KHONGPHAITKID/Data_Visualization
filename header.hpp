@@ -1,23 +1,23 @@
 #ifndef _HEADER_HPP_
 #define _HEADER_HPP_
 
-#include <iostream>
-#include <string>
-#include <SFML/Graphics.hpp>
-#include <ctime>
-#include <cmath>
-#include <sstream>
-#include <vector>
-#include <functional>
-#include <windows.h>
-//---
-#include <chrono> // for std::chrono
-#include <thread> // for std::this_thread::sleep_for
-//---
-#include <unistd.h>
-#include "Button.hpp"
-#include "Textbox.hpp"
-#include "Globals.hpp"
+// #include <iostream>
+// #include <string>
+// #include <SFML/Graphics.hpp>
+// #include <ctime>
+// #include <cmath>
+// #include <sstream>
+// #include <vector>
+// #include <functional>
+// #include <windows.h>
+// //---
+// #include <chrono> // for std::chrono
+// #include <thread> // for std::this_thread::sleep_for
+// //---
+// #include <unistd.h>
+// #include "Button.hpp"
+// #include "Textbox.hpp"
+// #include "Globals.hpp"
 // #include "RoundedRectangle.hpp"
 #include "DataVisualization1.hpp"
 #include "DataVisualization2.hpp"
