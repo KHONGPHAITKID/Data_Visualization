@@ -1,5 +1,5 @@
 #include "DataVisualization6.hpp"
-//Stack
+
 void CreateTitle6(sf::Text &Title, float PosX, float PosY)
 {
     Title.setOutlineColor(sf::Color::Red);
@@ -76,7 +76,6 @@ DataVisualization_6::DataVisualization_6()
     this->Title.setOutlineThickness(0.f);
     this->Title.setFillColor(sf::Color(106, 231, 255));
     //Back button
-    // this->backButton.CreateButton(100.f, 50.f, 70.f, 45.f, sf::Color(128, 128, 128), "Back", this->font, sf::Color::White);
     this->backButton.CreateButton(100.f, 50.f, 70.f, 72.5f, sf::Color(128, 128, 128), "Back", this->font, sf::Color::White);
     
     // Menu table
@@ -440,7 +439,7 @@ void DataVisualization_6::InsertNodeFrontStack(sf::RenderWindow &window, sf::Eve
 
 void DataVisualization_6::InsertNodeFront(sf::RenderWindow &window, int data)
 {
-    std::chrono::milliseconds delayTime(750);
+    std::chrono::milliseconds delayTime(1500 / speed);
     if (this->NodeArray == nullptr)
     {
         this->NodeArray = this->NodeArray->createNode(960, 627.5, 75, 300, font, data);
@@ -512,7 +511,7 @@ DataVisualization_6::~DataVisualization_6()
 bool DataVisualization_6::checkSize(sf::RenderWindow &window, int size)
 {
     if (size < 6) return true;
-    std::chrono::milliseconds delayTime(750);
+    std::chrono::milliseconds delayTime(1500 / speed);
     sf::Text message;
     message.setString("Size must be from 0 to 6");
     message.setCharacterSize(50);
@@ -547,110 +546,48 @@ void DataVisualization_6::DeleteNodeFront(sf::RenderWindow &window)
         printMessage(window, "There is no Node to be deleted!");
         return;
     }
-    std::chrono::milliseconds delayTime(1000); // 0.5 seconds
+    std::chrono::milliseconds delayTime(1500 / speed); // 0.5 seconds
     std::chrono::milliseconds delayTime1(50); // 0.05
 
-    // if (this->NodeArray->next == nullptr) // one element case
-    // {
-        this->NodeArray->rec.setFillColor(sf::Color::Red);
+    this->NodeArray->rec.setFillColor(sf::Color::Red);
+    window.clear();
+    window.draw(DefaultBackground);
+    this->drawNodes(window);
+    this->display(window);
+    window.display();
+    std::this_thread::sleep_for(delayTime); 
+    
+    float movePerFrame = (this->NodeArray->rec.getPosition().y - 172.5) / 25.f;
+    for (int i = 0; i < 25; i++)
+    {
+        this->NodeArray->rec.move(0, -1 * movePerFrame);
+        this->NodeArray->text.move(0, -1 * movePerFrame);
         window.clear();
         window.draw(DefaultBackground);
         this->drawNodes(window);
         this->display(window);
         window.display();
-        std::this_thread::sleep_for(delayTime); 
-        
-        float movePerFrame = (this->NodeArray->rec.getPosition().y - 172.5) / 25.f;
-        for (int i = 0; i < 25; i++)
-        {
-            this->NodeArray->rec.move(0, -1 * movePerFrame);
-            this->NodeArray->text.move(0, -1 * movePerFrame);
-            window.clear();
-            window.draw(DefaultBackground);
-            this->drawNodes(window);
-            this->display(window);
-            window.display();
-            // std::this_thread::sleep_for(delayTime); 
-        }
-        for (int i = 0; i < 25; i++)
-        {
-            this->NodeArray->rec.move(19.2f, 0);
-            this->NodeArray->text.move(19.2f, 0);
-            window.clear();
-            window.draw(DefaultBackground);
-            this->drawNodes(window);
-            this->display(window);
-            window.display();
-            // std::this_thread::sleep_for(delayTime); 
-        }
-        Stack_Node* temp = this->NodeArray;
-        this->NodeArray = this->NodeArray->next;
-        delete temp;
+    }
+    for (int i = 0; i < 25; i++)
+    {
+        this->NodeArray->rec.move(19.2f, 0);
+        this->NodeArray->text.move(19.2f, 0);
         window.clear();
         window.draw(DefaultBackground);
         this->drawNodes(window);
         this->display(window);
         window.display();
-        this->size--;
-        return;
-    // }
-
-    // Stack_Node* cur = this->NodeArray;
-    // this->NodeArray = this->NodeArray->next;
-
-    // window.clear();
-    // cur->rec.setFillColor(sf::Color::Red);
-    // // this->NodeArray->drawArrow(window, cur->rec.getPosition(), this->NodeArray->rec.getPosition());
-    // window.draw(cur->rec);
-    // window.draw(cur->text);
-    // this->drawNodes(window);
-    // this->display(window);
-    // window.display();
-
-    // std::this_thread::sleep_for(delayTime); 
-    // while (cur->rec.getRadius() > 16)
-    // {
-    //     float radius = cur->rec.getRadius();
-    //     radius = radius * 0.75;
-    //     cur->rec.setRadius(radius);
-    //     cur->rec.setOrigin(radius, radius);
-    //     cur->text.setCharacterSize(radius / 3.f * 2.f);
-    //     cur->text.setOrigin(cur->text.getLocalBounds().width / 2.f, cur->text.getLocalBounds().height / 2.f);
-    //     window.clear();
-    //     // this->NodeArray->drawArrow(window, cur->rec.getPosition(), this->NodeArray->rec.getPosition());
-    //     window.draw(cur->rec);
-    //     window.draw(cur->text);
-    //     this->drawNodes(window);
-    //     this->display(window);
-    //     window.display();
-    //     std::this_thread::sleep_for(delayTime1); 
-    // }
-    // delete cur;
-    // cur = nullptr;
-    // window.clear();
-    // this->drawNodes(window);
-    // this->display(window);
-    // window.display();
-    // // move up after delete
-    // for (int i = 0; i < 25; i++)
-    // {
-    //     Stack_Node* temp = this->NodeArray;
-    //     while (temp != nullptr)
-    //     {
-    //         window.clear();
-    //         temp->rec.move(0, -3);
-    //         temp->text.move(0, -3);
-    //         temp = temp->next;
-    //     }
-    //     this->drawNodes(window);
-    //     this->display(window);
-    //     window.display();
-    // }
-    // window.clear();
-    // this->drawNodes(window);
-    // this->display(window);
-    // window.display();
-    // this->size--;
+    }
+    Stack_Node* temp = this->NodeArray;
+    this->NodeArray = this->NodeArray->next;
+    delete temp;
+    window.clear();
+    window.draw(DefaultBackground);
+    this->drawNodes(window);
+    this->display(window);
+    window.display();
+    this->size--;
+    return;
 }   
 
 void DataVisualization_6::PeekNode(sf::RenderWindow &window)
@@ -661,8 +598,8 @@ void DataVisualization_6::PeekNode(sf::RenderWindow &window)
         printMessage(window, "Stack is empty!");
         return;
     }
-    std::chrono::milliseconds delayTime(1000); // 0.5 seconds
-    std::chrono::milliseconds delayTime1(50); // 0.05
+    std::chrono::milliseconds delayTime(1500 / speed); 
+    std::chrono::milliseconds delayTime1(50); 
     this->NodeArray->rec.setFillColor(sf::Color::Red);
     window.clear();
     window.draw(DefaultBackground);
@@ -683,7 +620,7 @@ void DataVisualization_6::PeekNode(sf::RenderWindow &window)
 bool DataVisualization_6::printMessage(sf::RenderWindow &window, std::string message/*, int min_range, int max_range, int value*/)
 {
     // if (size < 10) return true;
-    std::chrono::milliseconds delayTime(750);
+    std::chrono::milliseconds delayTime(1500 / speed);
     sf::Text WarningMessage;
     WarningMessage.setString(message);
     WarningMessage.setCharacterSize(50);

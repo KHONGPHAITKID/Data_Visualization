@@ -102,8 +102,8 @@ public:
     void CreateUserDefinedListQueue(sf::RenderWindow &window, sf::Event &event);
 
     int getQueueSize();
-    void InsertNodeFront(sf::RenderWindow &window, int data);
-    void InsertNodeFrontQueue(sf::RenderWindow &window, sf::Event &event);
+    void InsertNodeBack(sf::RenderWindow &window, int data);
+    void InsertNodeBackQueue(sf::RenderWindow &window, sf::Event &event);
 
     void DeleteNodeFront(sf::RenderWindow &window);
 

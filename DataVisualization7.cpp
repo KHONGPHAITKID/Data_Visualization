@@ -312,7 +312,7 @@ void DataVisualization_7::handleEvent(sf::RenderWindow &window, sf::Vector2f &mo
     {
         CreateRandomFixedSizeQueue(window, ev); 
         CreateUserDefinedListQueue(window, ev);
-        InsertNodeFrontQueue(window, ev);
+        InsertNodeBackQueue(window, ev);
     }
     else if (ev.type == sf::Event::MouseMoved)
     {
@@ -427,7 +427,7 @@ void DataVisualization_7::CreateUserDefinedList(sf::RenderWindow &window, std::v
     this->size = n;
 }
 
-void DataVisualization_7::InsertNodeFrontQueue(sf::RenderWindow &window, sf::Event &event)
+void DataVisualization_7::InsertNodeBackQueue(sf::RenderWindow &window, sf::Event &event)
 {
     if (this->InsertHead_Textbox.isSelected)
     {
@@ -438,16 +438,16 @@ void DataVisualization_7::InsertNodeFrontQueue(sf::RenderWindow &window, sf::Eve
         if (str != "" && this->InsertHead_Textbox.pressEnter == true)
         {
             int value = std::stoi(str);
-            this->InsertNodeFront(window, value);
+            this->InsertNodeBack(window, value);
         }
         this->InsertHead_Textbox.pressEnter = false;
     }
 }
 
-void DataVisualization_7::InsertNodeFront(sf::RenderWindow &window, int data)
+void DataVisualization_7::InsertNodeBack(sf::RenderWindow &window, int data)
 {
-    std::chrono::milliseconds delayTime(1000 / speed); // 0.5 seconds
-    std::chrono::milliseconds delayTime1(25); // 0.5 seconds
+    std::chrono::milliseconds delayTime(1000 / speed); 
+    std::chrono::milliseconds delayTime1(25);
 
     // std::this_thread::sleep_for(delayTime); 
     if (this->NodeArray == nullptr)
@@ -484,30 +484,28 @@ void DataVisualization_7::InsertNodeFront(sf::RenderWindow &window, int data)
  // moving right
     for (int i = 0; i < 50; i++)
     {
-        window.clear();
-        window.draw(DefaultBackground);
         newNode->circle.move(10, 0);
         newNode->text.move(10, 0);
+        window.clear();
+        window.draw(DefaultBackground);
         this->drawNodes(window);
         this->display(window);
         window.draw(newNode->circle);
         window.draw(newNode->text);
         window.display();
-        // std::this_thread::sleep_for(delayTime1);
     }
 //moving down
-    for (int i = 0; i < 50; i++)
+    for (int i = 0; i < 25; i++)
     {
         window.clear();
         window.draw(DefaultBackground);
-        newNode->circle.move(0, 3);
-        newNode->text.move(0, 3);
+        newNode->circle.move(0, 6);
+        newNode->text.move(0, 6);
         this->drawNodes(window);
         this->display(window);
         window.draw(newNode->circle);
         window.draw(newNode->text);
         window.display();
-        // std::this_thread::sleep_for(delayTime1);
     }
 
     LastNode->next = newNode;
