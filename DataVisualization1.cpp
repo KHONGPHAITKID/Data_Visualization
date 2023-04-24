@@ -582,19 +582,27 @@ void DataVisualization_1::Update(sf::RenderWindow &window, int index, int value)
 }
 
 void DataVisualization_1::swapNodes(sf::RenderWindow &window, int index1, int index2) {
-    std::chrono::milliseconds delayTime(1000 / speed);
-    std::chrono::milliseconds delayTime1(50);
-    std::chrono::milliseconds delayTime2(500 / speed);
-
-    // animate the swap by moving the nodes to their new positions
-    sf::Vector2f pos1 = Array[index1].rect.getPosition();
+        sf::Vector2f pos1 = Array[index1].rect.getPosition();
     sf::Vector2f pos2 = Array[index2].rect.getPosition();
     float distance = pos2.x - pos1.x;
-    float fps = 60;
+    float fps = 60 / speed;
     if (distance < 200){
-        fps = 30;
+        fps = 30 / speed;
     }
     float movePerFrame = distance / fps;
+    // moving up
+    for (float i = 0; i < 60 / speed; i++) {
+        Array[index1].rect.move(0, -1 * 150 * speed / 60.f);
+        Array[index1].data.move(0, -1 * 150 * speed / 60.f);
+        Array[index2].rect.move(0, -1 * 150 * speed / 60.f);
+        Array[index2].data.move(0, -1 * 150 * speed / 60.f);
+
+        window.clear();
+        window.draw(DefaultBackground);
+        this->drawArray(window);
+        this->display(window);
+        window.display();
+    }
 
     for (float i = 0; i < fps; i++) {
         Array[index1].rect.move(movePerFrame, 0);
@@ -607,8 +615,21 @@ void DataVisualization_1::swapNodes(sf::RenderWindow &window, int index1, int in
         this->drawArray(window);
         this->display(window);
         window.display();
-        // std::this_thread::sleep_for(delayTime1);
     }
+    // moving down
+    for (float i = 0; i < 60 / speed; i++) {
+        Array[index1].rect.move(0, 150 * speed / 60.f);
+        Array[index1].data.move(0, 150 * speed / 60.f);
+        Array[index2].rect.move(0, 150 * speed / 60.f);
+        Array[index2].data.move(0, 150 * speed / 60.f);
+
+        window.clear();
+        window.draw(DefaultBackground);
+        this->drawArray(window);
+        this->display(window);
+        window.display();
+    }
+
     std::swap(Array[index1], Array[index2]);
     Array[index1].setValue();
     Array[index2].setValue();
@@ -618,7 +639,6 @@ void DataVisualization_1::swapNodes(sf::RenderWindow &window, int index1, int in
     this->drawArray(window);
     this->display(window);
     window.display();
-    std::this_thread::sleep_for(delayTime1);
 }
 
 void DataVisualization_1::SearchArray(sf::RenderWindow &window, sf::Event &event)
@@ -700,6 +720,12 @@ void DataVisualization_1::SortAscendingArray(sf::RenderWindow& window)
     std::chrono::milliseconds delayTime(1000 / speed);
     std::chrono::milliseconds delayTime1(50);
     std::chrono::milliseconds delayTime2(500 / speed);
+
+    if (size == 0)
+    {
+        printMessage(window, "There is no Node to be sorted");
+        return;
+    }
 
     if (size <= 1) {
         printMessage(window, "Array is already sorted");

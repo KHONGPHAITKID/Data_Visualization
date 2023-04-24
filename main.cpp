@@ -120,6 +120,7 @@ int main()
                 break;
             case DV2: // Dynamic Array
                 dv2.display(window);
+                dv2.drawArray(window);
                 break;
             case DV3: // Singly LL
                 dv3.display(window);

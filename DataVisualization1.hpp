@@ -90,8 +90,8 @@ public:
     Button SortButtonDescending;
 
     int size;
-    ArrayElement Array[10];
     int funcstate;
+    ArrayElement Array[10];
 
     DataVisualization_1();
     
