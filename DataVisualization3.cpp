@@ -523,19 +523,22 @@ void DataVisualization_3::CreateUserDefinedListSLL(sf::RenderWindow &window, sf:
 
         std::string str = "";
         this->CreateUserDefinedList_Textbox.TextboxHandleEvent(event, str);
-        // if (str != "" && (std::stoi(str) < 0 || std::stoi(str) > 10))
-        // {
-        //     this->printMessage(window, "Size must be from 1 to 10");
-        //     str = "";
-        //     this->CreateUserDefinedList_Textbox.isSelected = false;
-        //     values.clear(); // clear Vector
-        //     return;
-        // }
         if (str != "" && this->CreateUserDefinedList_Textbox.pressEnter == true)
         {
             if (num_values == 0) 
             {
                 num_values = std::stoi(str);
+                if (num_values > 10)
+                {
+                    this->printMessage(window, "Size must be from 1 to 10");
+                    num_values = 0;
+                    str = "";
+                    values.clear();
+                    this->CreateUserDefinedList_Textbox.isSelected = false;
+                    this->CreateUserDefinedList_Textbox.EnterMessage.setString("Size:");
+                    this->CreateUserDefinedList_Textbox.pressEnter = false;
+                    return;
+                }
                 this->CreateUserDefinedList_Textbox.EnterMessage.setString("Value:");
             }
             else 

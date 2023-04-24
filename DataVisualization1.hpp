@@ -18,6 +18,18 @@
 #include "Globals.hpp"
 #include "Image.hpp"
 
+class ArrayElement // one memory slot
+{
+public:
+    int value;
+    sf::RectangleShape rect;
+    sf::Text data;
+
+    // void sortAscending();
+    // void sortDescending();
+    void setValue();
+};
+
 class DataVisualization_1
 {
 private:
@@ -68,40 +80,56 @@ public:
     Button ControlMenu_btn2;
     Button UpdateButton;
     Textbox UpdateButton_Textbox;
-    // Button InsertHead;
-    // sf::Texture InsertHeadImg;
-    // Button InsertBack;
-    // sf::Texture InsertBackImg;
-    // Textbox InsertBack_Textbox;
-    // Button InsertMid;
-    // Textbox InsertMid_Textbox; // 2 input: index, value
-    // sf::Texture InsertMidImg;
     // #3
     Button ControlMenu_btn3;
     Button SearchButton;
     Textbox SearchButton_Textbox;
-    // Button DeleteHead;
-    // Button DeleteBack;
-    // Button DeleteMid;
     // #4
     Button ControlMenu_btn4;
     Button SortButtonAscending;
     Button SortButtonDescending;
-    // Button UpdateNodeButton;
-    // Textbox UpdateNode_Textbox; // index + value
-    // #5
-    // Button ControlMenu_btn5;
-    // Button SearchNodeButton; // value
-    // Textbox SearchNode_Textbox;
 
     int size;
-
+    ArrayElement Array[10];
     int funcstate;
 
     DataVisualization_1();
     
     void display(sf::RenderWindow &window);
     void handleEvent(sf::RenderWindow &window, sf::Vector2f mousePos, sf::Event &ev);
+    void drawArray(sf::RenderWindow &window);
+
+    // #1
+    void createRandomArray();
+    void createRandomSort();
+    void createRandomFixedSizeArray(sf::RenderWindow &window, sf::Event &event);
+    void createRandomFixedSize(int size);
+
+    void createUserDefinedArray(sf::RenderWindow &window, sf::Event &event);
+    void createUserDefined(sf::RenderWindow &window, std::vector<int> &values);
+
+    void UpdateArray(sf::RenderWindow &window, sf::Event &event);
+    void Update(sf::RenderWindow &window, int index, int value);
+
+    void swapNodes(sf::RenderWindow &window, int index1, int index2);
+
+    void SearchArray(sf::RenderWindow &window, sf::Event &event);
+    void Search(sf::RenderWindow &window, int value);
+
+    // void SortAscendingArray();
+    void SortAscendingArray(sf::RenderWindow& window);
+    void SortDescendingArray(sf::RenderWindow& window);
+
+    // void SortDescendingArray();
+    void sortAscending();
+    void sortDescending();
+
+    bool checksize(sf::RenderWindow &window, int size);
+    // void createUserDefinedArray(sf::RenderWindow &window, sf::Event &event);
+
+    bool printMessage(sf::RenderWindow &window, std::string message);
+
 };
+
 
 #endif

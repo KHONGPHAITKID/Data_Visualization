@@ -116,6 +116,7 @@ int main()
                 break;
             case DV1: // Static Array
                 dv1.display(window);
+                dv1.drawArray(window);
                 break;
             case DV2: // Dynamic Array
                 dv2.display(window);
