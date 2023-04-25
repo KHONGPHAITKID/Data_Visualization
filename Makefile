@@ -6,7 +6,8 @@ LIBRARY = "$(path)\lib"
 CXXFLAGS = -O2
 SFMLFLAGS =
 SOURCE = main
-SFML_INCLUDE = -lsfml-graphics -lsfml-window -lsfml-system
+SFML_INCLUDE = -lsfml-graphics -lsfml-window -lsfml-system -lcomdlg32
+
 #=======================================================================================#
 
 all: compile link run

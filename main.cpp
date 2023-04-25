@@ -1,9 +1,5 @@
 #include "header.hpp"
 
-// sf::Font font;
-// sf::Color BackGroundColor = sf::Color(22, 73, 154);
-// sf::Sprite DefaultBackground;
-
 int main()
 {
     currentState = Menu;
@@ -19,13 +15,6 @@ int main()
         return 1;
     }
     window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
-
-// Load Font
-    // if (!font.loadFromFile("Fonts/arial.ttf"))
-    // {
-    //     std::cerr << "Failed to load Fonts" << "\n";
-    //     return 1;
-    // }
 
 // Load background1
     sf::Texture backgroundTexture1;
@@ -44,6 +33,7 @@ int main()
     MenuPage menu;
     SettingPage setting;
     StartingPage StartMenu;
+    AboutPage aboutMenu;
     DataVisualization_1 dv1;
     DataVisualization_2 dv2;
     DataVisualization_3 dv3;
@@ -70,6 +60,9 @@ int main()
                     break;
                 case Settings:
                     setting.handleEvent(window, mousePos, event);
+                    break;
+                case About:
+                    aboutMenu.handleEvent(window, mousePos, event);
                     break;
                 case DV1:
                     dv1.handleEvent(window, mousePos, event);
@@ -113,6 +106,9 @@ int main()
                 break;  
             case Settings:
                 setting.display(window);
+                break;
+            case About:
+                aboutMenu.display(window);
                 break;
             case DV1: // Static Array
                 dv1.display(window);

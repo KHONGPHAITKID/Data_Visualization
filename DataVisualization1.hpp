@@ -7,11 +7,12 @@
 #include <ctime>
 #include <cmath>
 #include <sstream>
+#include <fstream>
 #include <vector>
 #include <functional>
 #include <windows.h>
-#include <chrono> // for std::chrono
-#include <thread> // for std::this_thread::sleep_for
+#include <chrono> 
+#include <thread>
 #include <unistd.h>
 #include "Button.hpp"
 #include "Textbox.hpp"
@@ -68,28 +69,52 @@ public:
     sf::RectangleShape menuTable;
 
 // Create Buttons
+    // #1
     Button ControlMenu_btn1;
-    Button CreateEmpty;
+    Button CreateFromFileButton;
     Button CreateRadom;
     Button CreateRandomSort;
     Button CreateRandomFixedSize;
     Textbox CreateRandomFixedSize_Textbox;
     Button CreateUserDefinedListButton;
-    Textbox CreateUserDefinedList_Textbox; // Input many times
-    // ADD button
+    Textbox CreateUserDefinedList_Textbox;
+    
+    // #2
     Button ControlMenu_btn2;
-    Button UpdateButton;
-    Textbox UpdateButton_Textbox;
+    Button AddFrontButton;
+    Textbox AddFront_Textbox;
+    Button AddBackButton;
+    Textbox AddBack_Textbox;
+    Button AddMiddleButton;
+    Textbox AddMiddle_Textbox;
+    
     // #3
     Button ControlMenu_btn3;
-    Button SearchButton;
-    Textbox SearchButton_Textbox;
+    Button DeleteFrontButton;
+    // Textbox DeleteFront_Textbox;
+    Button DeleteBackButton;
+    // Textbox DeleteBack_Textbox;
+    Button DeleteMiddleButton;
+    Textbox DeleteMiddle_Textbox;
+    Button ClearArrayButton;
+
     // #4
     Button ControlMenu_btn4;
+    Button UpdateButton;
+    Textbox UpdateButton_Textbox;
+    Button AccessButton;
+    Textbox AccessButton_Textbox;
+    // #5
+    Button ControlMenu_btn5;
+    Button SearchButton;
+    Textbox SearchButton_Textbox;
+    // #6
+    Button ControlMenu_btn6;
     Button SortButtonAscending;
     Button SortButtonDescending;
 
     int size;
+    int capacity;
     int funcstate;
     ArrayElement Array[10];
 
@@ -100,35 +125,43 @@ public:
     void drawArray(sf::RenderWindow &window);
 
     // #1
+    void createArrayFromFile();
     void createRandomArray();
     void createRandomSort();
     void createRandomFixedSizeArray(sf::RenderWindow &window, sf::Event &event);
     void createRandomFixedSize(int size);
-
     void createUserDefinedArray(sf::RenderWindow &window, sf::Event &event);
     void createUserDefined(sf::RenderWindow &window, std::vector<int> &values);
 
+    void AddFrontArray(sf::RenderWindow &window, sf::Event &event);
+    void AddFront(sf::RenderWindow &window, int value);
+    void AddBackArray(sf::RenderWindow &window, sf::Event &event);
+    void AddBack(sf::RenderWindow &window, int value);
+    void AddMiddleArray(sf::RenderWindow &window, sf::Event &event);
+    void AddMiddle(sf::RenderWindow &window, int index, int value);
+
+    void DeleteFront(sf::RenderWindow &window);
+    void DeleteBack(sf::RenderWindow &window);
+    void DeleteMiddleArray(sf::RenderWindow &window, sf::Event &event);
+    void DeleteMiddle(sf::RenderWindow &window, int index);
+
     void UpdateArray(sf::RenderWindow &window, sf::Event &event);
     void Update(sf::RenderWindow &window, int index, int value);
-
-    void swapNodes(sf::RenderWindow &window, int index1, int index2);
+    void AccessArray(sf::RenderWindow &window, sf::Event &event);
+    void AccessValue(sf::RenderWindow &window, int index);
 
     void SearchArray(sf::RenderWindow &window, sf::Event &event);
     void Search(sf::RenderWindow &window, int value);
 
-    // void SortAscendingArray();
+    void swapNodes(sf::RenderWindow &window, int index1, int index2);
     void SortAscendingArray(sf::RenderWindow& window);
     void SortDescendingArray(sf::RenderWindow& window);
 
-    // void SortDescendingArray();
-    void sortAscending();
-    void sortDescending();
+    // void sortAscending();
+    // void sortDescending();
 
     bool checksize(sf::RenderWindow &window, int size);
-    // void createUserDefinedArray(sf::RenderWindow &window, sf::Event &event);
-
     bool printMessage(sf::RenderWindow &window, std::string message);
-
 };
 
 

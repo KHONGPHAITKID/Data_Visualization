@@ -5,6 +5,7 @@ enum ScreenState {
     Menu,
     Start,
     Settings,
+    About,
     DV1,
     DV2,
     DV3,

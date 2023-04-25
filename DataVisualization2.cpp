@@ -116,7 +116,7 @@ DataVisualization_2::DataVisualization_2()
     this->CreateUserDefinedList_Textbox.EnterMessage.setString("Size: ");
 
     //Function Key #2: Adding
-    this->ControlMenu_btn2.CreateButton(200.f, 50.f, 250.f, 1080 / 2.f + 175.f, sf::Color(106, 231, 255, 0), "Update", this->font, sf::Color(106, 231, 255));
+    this->ControlMenu_btn2.CreateButton(200.f, 50.f, 250.f, 1080 / 2.f + 175.f, sf::Color(106, 231, 255, 0), "Access", this->font, sf::Color(106, 231, 255));
     this->UpdateButton.CreateButton(130.f, 50.f, this->ControlMenu_btn2.rect.getPosition().x + this->ControlMenu_btn2.rect.getSize().x / 2.f + 20.f + 130/2.f + 10.f, 1080 / 2.f + 175.f, sf::Color(106, 231, 255, 0), "Update", this->font, sf::Color(106, 231, 255));
     this->UpdateButton.rect.setOutlineThickness(2.f);
     this->UpdateButton.rect.setOutlineColor(sf::Color(106, 231, 255));

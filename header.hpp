@@ -28,12 +28,11 @@
 #include "DataVisualization7.hpp"
 
 #include <regex>
-// int randNum();
-// void CreateTitle(sf::Text &Title, float PosX, float PosY);
 
-// sf::Font font;
-// sf::Color BackGroundColor = sf::Color(22, 73, 154);
+//--------------------------------------------------------------------------------------------
+// TESTING
 
+//--------------------------------------------------------------------------------------------
 
 class MenuPage
 {
@@ -44,6 +43,7 @@ public:
     sf::Font titlefont;
     Button startButton;
     Button settingsButton;
+    Button aboutButton;
     sf::Texture page2texture;
     MenuPage();
     void display(sf::RenderWindow &window);
@@ -59,6 +59,24 @@ public:
     sf::Text Title;
     Button backButton;
     sf::Texture page1texture;
+
+    // Style
+    sf::Text StyleTitle;
+    Button StyleBox;
+
+    // font
+    sf::Text FontTitle;
+    Button FontBox; // Comboboxes
+
+    // titlefont
+    sf::Text TitleFontTitle;
+    Button TitleFontBox;
+
+    // music theme
+    sf::Text MusicThemeTitle;
+    Button MusicThemeBox;
+
+
     SettingPage();
     void display(sf::RenderWindow &window);
     void handleEvent(sf::RenderWindow &window, sf::Vector2f mousePos, sf::Event &event);
@@ -88,4 +106,18 @@ public:
     void handleEvent(sf::RenderWindow &window, sf::Vector2f mousePos, sf::Event &event);
 };
 
+class AboutPage
+{
+private:
+public:
+    sf::Font font;
+    sf::Font titlefont;
+    sf::Text Title;
+    Button backButton;
+    sf::Texture page1texture;
+
+    AboutPage();
+    void display(sf::RenderWindow &window);
+    void handleEvent(sf::RenderWindow &window, sf::Vector2f mousePos, sf::Event &event);
+};
 #endif

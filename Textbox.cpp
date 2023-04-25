@@ -96,10 +96,11 @@ void Textbox::deleteLastChar()
 // Get user input:
 void Textbox::inputLogic(int charTyped) {
     if (charTyped != DELETE_KEY && charTyped != ENTER_KEY && charTyped != ESCAPE_KEY && isdigit(charTyped) && text.str().length() < limit) {
-        if (text.str().length() == 0 && charTyped == '0') {
-            return;
-        }
-        else if (text.str().length() == 1 && (charTyped > '9' || charTyped < '0')) {
+        // if (text.str().length() == 0 && charTyped == '0') {
+        //     return;
+        // }
+        // else 
+        if (text.str().length() == 1 && (charTyped > '9' || charTyped < '0')) {
             return;
         }
         text << static_cast<char>(charTyped);

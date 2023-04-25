@@ -1,21 +1,5 @@
 #include "header.hpp"
 
-/*
-sf::Font font;
-sf::Color(22, 73, 154)
-sf::Color sf::Color(22, 73, 154) = sf::Color(22, 73, 154);
-const sf::Color Pink1(253, 0, 112);
-const sf::Color Purple1(104, 0, 120);
-*/
-
-// void CreateTitle(sf::Text &Title, float PosX, float PosY)
-// {
-//     Title.setOutlineColor(sf::Color::Red);
-//     Title.setOutlineThickness(5.f);
-//     Title.setFillColor(sf::Color::White);
-//     Title.setOrigin(Title.getLocalBounds().width / 2.f, Title.getLocalBounds().height / 2.f);
-//     Title.setPosition(PosX, PosY);
-// }
 //---
 MenuPage::MenuPage()
 {
@@ -38,24 +22,30 @@ MenuPage::MenuPage()
     }
 
     sf::Text temp("Data Visualization", this->font, 120);
-    CreateTitle(temp, 1920 / 2.f, 300.f);
+    CreateTitle(temp, 1920 / 2.f, 250.f);
     this->Title = temp;
 
     this->startButton.CreateButton(600, 120, 1920 / 2.f, 530, sf::Color(106, 231, 255, 0), "Start", titlefont, sf::Color(106, 231, 255));
     this->startButton.rect.setOutlineColor(sf::Color(106, 231, 255));
     this->startButton.rect.setOutlineThickness(5);
     this->startButton.setSize(60);
-    this->settingsButton.CreateButton(600, 120, 1920 / 2.f - settingsButton.rect.getSize().x / 2.f, startButton.rect.getPosition().y + startButton.rect.getSize().y / 2.f + 30 + 150 / 2.f, sf::Color(106, 231, 255, 0), "Setting", titlefont, sf::Color(106, 231, 255));
+
+    this->settingsButton.CreateButton(600, 120, 960, startButton.rect.getPosition().y + startButton.rect.getSize().y / 2.f + 30 + 150 / 2.f, sf::Color(106, 231, 255, 0), "Setting", titlefont, sf::Color(106, 231, 255));
     this->settingsButton.rect.setOutlineColor(sf::Color(106, 231, 255));
     this->settingsButton.rect.setOutlineThickness(5);
     this->settingsButton.setSize(60);
+
+    this->aboutButton.CreateButton(600, 120, 960, settingsButton.rect.getPosition().y + settingsButton.rect.getSize().y / 2.f + 30 + 150 / 2.f, sf::Color(106, 231, 255, 0), "About", titlefont, sf::Color(106, 231, 255));
+    this->aboutButton.rect.setOutlineColor(sf::Color(106, 231, 255));
+    this->aboutButton.rect.setOutlineThickness(5);
+    this->aboutButton.setSize(60);
 }
 void MenuPage::display(sf::RenderWindow &window)
 {
     window.draw(this->Title);
-    // this->backButton.displayButton(window);
     this->settingsButton.displayButton(window);
     this->startButton.displayButton(window);
+    this->aboutButton.displayButton(window);
 }
 void MenuPage::handleEvent(sf::RenderWindow &window, sf::Vector2f mousePos, sf::Event &event)
 {
@@ -71,7 +61,49 @@ void MenuPage::handleEvent(sf::RenderWindow &window, sf::Vector2f mousePos, sf::
             currentState = Settings;
             DefaultBackground.setTexture(this->page2texture);
         }
+        else if (this->aboutButton.rect.getGlobalBounds().contains(mousePos))
+        {
+            currentState = About;
+            DefaultBackground.setTexture(this->page2texture);
+        }
     }
+    if (event.type == sf::Event::MouseMoved)
+    {
+        //------
+        if (this->startButton.rect.getGlobalBounds().contains(mousePos))
+        {
+            this->startButton.rect.setFillColor(sf::Color(106, 231, 255));
+            this->startButton.text.setFillColor(sf::Color::Black);
+            this->startButton.rect.setScale(1.1, 1.1);
+        } 
+        else {
+            this->startButton.rect.setFillColor(sf::Color(106, 231, 255, 0));
+            this->startButton.text.setFillColor(sf::Color(106, 231, 255));
+            this->startButton.rect.setScale(1, 1);
+        }
+        //-------
+        if (this->settingsButton.rect.getGlobalBounds().contains(mousePos))
+        {
+            this->settingsButton.rect.setFillColor(sf::Color(106, 231, 255));
+            this->settingsButton.text.setFillColor(sf::Color::Black);
+            this->settingsButton.rect.setScale(1.1, 1.1);
+        } else {
+            this->settingsButton.rect.setFillColor(sf::Color(106, 231, 255, 0));
+            this->settingsButton.text.setFillColor(sf::Color(106, 231, 255));
+            this->settingsButton.rect.setScale(1, 1);
+        }
+        if (this->aboutButton.rect.getGlobalBounds().contains(mousePos))
+        {
+            this->aboutButton.rect.setFillColor(sf::Color(106, 231, 255));
+            this->aboutButton.text.setFillColor(sf::Color::Black);
+            this->aboutButton.rect.setScale(1.1, 1.1);
+        } else {
+            this->aboutButton.rect.setFillColor(sf::Color(106, 231, 255, 0));
+            this->aboutButton.text.setFillColor(sf::Color(106, 231, 255));
+            this->aboutButton.rect.setScale(1, 1);
+        }
+    }
+
 }
 //---
 
@@ -260,5 +292,133 @@ void StartingPage::handleEvent(sf::RenderWindow &window, sf::Vector2f mousePos, 
             currentState = DV7;
             DefaultBackground.setTexture(page3texture);
         } 
+    }
+    if (event.type == sf::Event::MouseMoved)
+    {
+        //------
+        if (this->rect1.rect.getGlobalBounds().contains(mousePos))
+        {
+            this->rect1.rect.setFillColor(sf::Color(106, 231, 255));
+            this->rect1.text.setFillColor(sf::Color::Black);
+            this->rect1.rect.setScale(1.1, 1.1);
+        } 
+        else {
+            this->rect1.rect.setFillColor(sf::Color(106, 231, 255, 0));
+            this->rect1.text.setFillColor(sf::Color(106, 231, 255));
+            this->rect1.rect.setScale(1, 1);
+        }
+        if (this->rect2.rect.getGlobalBounds().contains(mousePos))
+        {
+            this->rect2.rect.setFillColor(sf::Color(106, 231, 255));
+            this->rect2.text.setFillColor(sf::Color::Black);
+            this->rect2.rect.setScale(1.1, 1.1);
+        } 
+        else {
+            this->rect2.rect.setFillColor(sf::Color(106, 231, 255, 0));
+            this->rect2.text.setFillColor(sf::Color(106, 231, 255));
+            this->rect2.rect.setScale(1, 1);
+        }
+        if (this->rect3.rect.getGlobalBounds().contains(mousePos))
+        {
+            this->rect3.rect.setFillColor(sf::Color(106, 231, 255));
+            this->rect3.text.setFillColor(sf::Color::Black);
+            this->rect3.rect.setScale(1.1, 1.1);
+        } 
+        else {
+            this->rect3.rect.setFillColor(sf::Color(106, 231, 255, 0));
+            this->rect3.text.setFillColor(sf::Color(106, 231, 255));
+            this->rect3.rect.setScale(1, 1);
+        }
+        if (this->rect4.rect.getGlobalBounds().contains(mousePos))
+        {
+            this->rect4.rect.setFillColor(sf::Color(106, 231, 255));
+            this->rect4.text.setFillColor(sf::Color::Black);
+            this->rect4.rect.setScale(1.1, 1.1);
+        } 
+        else {
+            this->rect4.rect.setFillColor(sf::Color(106, 231, 255, 0));
+            this->rect4.text.setFillColor(sf::Color(106, 231, 255));
+            this->rect4.rect.setScale(1, 1);
+        }
+        if (this->rect5.rect.getGlobalBounds().contains(mousePos))
+        {
+            this->rect5.rect.setFillColor(sf::Color(106, 231, 255));
+            this->rect5.text.setFillColor(sf::Color::Black);
+            this->rect5.rect.setScale(1.1, 1.1);
+        } 
+        else {
+            this->rect5.rect.setFillColor(sf::Color(106, 231, 255, 0));
+            this->rect5.text.setFillColor(sf::Color(106, 231, 255));
+            this->rect5.rect.setScale(1, 1);
+        }
+        if (this->rect6.rect.getGlobalBounds().contains(mousePos))
+        {
+            this->rect6.rect.setFillColor(sf::Color(106, 231, 255));
+            this->rect6.text.setFillColor(sf::Color::Black);
+            this->rect6.rect.setScale(1.1, 1.1);
+        } 
+        else {
+            this->rect6.rect.setFillColor(sf::Color(106, 231, 255, 0));
+            this->rect6.text.setFillColor(sf::Color(106, 231, 255));
+            this->rect6.rect.setScale(1, 1);
+        }
+        if (this->rect7.rect.getGlobalBounds().contains(mousePos))
+        {
+            this->rect7.rect.setFillColor(sf::Color(106, 231, 255));
+            this->rect7.text.setFillColor(sf::Color::Black);
+            this->rect7.rect.setScale(1.1, 1.1);
+        } 
+        else {
+            this->rect7.rect.setFillColor(sf::Color(106, 231, 255, 0));
+            this->rect7.text.setFillColor(sf::Color(106, 231, 255));
+            this->rect7.rect.setScale(1, 1);
+        }
+    }   
+}
+
+AboutPage::AboutPage()
+{
+    if (!this->font.loadFromFile("Fonts/iCielBCCubano_Normal.otf"))
+    {
+        std::cerr << "Failed to load Fonts" << "\n";
+        return;
+    }
+
+    if (!this->titlefont.loadFromFile("Fonts/SVN_Blade_runner.ttf"))
+    {
+        std::cerr << "Failed to load Fonts" << "\n";
+        return;
+    }
+
+    if (!page1texture.loadFromFile("media/img/background1.jpg")) // Replace "background.jpg" with the path to your image file
+    {
+        std::cerr << "Failed to load BackGround" << "\n";
+        return ;
+    }
+
+    //Title
+    sf::Text SettingTitle("About me", this->titlefont, 100);
+    CreateTitle(SettingTitle, 1920 / 2.f, 250.f);
+    this->Title = SettingTitle;
+
+    //Back button
+    this->backButton.CreateButton(100.f, 50.f, 70.f, 45.f, sf::Color(128, 128, 128), "Back", font, sf::Color::White);
+}
+
+void AboutPage::display(sf::RenderWindow &window)
+{
+    window.draw(this->Title);
+    this->backButton.displayButton(window);
+}
+
+void AboutPage::handleEvent(sf::RenderWindow &window, sf::Vector2f mousePos, sf::Event &event)
+{
+    if (event.type == sf::Event::MouseButtonPressed)
+    {
+        if (this->backButton.rect.getGlobalBounds().contains(mousePos))
+        {
+            currentState = Menu;
+            DefaultBackground.setTexture(page1texture);
+        }
     }
 }
