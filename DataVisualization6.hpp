@@ -7,6 +7,7 @@
 #include <ctime>
 #include <cmath>
 #include <sstream>
+#include <fstream>
 #include <functional>
 #include <windows.h>
 #include <chrono> 
@@ -60,7 +61,7 @@ public:
     Button ControlMenu_btn1;
     Button CreateEmpty;
     Button CreateRadom;
-    Button CreateRandomSort;
+    Button ImportFromFileButton; // CreateRandomSort
     Button CreateRandomFixedSize;
     Textbox CreateRandomFixedSize_Textbox;
     Button CreateUserDefinedListButton;
@@ -99,6 +100,8 @@ public:
     void handleEvent(sf::RenderWindow &window, sf::Vector2f &mousePos, sf::Event &ev);
     void display(sf::RenderWindow &window);
     void drawNodes(sf::RenderWindow &window);
+
+    void ImportFromFile(sf::RenderWindow &window);
 
     bool checkSize(sf::RenderWindow &window, int size);
 

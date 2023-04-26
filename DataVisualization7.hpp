@@ -7,6 +7,7 @@
 #include <ctime>
 #include <cmath>
 #include <sstream>
+#include <fstream>
 #include <vector>
 #include <functional>
 #include <windows.h>
@@ -64,7 +65,7 @@ public:
     Button ControlMenu_btn1;
     Button CreateEmpty;
     Button CreateRadom;
-    Button CreateRandomSort;
+    Button ImportFromFileButton; // CreateRandomSort
     Button CreateRandomFixedSize;
     Textbox CreateRandomFixedSize_Textbox;
     Button CreateUserDefinedListButton;
@@ -95,6 +96,8 @@ public:
     void drawNodes(sf::RenderWindow &window);
 
     bool checkSize(sf::RenderWindow &window, int size);
+
+    void ImportFromFile(sf::RenderWindow &window);
 
     void CreateRandomFixedSizeQueue(sf::RenderWindow &window, sf::Event &event);
 

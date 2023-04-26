@@ -116,6 +116,8 @@ public:
     Button backButton;
     sf::Texture page1texture;
 
+    sf::Text paragraph;
+
     AboutPage();
     void display(sf::RenderWindow &window);
     void handleEvent(sf::RenderWindow &window, sf::Vector2f mousePos, sf::Event &event);

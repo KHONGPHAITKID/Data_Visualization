@@ -114,11 +114,11 @@ DataVisualization_6::DataVisualization_6()
     this->CreateRadom.rect.setOutlineColor(sf::Color(106, 231, 255));
     this->CreateRadom.rect.setOutlineThickness(2.f);
     
-    this->CreateRandomSort.CreateButton(130.f, 50.f, this->CreateRadom.rect.getPosition().x + this->CreateRadom.rect.getSize().x / 2.f + 130/2.f + 10.f, this->ControlMenu_btn1.rect.getPosition().y, sf::Color(106, 231, 255, 0), "Random Sort", this->font, sf::Color(106, 231, 255));
-    this->CreateRandomSort.rect.setOutlineColor(sf::Color(106, 231, 255));
-    this->CreateRandomSort.rect.setOutlineThickness(2.f);
+    this->ImportFromFileButton.CreateButton(130.f, 50.f, this->CreateRadom.rect.getPosition().x + this->CreateRadom.rect.getSize().x / 2.f + 130/2.f + 10.f, this->ControlMenu_btn1.rect.getPosition().y, sf::Color(106, 231, 255, 0), "Import", this->font, sf::Color(106, 231, 255));
+    this->ImportFromFileButton.rect.setOutlineColor(sf::Color(106, 231, 255));
+    this->ImportFromFileButton.rect.setOutlineThickness(2.f);
 
-    this->CreateRandomFixedSize.CreateButton(180.f, 50.f, this->CreateRandomSort.rect.getPosition().x + this->CreateRandomSort.rect.getSize().x / 2.f + 160.f / 2.f + 20.f, this->ControlMenu_btn1.rect.getPosition().y, sf::Color(106, 231, 255, 0), "Random Fixed Size", this->font, sf::Color(106, 231, 255));
+    this->CreateRandomFixedSize.CreateButton(180.f, 50.f, this->ImportFromFileButton.rect.getPosition().x + this->ImportFromFileButton.rect.getSize().x / 2.f + 160.f / 2.f + 20.f, this->ControlMenu_btn1.rect.getPosition().y, sf::Color(106, 231, 255, 0), "Random Fixed Size", this->font, sf::Color(106, 231, 255));
     this->CreateRandomFixedSize.rect.setOutlineColor(sf::Color(106, 231, 255));
     this->CreateRandomFixedSize.rect.setOutlineThickness(2.f);
     InitTextbox(this->CreateRandomFixedSize_Textbox, 20, sf::Color::White, true, this->CreateRandomFixedSize.rect.getPosition().x , this->CreateRandomFixedSize.rect.getPosition().y + 50, font, true, 3);
@@ -184,7 +184,7 @@ void DataVisualization_6::display(sf::RenderWindow &window)
     case 1:
         this->CreateEmpty.displayButton(window);
         this->CreateRadom.displayButton(window);;
-        this->CreateRandomSort.displayButton(window);
+        this->ImportFromFileButton.displayButton(window);
         this->CreateRandomFixedSize.displayButton(window);
         this->CreateRandomFixedSize_Textbox.drawTo(window);
         this->CreateUserDefinedListButton.displayButton(window);
@@ -280,9 +280,10 @@ void DataVisualization_6::handleEvent(sf::RenderWindow &window, sf::Vector2f &mo
             {
                 this->NodeArray->CreateRandomNodes(this->NodeArray, this->size, this->font);
             }
-            if (this->CreateRandomSort.rect.getGlobalBounds().contains(mousePos))
+            if (this->ImportFromFileButton.rect.getGlobalBounds().contains(mousePos))
             {
-                this->NodeArray->CreateRandomSortStack(this->NodeArray, this->size, this->font);
+                // this->NodeArray->ImportFromFileButtonStack(this->NodeArray, this->size, this->font);
+                ImportFromFile(window);
             }
             if (this->CreateRandomFixedSize.rect.getGlobalBounds().contains(mousePos))
             {
@@ -343,6 +344,57 @@ void DataVisualization_6::handleEvent(sf::RenderWindow &window, sf::Vector2f &mo
         }
     }
     // free
+}
+
+void DataVisualization_6::ImportFromFile(sf::RenderWindow &window)
+{
+    OPENFILENAME ofn;
+    char szFileName[MAX_PATH] = "";
+
+    ZeroMemory(&ofn, sizeof(ofn));
+    ofn.lStructSize = sizeof(ofn);
+    ofn.hwndOwner = NULL;
+    ofn.lpstrFilter = "Text Files (*.txt)\0*.txt\0All Files (*.*)\0*.*\0";
+    ofn.lpstrFile = szFileName;
+    ofn.nMaxFile = MAX_PATH;
+    ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY;
+    ofn.lpstrDefExt = "txt";
+
+    if (GetOpenFileName(&ofn) == TRUE)
+    {
+        std::ifstream inputFile(ofn.lpstrFile);
+
+        if (inputFile.is_open())
+        {
+            // std::vector<int> array;
+            // delete the Node
+            this->NodeArray->DeleteStack(this->NodeArray);
+            int num;
+            int i = 0;
+            while (inputFile >> num)
+            {
+                // Stack_Node* temp = this->NodeArray->createNode(250 + i * 150, 250, 30, this->font, num);
+                Stack_Node* temp = this->NodeArray->createNode(960, 627.5 - 75 * i, 75, 300, this->font, num);
+                this->NodeArray->addBack(this->NodeArray, temp);
+                i++;
+                if (i > 5)
+                {
+                    break;
+                }
+            }
+            this->size = i;
+            inputFile.close();
+        }
+        else
+        {
+            // Handle error
+            std::cerr << "Error opening file." << std::endl;
+        }
+    }
+    else
+    {
+        std::cout << "Cancelled" << std::endl;
+    }
 }
 
 void DataVisualization_6::CreateRandomFixedSizeStack(sf::RenderWindow &window, sf::Event &event)

@@ -403,12 +403,20 @@ AboutPage::AboutPage()
 
     //Back button
     this->backButton.CreateButton(100.f, 50.f, 70.f, 45.f, sf::Color(128, 128, 128), "Back", font, sf::Color::White);
+
+
+    paragraph.setFont(font);
+    paragraph.setString("Hello and welcome to my project!\n\nMy name is Huynh Cao Tuan Kiet (ID: 22127219).\n\nI would like to take a moment to express my gratitude to my teacher:\n\n          Teacher: Nguyen Le Hoang Dung\n\n          Teacher: HO Tuan Thanh\n\n          Teacher: Dinh Ba Tien\n\n for their guidance and support throughout this project.\n\nTheir expertise have been invaluable, and I'm so grateful to have had the opportunity to learn from them.\n\nI hope you enjoy exploring my project and having awesome experience!");
+    paragraph.setCharacterSize(22);
+    paragraph.setFillColor(sf::Color::White);
+    paragraph.setPosition(280, 380);
 }
 
 void AboutPage::display(sf::RenderWindow &window)
 {
     window.draw(this->Title);
     this->backButton.displayButton(window);
+    window.draw(paragraph);
 }
 
 void AboutPage::handleEvent(sf::RenderWindow &window, sf::Vector2f mousePos, sf::Event &event)

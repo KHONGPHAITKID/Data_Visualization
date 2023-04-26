@@ -82,11 +82,14 @@ DataVisualization_3::DataVisualization_3()
     this->backButton.CreateButton(100.f, 50.f, 70.f, 72.5f, sf::Color(128, 128, 128), "Back", this->font, sf::Color::White);
     
     // Menu table
-    this->menuTable.setSize(sf::Vector2f(200.f, 250.f));
+    this->menuTable.setSize(sf::Vector2f(200.f, 300.f));
     this->menuTable.setFillColor(sf::Color(106, 231, 255, 0));
     this->menuTable.setOutlineColor(sf::Color(106, 231, 255));
     this->menuTable.setOutlineThickness(5.f);
-    this->menuTable.setPosition(150.f, 1080 / 2.f + 100.f);
+    this->menuTable.setPosition(150.f, 1080 / 2.f + 50.f);
+
+    //Function Key #0
+    this->ImportFromFileButton.CreateButton(200.f, 50.f, 250.f, 1080 / 2.f + 75.f, sf::Color(106, 231, 255, 0), "Import", this->font, sf::Color(106, 231, 255));
 
     //Function Key #1
     this->ControlMenu_btn1.CreateButton(200.f, 50.f, 250.f, 1080 / 2.f + 125.f, sf::Color(106, 231, 255, 0), "Create", this->font, sf::Color(106, 231, 255));
@@ -222,6 +225,7 @@ void DataVisualization_3::display(sf::RenderWindow &window)
         window.draw(this->HeadText);
     }
     CodeScript.drawImage(window);
+    this->ImportFromFileButton.displayButton(window);
     this->ControlMenu_btn1.displayButton(window);
     this->ControlMenu_btn2.displayButton(window);
     this->ControlMenu_btn3.displayButton(window);
@@ -302,6 +306,10 @@ void DataVisualization_3::handleEvent(sf::RenderWindow &window, sf::Vector2f &mo
             this->size = 0;
             this->funcstate = 0;
             this->speed = 2;
+        }
+        else if (this->ImportFromFileButton.rect.getGlobalBounds().contains(mousePos))
+        {
+            ImportFromFile(window);
         }
         else if (this->ControlMenu_btn1.rect.getGlobalBounds().contains(mousePos))
         {
@@ -447,6 +455,14 @@ void DataVisualization_3::handleEvent(sf::RenderWindow &window, sf::Vector2f &mo
     }
     else if (ev.type == sf::Event::MouseMoved)
     {
+        if (this->ImportFromFileButton.rect.getGlobalBounds().contains(mousePos))
+        {
+            this->ImportFromFileButton.rect.setFillColor(sf::Color(106, 231, 255));
+            this->ImportFromFileButton.text.setFillColor(sf::Color::Black);
+        } else {
+            this->ImportFromFileButton.rect.setFillColor(sf::Color(106, 231, 255, 0));
+            this->ImportFromFileButton.text.setFillColor(sf::Color(106, 231, 255));
+        }
         if (this->ControlMenu_btn1.rect.getGlobalBounds().contains(mousePos))
         {
             this->ControlMenu_btn1.rect.setFillColor(sf::Color(106, 231, 255));
@@ -486,9 +502,55 @@ void DataVisualization_3::handleEvent(sf::RenderWindow &window, sf::Vector2f &mo
         } else {
             this->ControlMenu_btn5.rect.setFillColor(sf::Color(106, 231, 255, 0));
             this->ControlMenu_btn5.text.setFillColor(sf::Color(106, 231, 255));
-        }
+        } 
     }
     // free
+}
+
+void DataVisualization_3::ImportFromFile(sf::RenderWindow &window)
+{
+    OPENFILENAME ofn;
+    char szFileName[MAX_PATH] = "";
+
+    ZeroMemory(&ofn, sizeof(ofn));
+    ofn.lStructSize = sizeof(ofn);
+    ofn.hwndOwner = NULL;
+    ofn.lpstrFilter = "Text Files (*.txt)\0*.txt\0All Files (*.*)\0*.*\0";
+    ofn.lpstrFile = szFileName;
+    ofn.nMaxFile = MAX_PATH;
+    ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY;
+    ofn.lpstrDefExt = "txt";
+
+    if (GetOpenFileName(&ofn) == TRUE)
+    {
+        std::ifstream inputFile(ofn.lpstrFile);
+
+        if (inputFile.is_open())
+        {
+            // std::vector<int> array;
+            // delete the Node
+            this->NodeArray->DeleteSLL(this->NodeArray);
+            int num;
+            int i = 0;
+            while (inputFile >> num)
+            {
+                SLL_Node* temp = this->NodeArray->createNode(250 + i * 150, 250, 30, this->font, num);
+                this->NodeArray->addBack(this->NodeArray, temp);
+                i++;
+            }
+            this->size = i;
+            inputFile.close();
+        }
+        else
+        {
+            // Handle error
+            std::cerr << "Error opening file." << std::endl;
+        }
+    }
+    else
+    {
+        std::cout << "Cancelled" << std::endl;
+    }
 }
 
 void DataVisualization_3::CreateRandomFixedSizeSLL(sf::RenderWindow &window, sf::Event &event)

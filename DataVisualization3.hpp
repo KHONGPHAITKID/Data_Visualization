@@ -7,6 +7,7 @@
 #include <ctime>
 #include <cmath>
 #include <sstream>
+#include <fstream>
 #include <functional>
 #include <windows.h>
 #include <chrono> // for std::chrono
@@ -49,8 +50,6 @@ public:
     // background
     sf::Texture page2texture;
 
-    // sf::Sprite CodeScript;
-    // sf::RectangleShape CodeHighLight;
     Image CodeScript;
     sf::Vector2f CodeScriptPosition;
     sf::RectangleShape CodeHighLight;
@@ -58,6 +57,7 @@ public:
 
     sf::RectangleShape menuTable;
     // Create Buttons
+    Button ImportFromFileButton;
     Button ControlMenu_btn1;
     Button CreateEmpty;
     Button CreateRadom;
@@ -116,6 +116,8 @@ public:
     void drawNodes(sf::RenderWindow &window);
 
     bool checkSize(sf::RenderWindow &window, int size);
+
+    void ImportFromFile(sf::RenderWindow &window);
 
     void CreateRandomFixedSizeSLL(sf::RenderWindow &window, sf::Event &event);
 

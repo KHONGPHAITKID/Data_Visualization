@@ -7,6 +7,7 @@
 #include <ctime>
 #include <cmath>
 #include <sstream>
+#include <fstream>
 #include <functional>
 #include <windows.h>
 #include <chrono> 
@@ -58,6 +59,7 @@ public:
 
     sf::RectangleShape menuTable;
     // Create Buttons
+    Button ImportFromFileButton;
     Button ControlMenu_btn1;
     Button CreateEmpty;
     Button CreateRadom;
@@ -116,6 +118,8 @@ public:
     void drawNodes(sf::RenderWindow &window);
 
     bool checkSize(sf::RenderWindow &window, int size);
+
+    void ImportFromFile(sf::RenderWindow &window);
 
     void CreateRandomFixedSizeDLL(sf::RenderWindow &window, sf::Event &event);
 
