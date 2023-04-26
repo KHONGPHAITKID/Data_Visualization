@@ -290,6 +290,7 @@ void DataVisualization_1::handleEvent(sf::RenderWindow &window, sf::Vector2f mou
             currentState = Start;
             DefaultBackground.setTexture(this->page2texture);
             this->size = 0;
+            this->capacity = 0;
             this->funcstate = 0;
             this->speed = 2;
         }
@@ -409,6 +410,7 @@ void DataVisualization_1::handleEvent(sf::RenderWindow &window, sf::Vector2f mou
             }
             if (this->ClearArrayButton.rect.getGlobalBounds().contains(mousePos))
             {
+                this->capacity = 0;
                 this->size = 0;
             }
             break;
@@ -457,9 +459,7 @@ void DataVisualization_1::handleEvent(sf::RenderWindow &window, sf::Vector2f mou
         AddFrontArray(window, ev);
         AddMiddleArray(window, ev);
         AddBackArray(window, ev);
-        // DeleteFrontArray(window, ev);    
         DeleteMiddleArray(window, ev);
-        // DeleteBackArray(window, ev);
         AccessArray(window, ev);
     }
     else if (ev.type == sf::Event::MouseMoved)
@@ -517,7 +517,7 @@ void DataVisualization_1::handleEvent(sf::RenderWindow &window, sf::Vector2f mou
 
 void DataVisualization_1::drawArray(sf::RenderWindow &window)
 {
-    if (this->size != 0)
+    if (this->capacity != 0)
     {
         sf::Text IndexText;
         IndexText.setCharacterSize(30);
@@ -535,9 +535,16 @@ void DataVisualization_1::drawArray(sf::RenderWindow &window)
         index.setFont(font);
         index.setPosition(this->Array[i].rect.getPosition().x, this->Array[i].rect.getPosition().y + 100);
         index.setOrigin(index.getLocalBounds().width / 2.f, index.getLocalBounds().height / 2.f);
+        // Array[i].rect.setFillColor(sf::Color(106, 231, 255));
         window.draw(this->Array[i].rect);
         window.draw(this->Array[i].data);
         window.draw(index);
+    }
+    for (int i = this->size; i < this->capacity; i++)
+    {
+        Array[i].rect.setFillColor(sf::Color(7, 155, 184));
+        window.draw(this->Array[i].rect);
+        window.draw(this->Array[i].data);
     }
 }
 
@@ -569,6 +576,7 @@ void DataVisualization_1::createArrayFromFile()
             while (inputFile >> num)
             {
                 this->Array[index].value = num;
+                this->Array[index].rect.setFillColor(sf::Color(106, 231, 255));
                 this->Array[index++].setValue();
             }
 
@@ -594,6 +602,7 @@ void DataVisualization_1::createRandomArray()
     for (int i = 0; i < this->size; i++)
     {
         this->Array[i].value = 1 + rand() % 99;
+        this->Array[i].rect.setFillColor(sf::Color(106, 231, 255));
         this->Array[i].setValue();
     }
 }
@@ -605,6 +614,7 @@ void DataVisualization_1::createRandomSort()
     for (int i = 0; i < this->size; i++)
     {
         this->Array[i].value = 1 + rand() % 99;
+        this->Array[i].rect.setFillColor(sf::Color(106, 231, 255));
         this->Array[i].setValue();
     }
     // this->SortAscendingArray(window);
@@ -617,6 +627,7 @@ void DataVisualization_1::createRandomFixedSize(int size)
     for (int i = 0; i < this->size; i++)
     {
         this->Array[i].value = 1 + rand() % 99;
+        this->Array[i].rect.setFillColor(sf::Color(106, 231, 255));
         this->Array[i].setValue();
     }
 }
@@ -698,6 +709,7 @@ void DataVisualization_1::createUserDefined(sf::RenderWindow &window, std::vecto
     for (int i = 0; i < this->size; i++)
     {
         this->Array[i].value = values[i];
+        this->Array[i].rect.setFillColor(sf::Color(106, 231, 255));
         this->Array[i].setValue();
     }
 }
@@ -722,6 +734,46 @@ void DataVisualization_1::AddFrontArray(sf::RenderWindow &window, sf::Event &eve
 void DataVisualization_1::AddFront(sf::RenderWindow &window, int value)
 {
     // coding...
+    if (this->size == this->capacity)
+    {
+        this->printMessage(window, "Array's capacity is full");
+        return;
+    }
+    Image arrow;
+    arrow.setImage("media/DataVisualization1/arrowright.png");
+    this->Array[0].rect.setFillColor(sf::Color::White);
+    for (int i = 0; i < size; i++)
+    {
+        arrow.setPosition(sf::Vector2f(467 + arrow.ImageHolder.getLocalBounds().width / 2.f + 100 * i, 350 - arrow.ImageHolder.getLocalBounds().height + 4));
+        arrow.drawImage(window);
+    }
+    window.display();
+    sf::sleep(sf::milliseconds(2000 / speed));
+
+    this->size++;
+    for (int i = this->size - 1; i >= 0; i--)
+    {
+        this->Array[i+1].value = this->Array[i].value;
+        this->Array[i+1].setValue();
+    }
+    // make the first element white and return it back
+    this->Array[0].rect.setFillColor(sf::Color::White);
+    this->Array[size - 1].rect.setFillColor(sf::Color(106, 231, 255));
+    window.clear();
+    window.draw(DefaultBackground);
+    this->display(window);
+    this->drawArray(window);
+    window.display();
+    sf::sleep(sf::milliseconds(2000 / speed));
+
+    this->Array[0].value = value;
+    this->Array[0].setValue();
+    window.clear();
+    window.draw(DefaultBackground);
+    this->display(window);
+    this->drawArray(window);
+    window.display();
+    this->Array[0].rect.setFillColor(sf::Color(106, 231, 255));
 }
 void DataVisualization_1::AddBackArray(sf::RenderWindow &window, sf::Event &event)
 {
@@ -743,23 +795,149 @@ void DataVisualization_1::AddBackArray(sf::RenderWindow &window, sf::Event &even
 void DataVisualization_1::AddBack(sf::RenderWindow &window, int value)
 {
     // coding...
+    if (this->size == this->capacity)
+    {
+        this->printMessage(window, "Array's capacity is full");
+        return;
+    }
+    this->size++;
+    this->Array[size-1].rect.setFillColor(sf::Color::White);
+    window.clear();
+    window.draw(DefaultBackground);
+    this->display(window);
+    this->drawArray(window);
+    window.display();
+    sf::sleep(sf::milliseconds(2000 / speed));
+
+    this->Array[size-1].value = value;
+    this->Array[size-1].setValue();
+    this->Array[size-1].rect.setFillColor(sf::Color(106, 231, 255));
 }
 void DataVisualization_1::AddMiddleArray(sf::RenderWindow &window, sf::Event &event)
 {
     // coding...
+    if (this->AddMiddle_Textbox.isSelected)
+    {
+        static int value = -1;
+        static int index = -1;
+
+        // Receive input string
+        std::string str = "";
+        this->AddMiddle_Textbox.TextboxHandleEvent(event, str);
+
+        // Check if input is valid
+        if (str != "" && this->AddMiddle_Textbox.pressEnter == true)
+        {
+            if (index == -1) {
+                index = std::stoi(str);
+                this->AddMiddle_Textbox.EnterMessage.setString("Value: ");
+            }
+            else {
+                value = std::stoi(str);
+                this->AddMiddle(window, index, value);
+                this->AddMiddle_Textbox.EnterMessage.setString("Index: ");
+                value = -1;
+                index = -1;
+            }
+            this->AddMiddle_Textbox.pressEnter = false;
+        }
+    }
 }
 void DataVisualization_1::AddMiddle(sf::RenderWindow &window, int index, int value)
 {
     // coding...
+    if (this->size == this->capacity)
+    {
+        this->printMessage(window, "Array's capacity is full");
+        return;
+    }
+    if (index < 0 || index > this->size)
+    {
+        this->printMessage(window, "Index is out of range");
+        return;
+    }
+    if (index == 0)
+    {
+        AddFront(window, value);
+        return;
+    }
+    if (index == size - 1)
+    {
+        AddBack(window, value);
+        return;
+    }
+    Image arrow;
+    arrow.setImage("media/DataVisualization1/arrowright.png");
+    // this->Array[0].rect.setFillColor(sf::Color::White);
+    this->Array[index].rect.setFillColor(sf::Color::White);
+    for (int i = index; i < size; i++)
+    {
+        arrow.setPosition(sf::Vector2f(467 + arrow.ImageHolder.getLocalBounds().width / 2.f + 100 * i, 350 - arrow.ImageHolder.getLocalBounds().height + 4));
+        arrow.drawImage(window);
+    }
+    window.display();
+    sf::sleep(sf::milliseconds(2000 / speed));
+
+    this->size++;
+    for (int i = this->size - 1; i >= index; i--)
+    {
+        this->Array[i+1].value = this->Array[i].value;
+        this->Array[i+1].setValue();
+    }
+    // make the first element white and return it back
+    this->Array[size - 1].rect.setFillColor(sf::Color(106, 231, 255));
+    window.clear();
+    window.draw(DefaultBackground);
+    this->display(window);
+    this->drawArray(window);
+    window.display();
+    sf::sleep(sf::milliseconds(2000 / speed));
+
+    this->Array[index].value = value;
+    this->Array[index].setValue();
+    window.clear();
+    window.draw(DefaultBackground);
+    this->display(window);
+    this->drawArray(window);
+    window.display();
+    this->Array[index].rect.setFillColor(sf::Color(106, 231, 255));
 }
 
 void DataVisualization_1::DeleteFront(sf::RenderWindow &window)
 {
     // coding...
+    if (this->size == 0)
+    {
+        this->printMessage(window, "Array is empty");
+        return;
+    }
+    Image arrow;
+    arrow.setImage("media/DataVisualization1/arrowleft.png");
+    for (int i = 0; i < size - 1; i++)
+    {
+        arrow.setPosition(sf::Vector2f(467 + arrow.ImageHolder.getLocalBounds().width / 2.f + 100 * i, 350 - arrow.ImageHolder.getLocalBounds().height + 4));
+        arrow.drawImage(window);
+    }
+    window.display();
+    sf::sleep(sf::milliseconds(2000 / speed));
+
+    this->size--;
+    for (int i = 0; i < this->size; i++)
+    {
+        this->Array[i].value = this->Array[i + 1].value;
+        this->Array[i].setValue();
+    }
+    
 }
 void DataVisualization_1::DeleteBack(sf::RenderWindow &window)
 {
     // coding...
+    if (this->size == 0)
+    {
+        this->printMessage(window, "Array is empty");
+        return;
+    }
+    this->size--;
 }
 void DataVisualization_1::DeleteMiddleArray(sf::RenderWindow &window, sf::Event &event)
 {
@@ -779,7 +957,42 @@ void DataVisualization_1::DeleteMiddleArray(sf::RenderWindow &window, sf::Event 
 }
 void DataVisualization_1::DeleteMiddle(sf::RenderWindow &window, int index)
 {
-    // coding...
+    if (this->size == 0)
+    {
+        this->printMessage(window, "Array is empty");
+        return;
+    }
+    if (index < 0 || index >= this->size)
+    {
+        this->printMessage(window, "Index out of range");
+        return;
+    }
+    if (index == 0)
+    {
+        DeleteFront(window);
+        return;
+    }
+    if (index == size-1)
+    {
+        DeleteBack(window);
+        return;
+    }
+    Image arrow;
+    arrow.setImage("media/DataVisualization1/arrowleft.png");
+    for (int i = index; i < size - 1; i++)
+    {
+        arrow.setPosition(sf::Vector2f(467 + arrow.ImageHolder.getLocalBounds().width / 2.f + 100 * i, 350 - arrow.ImageHolder.getLocalBounds().height + 4));
+        arrow.drawImage(window);
+    }
+    window.display();
+    sf::sleep(sf::milliseconds(2000 / speed));
+
+    this->size--;
+    for (int i = index; i < this->size; i++)
+    {
+        this->Array[i].value = this->Array[i + 1].value;
+        this->Array[i].setValue();
+    }
 }
 
 void DataVisualization_1::AccessArray(sf::RenderWindow &window, sf::Event &event)
@@ -812,7 +1025,7 @@ void DataVisualization_1::AccessValue(sf::RenderWindow &window, int index)
     {
         // CodeScript.drawImage(window);
         // window.draw(CodeHighLight);
-        printMessage(window, "There is no Node to be accessed!");
+        printMessage(window, "No element to be accessed!");
         return;
     }
     if (index >= this->size || index < 0)
@@ -836,7 +1049,6 @@ void DataVisualization_1::AccessValue(sf::RenderWindow &window, int index)
     this->Array[index].rect.setFillColor(sf::Color(106, 231, 255));
     return;
 }
-
 
 void DataVisualization_1::UpdateArray(sf::RenderWindow &window, sf::Event &event)
 {
@@ -877,7 +1089,7 @@ void DataVisualization_1::Update(sf::RenderWindow &window, int index, int value)
      if (this->size == 0)
     {
         window.draw(CodeHighLight);
-        printMessage(window, "There is no Node to be Update");
+        printMessage(window, "No element to be Update");
         return;
     }
     
@@ -912,7 +1124,7 @@ void DataVisualization_1::Update(sf::RenderWindow &window, int index, int value)
 }
 
 void DataVisualization_1::swapNodes(sf::RenderWindow &window, int index1, int index2) {
-        sf::Vector2f pos1 = Array[index1].rect.getPosition();
+    sf::Vector2f pos1 = Array[index1].rect.getPosition();
     sf::Vector2f pos2 = Array[index2].rect.getPosition();
     float distance = pos2.x - pos1.x;
     float fps = 60 / speed;
@@ -1002,7 +1214,7 @@ void DataVisualization_1::Search(sf::RenderWindow &window, int value)
     {
         // CodeScript.drawImage(window);
         // window.draw(CodeHighLight);
-        printMessage(window, "There is no Node to be searched");
+        printMessage(window, "No element to be searched");
         return;
     }
     // code
@@ -1049,7 +1261,7 @@ void DataVisualization_1::SortAscendingArray(sf::RenderWindow& window)
 
     if (size == 0)
     {
-        printMessage(window, "There is no Node to be sorted");
+        printMessage(window, "No element to be sorted");
         return;
     }
 
@@ -1077,6 +1289,12 @@ void DataVisualization_1::SortDescendingArray(sf::RenderWindow& window)
     std::chrono::milliseconds delayTime(1000 / speed);
     std::chrono::milliseconds delayTime1(50);
     std::chrono::milliseconds delayTime2(500 / speed);
+
+    if (size == 0)
+    {
+        printMessage(window, "No element to be sorted");
+        return;
+    }
 
     if (size <= 1) {
         printMessage(window, "Array is already sorted");
