@@ -2,9 +2,19 @@
 
 ScreenState currentState = Menu;
 
-sf::Font font;
+sf::Font defautFont;
+sf::Font defautTitleFont;
+
 sf::Color BackGroundColor = sf::Color(22, 73, 154);
 sf::Sprite DefaultBackground;
+sf::Texture BackGround0;
+sf::Texture BackGround1;
+sf::Texture BackGround2;
+
+sf::Color ButtonColor;
+sf::Color ButtonOutlineColor;
+sf::Color MainColor;
+
 Image NotificationImage;
 
 void CreateTitle(sf::Text &Title, float PosX, float PosY)

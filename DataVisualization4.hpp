@@ -47,9 +47,6 @@ public:
     Image IncreaseSpeedButton;
     Image DecreaseSpeedButton;
 
-    // background
-    sf::Texture page2texture;
-
     // sf::Sprite CodeScript;
     // sf::RectangleShape CodeHighLight;
     Image CodeScript;

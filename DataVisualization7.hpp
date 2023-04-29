@@ -45,9 +45,6 @@ public:
     Image IncreaseSpeedButton;
     Image DecreaseSpeedButton;
 
-    // background
-    sf::Texture page2texture;
-
     // code script
     Image CodeScript;
     sf::Vector2f CodeScriptPosition;

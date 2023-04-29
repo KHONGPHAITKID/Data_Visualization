@@ -17,17 +17,43 @@ int main()
     window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
 // Load background1
-    sf::Texture backgroundTexture1;
-    if (!backgroundTexture1.loadFromFile("media/img/background1.jpg")) // Replace "background.jpg" with the path to your image file
+
+    if (!BackGround0.loadFromFile("media/img/background1.jpg")) 
     {
-        std::cerr << "Failed to load BackGround" << "\n";
+        std::cerr << "Failed to load BackGround0" << "\n";
         return 1;
     }
-    DefaultBackground.setTexture(backgroundTexture1);    
+    if (!BackGround1.loadFromFile("media/img/menubackground.jpg")) 
+    {
+        std::cerr << "Failed to load BackGround2" << "\n";
+        return 1;
+    }
+    if (!BackGround2.loadFromFile("media/img/background2.jpg")) 
+    {
+        std::cerr << "Failed to load BackGround1" << "\n";
+        return 1;
+    }
+    DefaultBackground.setTexture(BackGround0);    
+    ButtonColor = sf::Color(106, 231, 255, 0);
+    ButtonOutlineColor = sf::Color(106, 231, 255);
+    MainColor = sf::Color(106, 231, 255);
 
+    if (!defautFont.loadFromFile("Fonts/iCielBCCubano_Normal.otf"))
+    {
+        std::cerr << "Failed to load Fonts" << "\n";
+        return 0;
+    }
+
+    if (!defautTitleFont.loadFromFile("Fonts/SVN_Blade_runner.ttf"))
+    {
+        std::cerr << "Failed to load Fonts" << "\n";
+        return 0;
+    }
 
     //----------TESTING------------
-
+    // sf::ColorPicker colorPicker;
+    // colorPicker.setPosition(100, 100);
+    // colorPicker.setFillColor(sf::Color::White);
     //----------TESTING------------
 
     MenuPage menu;

@@ -12,22 +12,8 @@ void CreateTitle4(sf::Text &Title, float PosX, float PosY)
 DataVisualization_4::DataVisualization_4()
 {
     //Fonts
-    if (!this->font.loadFromFile("Fonts/iCielBCCubano_Normal.otf"))
-    {
-        std::cerr << "Failed to load Fonts" << "\n";
-        return;
-    }
-    if (!this->titlefont.loadFromFile("Fonts/SVN_Blade_runner.ttf"))
-    {
-        std::cerr << "Failed to load Fonts" << "\n";
-        return;
-    }
-    if (!page2texture.loadFromFile("media/img/menubackground.jpg")) 
-    {
-        std::cerr << "Failed to load BackGround" << "\n";
-        return;
-    }
-
+    this->font = defautFont;
+    this->titlefont = defautTitleFont;
     NotificationImage.setImage("media/img/noti_board.png");
     NotificationImage.setPosition(sf::Vector2f(1920/2.f, 1080/4.f - 150));
 
@@ -300,7 +286,7 @@ void DataVisualization_4::handleEvent(sf::RenderWindow &window, sf::Vector2f &mo
         if (this->backButton.rect.getGlobalBounds().contains(mousePos))
         {
             currentState = Start;
-            DefaultBackground.setTexture(this->page2texture);
+            DefaultBackground.setTexture(BackGround1);
             this->NodeArray->DeleteDLL(this->NodeArray);
             this->NodeArray = nullptr;
             this->size = 0;

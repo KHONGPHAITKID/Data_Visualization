@@ -11,22 +11,8 @@ void CreateTitle7(sf::Text &Title, float PosX, float PosY)
 
 DataVisualization_7::DataVisualization_7()
 {
-if (!this->font.loadFromFile("Fonts/iCielBCCubano_Normal.otf"))
-    {
-        std::cerr << "Failed to load Fonts" << "\n";
-        return;
-    }
-    if (!this->titlefont.loadFromFile("Fonts/SVN_Blade_runner.ttf"))
-    {
-        std::cerr << "Failed to load Fonts" << "\n";
-        return;
-    }
-    if (!page2texture.loadFromFile("media/img/menubackground.jpg")) 
-    {
-        std::cerr << "Failed to load BackGround" << "\n";
-        return;
-    }
-
+    this->font = defautFont;
+    this->titlefont = defautTitleFont;
     this->speed = 2;
     speedText.setCharacterSize(20);
     speedText.setFont(font);
@@ -208,7 +194,7 @@ void DataVisualization_7::handleEvent(sf::RenderWindow &window, sf::Vector2f &mo
         if (this->backButton.rect.getGlobalBounds().contains(mousePos))
         {
             currentState = Start;
-            DefaultBackground.setTexture(this->page2texture);
+            DefaultBackground.setTexture(BackGround1);
             this->NodeArray->DeleteQueue(this->NodeArray);
             this->NodeArray = nullptr;
             this->size = 0;

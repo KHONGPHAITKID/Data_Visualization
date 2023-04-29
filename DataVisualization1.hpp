@@ -57,9 +57,6 @@ public:
     Image IncreaseSpeedButton;
     Image DecreaseSpeedButton;
 
-// background
-    sf::Texture page2texture;
-
 // HighLight Code
     Image CodeScript;
     sf::Vector2f CodeScriptPosition;
@@ -163,6 +160,6 @@ public:
     bool checksize(sf::RenderWindow &window, int size);
     bool printMessage(sf::RenderWindow &window, std::string message);
 };
-
+void pause_for(std::chrono::milliseconds duration);
 
 #endif

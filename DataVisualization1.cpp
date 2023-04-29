@@ -1,5 +1,5 @@
 #include "DataVisualization1.hpp"
-
+// MainColor
 void ArrayElement::setValue()
 {
     this->data.setString(std::to_string(this->value));
@@ -10,22 +10,8 @@ void ArrayElement::setValue()
 DataVisualization_1::DataVisualization_1()
 {
 //Fonts
-    if (!this->font.loadFromFile("Fonts/iCielBCCubano_Normal.otf"))
-    {
-        std::cerr << "Failed to load Fonts" << "\n";
-        return;
-    }
-    if (!this->titlefont.loadFromFile("Fonts/SVN_Blade_runner.ttf"))
-    {
-        std::cerr << "Failed to load Fonts" << "\n";
-        return;
-    }
-    if (!page2texture.loadFromFile("media/img/menubackground.jpg")) 
-    {
-        std::cerr << "Failed to load BackGround" << "\n";
-        return;
-    }
-
+    this->font = defautFont;
+    this->titlefont = defautTitleFont;
     NotificationImage.setImage("media/img/noti_board.png");
     NotificationImage.setPosition(sf::Vector2f(1920/2.f, 1080/4.f - 150));
 
@@ -66,7 +52,7 @@ DataVisualization_1::DataVisualization_1()
     CodeScript.setPosition(CodeScriptPosition);
     CodeHighLight.setSize(sf::Vector2f(700, 30));
     CodeHighLight.setFillColor(sf::Color(106, 231, 255, 100));
-    CodeHighLight.setOutlineColor(sf::Color(106, 231, 255));
+    CodeHighLight.setOutlineColor(ButtonOutlineColor);
     //---------------------
     CodeHighLight.setPosition(CodeHighLightPosition); // 1170 - 697.5 ~ 35
     //---------------------
@@ -81,108 +67,108 @@ DataVisualization_1::DataVisualization_1()
     
     // Menu table
     this->menuTable.setSize(sf::Vector2f(200.f, 300.f));
-    this->menuTable.setFillColor(sf::Color(106, 231, 255, 0));
-    this->menuTable.setOutlineColor(sf::Color(106, 231, 255));
+    this->menuTable.setFillColor(ButtonColor);
+    this->menuTable.setOutlineColor(ButtonOutlineColor);
     this->menuTable.setOutlineThickness(5.f);
     this->menuTable.setPosition(150.f, 1080 / 2.f + 100.f);
 
     //Function Key #1
-    this->ControlMenu_btn1.CreateButton(200.f, 50.f, 250.f, 1080 / 2.f + 125.f, sf::Color(106, 231, 255, 0), "Create", this->font, sf::Color(106, 231, 255));
+    this->ControlMenu_btn1.CreateButton(200.f, 50.f, 250.f, 1080 / 2.f + 125.f, ButtonColor, "Create", this->font, MainColor);
 
-    this->CreateFromFileButton.CreateButton(130.f, 50.f, this->ControlMenu_btn1.rect.getPosition().x + this->ControlMenu_btn1.rect.getSize().x / 2.f + 20.f + 130/2.f + 10.f, this->ControlMenu_btn1.rect.getPosition().y, sf::Color(106, 231, 255, 0), "Import", this->font, sf::Color(106, 231, 255));
+    this->CreateFromFileButton.CreateButton(130.f, 50.f, this->ControlMenu_btn1.rect.getPosition().x + this->ControlMenu_btn1.rect.getSize().x / 2.f + 20.f + 130/2.f + 10.f, this->ControlMenu_btn1.rect.getPosition().y, ButtonColor, "Import", this->font, MainColor);
     this->CreateFromFileButton.rect.setOutlineThickness(2.f);
-    this->CreateFromFileButton.rect.setOutlineColor(sf::Color(106, 231, 255));
+    this->CreateFromFileButton.rect.setOutlineColor(ButtonOutlineColor);
 
-    this->CreateRadom.CreateButton(130.f, 50.f, this->CreateFromFileButton.rect.getPosition().x + this->CreateFromFileButton.rect.getSize().x / 2.f + 130/2.f + 10.f, this->ControlMenu_btn1.rect.getPosition().y, sf::Color(106, 231, 255, 0), "Random", this->font, sf::Color(106, 231, 255));
+    this->CreateRadom.CreateButton(130.f, 50.f, this->CreateFromFileButton.rect.getPosition().x + this->CreateFromFileButton.rect.getSize().x / 2.f + 130/2.f + 10.f, this->ControlMenu_btn1.rect.getPosition().y, ButtonColor, "Random", this->font, MainColor);
     this->CreateRadom.rect.setOutlineThickness(2.f);
-    this->CreateRadom.rect.setOutlineColor(sf::Color(106, 231, 255));
+    this->CreateRadom.rect.setOutlineColor(ButtonOutlineColor);
 
-    this->CreateRandomSort.CreateButton(130.f, 50.f, this->CreateRadom.rect.getPosition().x + this->CreateRadom.rect.getSize().x / 2.f + 130/2.f + 10.f, this->ControlMenu_btn1.rect.getPosition().y, sf::Color(106, 231, 255, 0), "Random Sort", this->font, sf::Color(106, 231, 255));
+    this->CreateRandomSort.CreateButton(130.f, 50.f, this->CreateRadom.rect.getPosition().x + this->CreateRadom.rect.getSize().x / 2.f + 130/2.f + 10.f, this->ControlMenu_btn1.rect.getPosition().y, ButtonColor, "Random Sort", this->font, MainColor);
     this->CreateRandomSort.rect.setOutlineThickness(2.f);
-    this->CreateRandomSort.rect.setOutlineColor(sf::Color(106, 231, 255));
+    this->CreateRandomSort.rect.setOutlineColor(ButtonOutlineColor);
     
-    this->CreateRandomFixedSize.CreateButton(180.f, 50.f, this->CreateRandomSort.rect.getPosition().x + this->CreateRandomSort.rect.getSize().x / 2.f + 160.f / 2.f + 20.f, this->ControlMenu_btn1.rect.getPosition().y, sf::Color(106, 231, 255, 0), "Random Fixed Size", this->font, sf::Color(106, 231, 255));
+    this->CreateRandomFixedSize.CreateButton(180.f, 50.f, this->CreateRandomSort.rect.getPosition().x + this->CreateRandomSort.rect.getSize().x / 2.f + 160.f / 2.f + 20.f, this->ControlMenu_btn1.rect.getPosition().y, ButtonColor, "Random Fixed Size", this->font, MainColor);
     this->CreateRandomFixedSize.rect.setOutlineThickness(2.f);
-    this->CreateRandomFixedSize.rect.setOutlineColor(sf::Color(106, 231, 255));
+    this->CreateRandomFixedSize.rect.setOutlineColor(ButtonOutlineColor);
 
     InitTextbox(this->CreateRandomFixedSize_Textbox, 20, sf::Color::White, true, this->CreateRandomFixedSize.rect.getPosition().x , this->CreateRandomFixedSize.rect.getPosition().y + 50, font, true, 3);
     this->CreateRandomFixedSize_Textbox.EnterMessage.setString("Size: ");
     
-    this->CreateUserDefinedListButton.CreateButton(130.f, 50.f, this->CreateRandomFixedSize.rect.getPosition().x + this->CreateRandomFixedSize.rect.getSize().x / 2.f + 130.f/2.f + 10.f, this->ControlMenu_btn1.rect.getPosition().y, sf::Color(106, 231, 255, 0), "User Defined", this->font, sf::Color(106, 231, 255));
+    this->CreateUserDefinedListButton.CreateButton(130.f, 50.f, this->CreateRandomFixedSize.rect.getPosition().x + this->CreateRandomFixedSize.rect.getSize().x / 2.f + 130.f/2.f + 10.f, this->ControlMenu_btn1.rect.getPosition().y, ButtonColor, "User Defined", this->font, MainColor);
     this->CreateUserDefinedListButton.rect.setOutlineThickness(2.f);
-    this->CreateUserDefinedListButton.rect.setOutlineColor(sf::Color(106, 231, 255));
+    this->CreateUserDefinedListButton.rect.setOutlineColor(ButtonOutlineColor);
 
     InitTextbox(this->CreateUserDefinedList_Textbox, 20, sf::Color::White, true, this->CreateUserDefinedListButton.rect.getPosition().x, this->CreateUserDefinedListButton.rect.getPosition().y + 50, font, true, 3);
     this->CreateUserDefinedList_Textbox.EnterMessage.setString("Size: ");
 
     // Function Key #2: Add
-    this->ControlMenu_btn2.CreateButton(200.f, 50.f, 250.f, 1080 / 2.f + 175.f, sf::Color(106, 231, 255, 0), "Add", this->font, sf::Color(106, 231, 255));
-    this->AddFrontButton.CreateButton(130.f, 50.f, this->ControlMenu_btn2.rect.getPosition().x + this->ControlMenu_btn2.rect.getSize().x / 2.f + 20.f + 130/2.f + 10.f, this->ControlMenu_btn2.rect.getPosition().y, sf::Color(106, 231, 255, 0), "Front", this->font, sf::Color(106, 231, 255));
+    this->ControlMenu_btn2.CreateButton(200.f, 50.f, 250.f, 1080 / 2.f + 175.f, ButtonColor, "Add", this->font, MainColor);
+    this->AddFrontButton.CreateButton(130.f, 50.f, this->ControlMenu_btn2.rect.getPosition().x + this->ControlMenu_btn2.rect.getSize().x / 2.f + 20.f + 130/2.f + 10.f, this->ControlMenu_btn2.rect.getPosition().y, ButtonColor, "Front", this->font, MainColor);
     this->AddFrontButton.rect.setOutlineThickness(2.f);
-    this->AddFrontButton.rect.setOutlineColor(sf::Color(106, 231, 255));
+    this->AddFrontButton.rect.setOutlineColor(ButtonOutlineColor);
     InitTextbox(this->AddFront_Textbox, 20, sf::Color::White, true, this->AddFrontButton.rect.getPosition().x, this->AddFrontButton.rect.getPosition().y + 50, font, true, 3);
     this->AddFront_Textbox.EnterMessage.setString("Value: ");
-    this->AddMiddleButton.CreateButton(130.f, 50.f, this->AddFrontButton.rect.getPosition().x + this->AddFrontButton.rect.getSize().x / 2.f + 130/2.f + 10.f, this->ControlMenu_btn2.rect.getPosition().y, sf::Color(106, 231, 255, 0), "Middle", this->font, sf::Color(106, 231, 255));
+    this->AddMiddleButton.CreateButton(130.f, 50.f, this->AddFrontButton.rect.getPosition().x + this->AddFrontButton.rect.getSize().x / 2.f + 130/2.f + 10.f, this->ControlMenu_btn2.rect.getPosition().y, ButtonColor, "Middle", this->font, MainColor);
     this->AddMiddleButton.rect.setOutlineThickness(2.f);
-    this->AddMiddleButton.rect.setOutlineColor(sf::Color(106, 231, 255));
+    this->AddMiddleButton.rect.setOutlineColor(ButtonOutlineColor);
     InitTextbox(this->AddMiddle_Textbox, 20, sf::Color::White, true, this->AddMiddleButton.rect.getPosition().x, this->AddMiddleButton.rect.getPosition().y + 50, font, true, 3);
     this->AddMiddle_Textbox.EnterMessage.setString("Index: ");
-    this->AddBackButton.CreateButton(130.f, 50.f, this->AddMiddleButton.rect.getPosition().x + this->AddMiddleButton.rect.getSize().x / 2.f + 130/2.f + 10.f, this->ControlMenu_btn2.rect.getPosition().y, sf::Color(106, 231, 255, 0), "Back", this->font, sf::Color(106, 231, 255));
+    this->AddBackButton.CreateButton(130.f, 50.f, this->AddMiddleButton.rect.getPosition().x + this->AddMiddleButton.rect.getSize().x / 2.f + 130/2.f + 10.f, this->ControlMenu_btn2.rect.getPosition().y, ButtonColor, "Back", this->font, MainColor);
     this->AddBackButton.rect.setOutlineThickness(2.f);
-    this->AddBackButton.rect.setOutlineColor(sf::Color(106, 231, 255));
+    this->AddBackButton.rect.setOutlineColor(ButtonOutlineColor);
     InitTextbox(this->AddBack_Textbox, 20, sf::Color::White, true, this->AddBackButton.rect.getPosition().x, this->AddBackButton.rect.getPosition().y + 50, font, true, 3);
     this->AddBack_Textbox.EnterMessage.setString("Value: ");
 
     // Function Key #3: Delete
-    this->ControlMenu_btn3.CreateButton(200.f, 50.f, 250.f, 1080 / 2.f + 225.f, sf::Color(106, 231, 255, 0), "Delete", this->font, sf::Color(106, 231, 255));
-    this->DeleteFrontButton.CreateButton(130.f, 50.f, this->ControlMenu_btn3.rect.getPosition().x + this->ControlMenu_btn3.rect.getSize().x / 2.f + 20.f + 130/2.f + 10.f, this->ControlMenu_btn3.rect.getPosition().y, sf::Color(106, 231, 255, 0), "Front", this->font, sf::Color(106, 231, 255));
+    this->ControlMenu_btn3.CreateButton(200.f, 50.f, 250.f, 1080 / 2.f + 225.f, ButtonColor, "Delete", this->font, MainColor);
+    this->DeleteFrontButton.CreateButton(130.f, 50.f, this->ControlMenu_btn3.rect.getPosition().x + this->ControlMenu_btn3.rect.getSize().x / 2.f + 20.f + 130/2.f + 10.f, this->ControlMenu_btn3.rect.getPosition().y, ButtonColor, "Front", this->font, MainColor);
     this->DeleteFrontButton.rect.setOutlineThickness(2.f);
-    this->DeleteFrontButton.rect.setOutlineColor(sf::Color(106, 231, 255));
+    this->DeleteFrontButton.rect.setOutlineColor(ButtonOutlineColor);
     // InitTextbox(this->DeleteFront_Textbox, 20, sf::Color::White, true, this->DeleteFrontButton.rect.getPosition().x, this->DeleteFrontButton.rect.getPosition().y + 50, font, true, 3);
     // this->DeleteFront_Textbox.EnterMessage.setString("Index: ");
-    this->DeleteMiddleButton.CreateButton(130.f, 50.f, this->DeleteFrontButton.rect.getPosition().x + this->DeleteFrontButton.rect.getSize().x / 2.f + 130/2.f + 10.f, this->ControlMenu_btn3.rect.getPosition().y, sf::Color(106, 231, 255, 0), "Middle", this->font, sf::Color(106, 231, 255));
+    this->DeleteMiddleButton.CreateButton(130.f, 50.f, this->DeleteFrontButton.rect.getPosition().x + this->DeleteFrontButton.rect.getSize().x / 2.f + 130/2.f + 10.f, this->ControlMenu_btn3.rect.getPosition().y, ButtonColor, "Middle", this->font, MainColor);
     this->DeleteMiddleButton.rect.setOutlineThickness(2.f);
-    this->DeleteMiddleButton.rect.setOutlineColor(sf::Color(106, 231, 255));
+    this->DeleteMiddleButton.rect.setOutlineColor(ButtonOutlineColor);
     InitTextbox(this->DeleteMiddle_Textbox, 20, sf::Color::White, true, this->DeleteMiddleButton.rect.getPosition().x, this->DeleteMiddleButton.rect.getPosition().y + 50, font, true, 3);
     this->DeleteMiddle_Textbox.EnterMessage.setString("Index: ");
-    this->DeleteBackButton.CreateButton(130.f, 50.f, this->DeleteMiddleButton.rect.getPosition().x + this->DeleteMiddleButton.rect.getSize().x / 2.f + 130/2.f + 10.f, this->ControlMenu_btn3.rect.getPosition().y, sf::Color(106, 231, 255, 0), "Back", this->font, sf::Color(106, 231, 255));
+    this->DeleteBackButton.CreateButton(130.f, 50.f, this->DeleteMiddleButton.rect.getPosition().x + this->DeleteMiddleButton.rect.getSize().x / 2.f + 130/2.f + 10.f, this->ControlMenu_btn3.rect.getPosition().y, ButtonColor, "Back", this->font, MainColor);
     this->DeleteBackButton.rect.setOutlineThickness(2.f);
-    this->DeleteBackButton.rect.setOutlineColor(sf::Color(106, 231, 255));
+    this->DeleteBackButton.rect.setOutlineColor(ButtonOutlineColor);
     // InitTextbox(this->DeleteBack_Textbox, 20, sf::Color::White, true, this->DeleteBackButton.rect.getPosition().x, this->DeleteBackButton.rect.getPosition().y + 50, font, true, 3);
     // this->DeleteBack_Textbox.EnterMessage.setString("Index: ");
-    this->ClearArrayButton.CreateButton(130.f, 50.f, this->DeleteBackButton.rect.getPosition().x + this->DeleteBackButton.rect.getSize().x / 2.f + 130/2.f + 10.f, this->ControlMenu_btn3.rect.getPosition().y, sf::Color(106, 231, 255, 0), "Clear", this->font, sf::Color(106, 231, 255));
+    this->ClearArrayButton.CreateButton(130.f, 50.f, this->DeleteBackButton.rect.getPosition().x + this->DeleteBackButton.rect.getSize().x / 2.f + 130/2.f + 10.f, this->ControlMenu_btn3.rect.getPosition().y, ButtonColor, "Clear", this->font, MainColor);
     this->ClearArrayButton.rect.setOutlineThickness(2.f);
-    this->ClearArrayButton.rect.setOutlineColor(sf::Color(106, 231, 255));
+    this->ClearArrayButton.rect.setOutlineColor(ButtonOutlineColor);
 
     //Function Key #4: Access
-    this->ControlMenu_btn4.CreateButton(200.f, 50.f, 250.f, 1080 / 2.f + 275.f, sf::Color(106, 231, 255, 0), "Access", this->font, sf::Color(106, 231, 255));
-    this->UpdateButton.CreateButton(130.f, 50.f, this->ControlMenu_btn4.rect.getPosition().x + this->ControlMenu_btn4.rect.getSize().x / 2.f + 20.f + 130/2.f + 10.f, 1080 / 2.f + 275.f, sf::Color(106, 231, 255, 0), "Update", this->font, sf::Color(106, 231, 255));
+    this->ControlMenu_btn4.CreateButton(200.f, 50.f, 250.f, 1080 / 2.f + 275.f, ButtonColor, "Access", this->font, MainColor);
+    this->UpdateButton.CreateButton(130.f, 50.f, this->ControlMenu_btn4.rect.getPosition().x + this->ControlMenu_btn4.rect.getSize().x / 2.f + 20.f + 130/2.f + 10.f, 1080 / 2.f + 275.f, ButtonColor, "Update", this->font, MainColor);
     this->UpdateButton.rect.setOutlineThickness(2.f);
-    this->UpdateButton.rect.setOutlineColor(sf::Color(106, 231, 255));
+    this->UpdateButton.rect.setOutlineColor(ButtonOutlineColor);
     InitTextbox(this->UpdateButton_Textbox, 20, sf::Color::White, true, this->UpdateButton.rect.getPosition().x, this->UpdateButton.rect.getPosition().y + 50, font, true, 3);
     this->UpdateButton_Textbox.EnterMessage.setString("Index: ");
-    this->AccessButton.CreateButton(130.f, 50.f, this->UpdateButton.rect.getPosition().x + this->UpdateButton.rect.getSize().x / 2.f + 130/2.f + 10.f, 1080 / 2.f + 275.f, sf::Color(106, 231, 255, 0), "Access", this->font, sf::Color(106, 231, 255));
+    this->AccessButton.CreateButton(130.f, 50.f, this->UpdateButton.rect.getPosition().x + this->UpdateButton.rect.getSize().x / 2.f + 130/2.f + 10.f, 1080 / 2.f + 275.f, ButtonColor, "Access", this->font, MainColor);
     this->AccessButton.rect.setOutlineThickness(2.f);
-    this->AccessButton.rect.setOutlineColor(sf::Color(106, 231, 255));
+    this->AccessButton.rect.setOutlineColor(ButtonOutlineColor);
     InitTextbox(this->AccessButton_Textbox, 20, sf::Color::White, true, this->AccessButton.rect.getPosition().x, this->AccessButton.rect.getPosition().y + 50, font, true, 3);
     this->AccessButton_Textbox.EnterMessage.setString("Index: ");
 
     //Function Key #5: Search
-    this->ControlMenu_btn5.CreateButton(200.f, 50.f, 250.f, 1080 / 2.f + 325.f, sf::Color(106, 231, 255, 0), "Search", this->font, sf::Color(106, 231, 255));
-    this->SearchButton.CreateButton(130.f, 50.f, this->ControlMenu_btn5.rect.getPosition().x + this->ControlMenu_btn5.rect.getSize().x / 2.f + 20.f + 130/2.f + 10.f, 1080 / 2.f + 325.f, sf::Color(106, 231, 255, 0), "Search", this->font, sf::Color(106, 231, 255));
+    this->ControlMenu_btn5.CreateButton(200.f, 50.f, 250.f, 1080 / 2.f + 325.f, ButtonColor, "Search", this->font, MainColor);
+    this->SearchButton.CreateButton(130.f, 50.f, this->ControlMenu_btn5.rect.getPosition().x + this->ControlMenu_btn5.rect.getSize().x / 2.f + 20.f + 130/2.f + 10.f, 1080 / 2.f + 325.f, ButtonColor, "Search", this->font, MainColor);
     this->SearchButton.rect.setOutlineThickness(2.f);
-    this->SearchButton.rect.setOutlineColor(sf::Color(106, 231, 255));
+    this->SearchButton.rect.setOutlineColor(ButtonOutlineColor);
     InitTextbox(this->SearchButton_Textbox, 20, sf::Color::White, true, this->SearchButton.rect.getPosition().x, this->SearchButton.rect.getPosition().y + 50, font, true, 3);
     this->SearchButton_Textbox.EnterMessage.setString("Value: ");
 
     //Function Key #6: Sort
-    this->ControlMenu_btn6.CreateButton(200.f, 50.f, 250.f, 1080 / 2.f + 375.f, sf::Color(106, 231, 255, 0), "Sort", this->font, sf::Color(106, 231, 255));
-    this->SortButtonAscending.CreateButton(130.f, 50.f, this->ControlMenu_btn6.rect.getPosition().x + this->ControlMenu_btn6.rect.getSize().x / 2.f + 20.f + 130/2.f + 10.f, 1080 / 2.f + 375.f, sf::Color(106, 231, 255, 0), "Ascending", this->font, sf::Color(106, 231, 255));
+    this->ControlMenu_btn6.CreateButton(200.f, 50.f, 250.f, 1080 / 2.f + 375.f, ButtonColor, "Sort", this->font, MainColor);
+    this->SortButtonAscending.CreateButton(130.f, 50.f, this->ControlMenu_btn6.rect.getPosition().x + this->ControlMenu_btn6.rect.getSize().x / 2.f + 20.f + 130/2.f + 10.f, 1080 / 2.f + 375.f, ButtonColor, "Ascending", this->font, MainColor);
     this->SortButtonAscending.rect.setOutlineThickness(2.f);
-    this->SortButtonAscending.rect.setOutlineColor(sf::Color(106, 231, 255));
-    this->SortButtonDescending.CreateButton(130.f, 50.f, this->SortButtonAscending.rect.getPosition().x + this->SortButtonAscending.rect.getSize().x / 2.f + 10.f + 130/2.f, 1080 / 2.f + 375.f, sf::Color(106, 231, 255, 0), "Descending", this->font, sf::Color(106, 231, 255));
+    this->SortButtonAscending.rect.setOutlineColor(ButtonOutlineColor);
+    this->SortButtonDescending.CreateButton(130.f, 50.f, this->SortButtonAscending.rect.getPosition().x + this->SortButtonAscending.rect.getSize().x / 2.f + 10.f + 130/2.f, 1080 / 2.f + 375.f, ButtonColor, "Descending", this->font, MainColor);
     this->SortButtonDescending.rect.setOutlineThickness(2.f);
-    this->SortButtonDescending.rect.setOutlineColor(sf::Color(106, 231, 255));
+    this->SortButtonDescending.rect.setOutlineColor(ButtonOutlineColor);
     
     for (int i = 0; i < 10; i++)
     {
@@ -190,7 +176,7 @@ DataVisualization_1::DataVisualization_1()
         this->Array[i].rect.setSize(sf::Vector2f(100.f, 100.f));
         this->Array[i].rect.setPosition(sf::Vector2f(450 + 100 * i, 400));
         this->Array[i].rect.setOrigin(sf::Vector2f(50, 50));
-        this->Array[i].rect.setFillColor(sf::Color(106, 231, 255));
+        this->Array[i].rect.setFillColor(MainColor);
         this->Array[i].rect.setOutlineColor(sf::Color::Black);
         this->Array[i].rect.setOutlineThickness(2.f);
 
@@ -288,7 +274,7 @@ void DataVisualization_1::handleEvent(sf::RenderWindow &window, sf::Vector2f mou
         if (this->backButton.rect.getGlobalBounds().contains(mousePos))
         {
             currentState = Start;
-            DefaultBackground.setTexture(this->page2texture);
+            DefaultBackground.setTexture(BackGround1);
             this->size = 0;
             this->capacity = 0;
             this->funcstate = 0;
@@ -466,51 +452,51 @@ void DataVisualization_1::handleEvent(sf::RenderWindow &window, sf::Vector2f mou
     {
         if (this->ControlMenu_btn1.rect.getGlobalBounds().contains(mousePos))
         {
-            this->ControlMenu_btn1.rect.setFillColor(sf::Color(106, 231, 255));
+            this->ControlMenu_btn1.rect.setFillColor(MainColor);
             this->ControlMenu_btn1.text.setFillColor(sf::Color::Black);
         } else {
-            this->ControlMenu_btn1.rect.setFillColor(sf::Color(106, 231, 255, 0));
-            this->ControlMenu_btn1.text.setFillColor(sf::Color(106, 231, 255));
+            this->ControlMenu_btn1.rect.setFillColor(ButtonColor);
+            this->ControlMenu_btn1.text.setFillColor(MainColor);
         }
         if (this->ControlMenu_btn2.rect.getGlobalBounds().contains(mousePos))
         {
-            this->ControlMenu_btn2.rect.setFillColor(sf::Color(106, 231, 255));
+            this->ControlMenu_btn2.rect.setFillColor(MainColor);
             this->ControlMenu_btn2.text.setFillColor(sf::Color::Black);
         } else {
-            this->ControlMenu_btn2.rect.setFillColor(sf::Color(106, 231, 255, 0));
-            this->ControlMenu_btn2.text.setFillColor(sf::Color(106, 231, 255));
+            this->ControlMenu_btn2.rect.setFillColor(ButtonColor);
+            this->ControlMenu_btn2.text.setFillColor(MainColor);
         }
         if (this->ControlMenu_btn3.rect.getGlobalBounds().contains(mousePos))
         {
-            this->ControlMenu_btn3.rect.setFillColor(sf::Color(106, 231, 255));
+            this->ControlMenu_btn3.rect.setFillColor(MainColor);
             this->ControlMenu_btn3.text.setFillColor(sf::Color::Black);
         } else {
-            this->ControlMenu_btn3.rect.setFillColor(sf::Color(106, 231, 255, 0));
-            this->ControlMenu_btn3.text.setFillColor(sf::Color(106, 231, 255));
+            this->ControlMenu_btn3.rect.setFillColor(ButtonColor);
+            this->ControlMenu_btn3.text.setFillColor(MainColor);
         }
         if (this->ControlMenu_btn4.rect.getGlobalBounds().contains(mousePos))
         {
-            this->ControlMenu_btn4.rect.setFillColor(sf::Color(106, 231, 255));
+            this->ControlMenu_btn4.rect.setFillColor(MainColor);
             this->ControlMenu_btn4.text.setFillColor(sf::Color::Black);
         } else {
-            this->ControlMenu_btn4.rect.setFillColor(sf::Color(106, 231, 255, 0));
-            this->ControlMenu_btn4.text.setFillColor(sf::Color(106, 231, 255));
+            this->ControlMenu_btn4.rect.setFillColor(ButtonColor);
+            this->ControlMenu_btn4.text.setFillColor(MainColor);
         }
         if (this->ControlMenu_btn5.rect.getGlobalBounds().contains(mousePos))
         {
-            this->ControlMenu_btn5.rect.setFillColor(sf::Color(106, 231, 255));
+            this->ControlMenu_btn5.rect.setFillColor(MainColor);
             this->ControlMenu_btn5.text.setFillColor(sf::Color::Black);
         } else {
-            this->ControlMenu_btn5.rect.setFillColor(sf::Color(106, 231, 255, 0));
-            this->ControlMenu_btn5.text.setFillColor(sf::Color(106, 231, 255));
+            this->ControlMenu_btn5.rect.setFillColor(ButtonColor);
+            this->ControlMenu_btn5.text.setFillColor(MainColor);
         }
         if (this->ControlMenu_btn6.rect.getGlobalBounds().contains(mousePos))
         {
-            this->ControlMenu_btn6.rect.setFillColor(sf::Color(106, 231, 255));
+            this->ControlMenu_btn6.rect.setFillColor(MainColor);
             this->ControlMenu_btn6.text.setFillColor(sf::Color::Black);
         } else {
-            this->ControlMenu_btn6.rect.setFillColor(sf::Color(106, 231, 255, 0));
-            this->ControlMenu_btn6.text.setFillColor(sf::Color(106, 231, 255));
+            this->ControlMenu_btn6.rect.setFillColor(ButtonColor);
+            this->ControlMenu_btn6.text.setFillColor(MainColor);
         }
     }
 }
@@ -535,7 +521,7 @@ void DataVisualization_1::drawArray(sf::RenderWindow &window)
         index.setFont(font);
         index.setPosition(this->Array[i].rect.getPosition().x, this->Array[i].rect.getPosition().y + 100);
         index.setOrigin(index.getLocalBounds().width / 2.f, index.getLocalBounds().height / 2.f);
-        // Array[i].rect.setFillColor(sf::Color(106, 231, 255));
+        // Array[i].rect.setFillColor(MainColor);
         window.draw(this->Array[i].rect);
         window.draw(this->Array[i].data);
         window.draw(index);
@@ -577,7 +563,7 @@ void DataVisualization_1::createArrayFromFile()
             while (inputFile >> num)
             {
                 this->Array[index].value = num;
-                this->Array[index].rect.setFillColor(sf::Color(106, 231, 255));
+                this->Array[index].rect.setFillColor(MainColor);
                 this->Array[index++].setValue();
                 i++;
                 if (i == this->capacity)
@@ -586,7 +572,7 @@ void DataVisualization_1::createArrayFromFile()
             while (i < this->capacity)
             {
                 this->Array[index].value = -1;
-                this->Array[index].rect.setFillColor(sf::Color(106, 231, 255));
+                this->Array[index].rect.setFillColor(MainColor);
                 this->Array[index++].setValue();                
                 i++;
             }
@@ -612,7 +598,7 @@ void DataVisualization_1::createRandomArray()
     for (int i = 0; i < this->size; i++)
     {
         this->Array[i].value = 1 + rand() % 99;
-        this->Array[i].rect.setFillColor(sf::Color(106, 231, 255));
+        this->Array[i].rect.setFillColor(MainColor);
         this->Array[i].setValue();
     }
 }
@@ -624,7 +610,7 @@ void DataVisualization_1::createRandomSort()
     for (int i = 0; i < this->size; i++)
     {
         this->Array[i].value = 1 + rand() % 99;
-        this->Array[i].rect.setFillColor(sf::Color(106, 231, 255));
+        this->Array[i].rect.setFillColor(MainColor);
         this->Array[i].setValue();
     }
     // this->SortAscendingArray(window);
@@ -637,7 +623,7 @@ void DataVisualization_1::createRandomFixedSize(int size)
     for (int i = 0; i < this->size; i++)
     {
         this->Array[i].value = 1 + rand() % 99;
-        this->Array[i].rect.setFillColor(sf::Color(106, 231, 255));
+        this->Array[i].rect.setFillColor(MainColor);
         this->Array[i].setValue();
     }
 }
@@ -719,7 +705,7 @@ void DataVisualization_1::createUserDefined(sf::RenderWindow &window, std::vecto
     for (int i = 0; i < this->size; i++)
     {
         this->Array[i].value = values[i];
-        this->Array[i].rect.setFillColor(sf::Color(106, 231, 255));
+        this->Array[i].rect.setFillColor(MainColor);
         this->Array[i].setValue();
     }
 }
@@ -768,7 +754,7 @@ void DataVisualization_1::AddFront(sf::RenderWindow &window, int value)
     }
     // make the first element white and return it back
     this->Array[0].rect.setFillColor(sf::Color::White);
-    this->Array[size - 1].rect.setFillColor(sf::Color(106, 231, 255));
+    this->Array[size - 1].rect.setFillColor(MainColor);
     window.clear();
     window.draw(DefaultBackground);
     this->display(window);
@@ -783,7 +769,7 @@ void DataVisualization_1::AddFront(sf::RenderWindow &window, int value)
     this->display(window);
     this->drawArray(window);
     window.display();
-    this->Array[0].rect.setFillColor(sf::Color(106, 231, 255));
+    this->Array[0].rect.setFillColor(MainColor);
 }
 void DataVisualization_1::AddBackArray(sf::RenderWindow &window, sf::Event &event)
 {
@@ -821,7 +807,7 @@ void DataVisualization_1::AddBack(sf::RenderWindow &window, int value)
 
     this->Array[size-1].value = value;
     this->Array[size-1].setValue();
-    this->Array[size-1].rect.setFillColor(sf::Color(106, 231, 255));
+    this->Array[size-1].rect.setFillColor(MainColor);
 }
 void DataVisualization_1::AddMiddleArray(sf::RenderWindow &window, sf::Event &event)
 {
@@ -895,7 +881,7 @@ void DataVisualization_1::AddMiddle(sf::RenderWindow &window, int index, int val
         this->Array[i+1].setValue();
     }
     // make the first element white and return it back
-    this->Array[size - 1].rect.setFillColor(sf::Color(106, 231, 255));
+    this->Array[size - 1].rect.setFillColor(MainColor);
     window.clear();
     window.draw(DefaultBackground);
     this->display(window);
@@ -910,7 +896,7 @@ void DataVisualization_1::AddMiddle(sf::RenderWindow &window, int index, int val
     this->display(window);
     this->drawArray(window);
     window.display();
-    this->Array[index].rect.setFillColor(sf::Color(106, 231, 255));
+    this->Array[index].rect.setFillColor(MainColor);
 }
 
 void DataVisualization_1::DeleteFront(sf::RenderWindow &window)
@@ -1056,7 +1042,7 @@ void DataVisualization_1::AccessValue(sf::RenderWindow &window, int index)
     std::string mess = "Array[" + std::to_string(index) + "] = " + std::to_string(this->Array[index].value);
     printMessage(window, mess);
 
-    this->Array[index].rect.setFillColor(sf::Color(106, 231, 255));
+    this->Array[index].rect.setFillColor(MainColor);
     return;
 }
 
@@ -1130,31 +1116,31 @@ void DataVisualization_1::Update(sf::RenderWindow &window, int index, int value)
     // NotificationImage.drawImage(window);
     window.display();
     std::this_thread::sleep_for(delayTime);
-    this->Array[index].rect.setFillColor(sf::Color(106, 231, 255));
+    this->Array[index].rect.setFillColor(MainColor);
 }
 
 void DataVisualization_1::swapNodes(sf::RenderWindow &window, int index1, int index2) {
     sf::Vector2f pos1 = Array[index1].rect.getPosition();
     sf::Vector2f pos2 = Array[index2].rect.getPosition();
     float distance = pos2.x - pos1.x;
-    float fps = 60 / speed;
+    float fps = 30 / speed;
     if (distance < 200){
-        fps = 30 / speed;
+        fps = 15 / speed;
     }
     float movePerFrame = distance / fps;
     // moving up
-    for (float i = 0; i < 60 / speed; i++) {
-        Array[index1].rect.move(0, -1 * 150 * speed / 60.f);
-        Array[index1].data.move(0, -1 * 150 * speed / 60.f);
-        Array[index2].rect.move(0, -1 * 150 * speed / 60.f);
-        Array[index2].data.move(0, -1 * 150 * speed / 60.f);
+    // for (float i = 0; i < 30 / speed; i++) {
+    //     Array[index1].rect.move(0, -1 * 150 * speed / 30.f);
+    //     Array[index1].data.move(0, -1 * 150 * speed / 30.f);
+    //     Array[index2].rect.move(0, -1 * 150 * speed / 30.f);
+    //     Array[index2].data.move(0, -1 * 150 * speed / 30.f);
 
-        window.clear();
-        window.draw(DefaultBackground);
-        this->drawArray(window);
-        this->display(window);
-        window.display();
-    }
+    //     window.clear();
+    //     window.draw(DefaultBackground);
+    //     this->drawArray(window);
+    //     this->display(window);
+    //     window.display();
+    // }
 
     for (float i = 0; i < fps; i++) {
         Array[index1].rect.move(movePerFrame, 0);
@@ -1169,18 +1155,18 @@ void DataVisualization_1::swapNodes(sf::RenderWindow &window, int index1, int in
         window.display();
     }
     // moving down
-    for (float i = 0; i < 60 / speed; i++) {
-        Array[index1].rect.move(0, 150 * speed / 60.f);
-        Array[index1].data.move(0, 150 * speed / 60.f);
-        Array[index2].rect.move(0, 150 * speed / 60.f);
-        Array[index2].data.move(0, 150 * speed / 60.f);
+    // for (float i = 0; i < 30 / speed; i++) {
+    //     Array[index1].rect.move(0, 150 * speed / 30.f);
+    //     Array[index1].data.move(0, 150 * speed / 30.f);
+    //     Array[index2].rect.move(0, 150 * speed / 30.f);
+    //     Array[index2].data.move(0, 150 * speed / 30.f);
 
-        window.clear();
-        window.draw(DefaultBackground);
-        this->drawArray(window);
-        this->display(window);
-        window.display();
-    }
+    //     window.clear();
+    //     window.draw(DefaultBackground);
+    //     this->drawArray(window);
+    //     this->display(window);
+    //     window.display();
+    // }
 
     std::swap(Array[index1], Array[index2]);
     Array[index1].setValue();
@@ -1192,6 +1178,7 @@ void DataVisualization_1::swapNodes(sf::RenderWindow &window, int index1, int in
     this->display(window);
     window.display();
 }
+
 
 void DataVisualization_1::SearchArray(sf::RenderWindow &window, sf::Event &event)
 {
@@ -1258,17 +1245,13 @@ void DataVisualization_1::Search(sf::RenderWindow &window, int value)
 
     for (int i = 0; i <= index; i++)
     {
-        this->Array[i].rect.setFillColor(sf::Color(106, 231, 255));
+        this->Array[i].rect.setFillColor(MainColor);
     }
     return;
 }
 
 void DataVisualization_1::SortAscendingArray(sf::RenderWindow& window) 
 {
-    std::chrono::milliseconds delayTime(1000 / speed);
-    std::chrono::milliseconds delayTime1(50);
-    std::chrono::milliseconds delayTime2(500 / speed);
-
     if (size == 0)
     {
         printMessage(window, "No element to be sorted");
@@ -1296,9 +1279,9 @@ void DataVisualization_1::SortAscendingArray(sf::RenderWindow& window)
 
 void DataVisualization_1::SortDescendingArray(sf::RenderWindow& window) 
 {
-    std::chrono::milliseconds delayTime(1000 / speed);
-    std::chrono::milliseconds delayTime1(50);
-    std::chrono::milliseconds delayTime2(500 / speed);
+    // std::chrono::milliseconds delayTime(1000 / speed);
+    // std::chrono::milliseconds delayTime1(50);
+    // std::chrono::milliseconds delayTime2(500 / speed);
 
     if (size == 0)
     {
@@ -1415,4 +1398,14 @@ bool DataVisualization_1::printMessage(sf::RenderWindow &window, std::string mes
     window.display();
     std::this_thread::sleep_for(delayTime);
     return true;
+}
+
+void pause_for(std::chrono::milliseconds duration) {
+    auto start_time = std::chrono::steady_clock::now();
+    auto end_time = start_time + duration;
+    
+    while (std::chrono::steady_clock::now() < end_time) {
+        // Do other work while waiting
+        std::this_thread::yield();
+    }
 }
