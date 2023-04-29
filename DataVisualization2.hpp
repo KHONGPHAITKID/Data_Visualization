@@ -118,7 +118,9 @@ public:
     int size;
     int capacity;
     int funcstate;
-    VectorElement Vector[10];
+    // VectorElement Vector[10];
+    std::vector<VectorElement> Vector = std::vector<VectorElement>(10);
+
 
     DataVisualization_2();
     

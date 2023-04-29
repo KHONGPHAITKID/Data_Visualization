@@ -537,6 +537,8 @@ void DataVisualization_3::ImportFromFile(sf::RenderWindow &window)
                 SLL_Node* temp = this->NodeArray->createNode(250 + i * 150, 250, 30, this->font, num);
                 this->NodeArray->addBack(this->NodeArray, temp);
                 i++;
+                if (i == 10)
+                    break;
             }
             this->size = i;
             inputFile.close();

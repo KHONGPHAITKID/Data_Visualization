@@ -572,14 +572,24 @@ void DataVisualization_1::createArrayFromFile()
             int num; int index = 0;
             inputFile >> this->size;
             this->capacity = this->size;
+            int i = 0;
             
             while (inputFile >> num)
             {
                 this->Array[index].value = num;
                 this->Array[index].rect.setFillColor(sf::Color(106, 231, 255));
                 this->Array[index++].setValue();
+                i++;
+                if (i == this->capacity)
+                    break;
             }
-
+            while (i < this->capacity)
+            {
+                this->Array[index].value = -1;
+                this->Array[index].rect.setFillColor(sf::Color(106, 231, 255));
+                this->Array[index++].setValue();                
+                i++;
+            }
             inputFile.close();
 
         }
@@ -972,7 +982,7 @@ void DataVisualization_1::DeleteMiddle(sf::RenderWindow &window, int index)
         DeleteFront(window);
         return;
     }
-    if (index == size-1)
+    if (index == size)
     {
         DeleteBack(window);
         return;

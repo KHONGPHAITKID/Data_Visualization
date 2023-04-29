@@ -138,7 +138,6 @@ DataVisualization_2::DataVisualization_2()
     InitTextbox(this->AllocateSize_Textbox, 20, sf::Color::White, true, this->AllocateSizeButton.rect.getPosition().x, this->AllocateSizeButton.rect.getPosition().y + 50, font, true, 3);
     this->AllocateSize_Textbox.EnterMessage.setString("Size: ");
 
-
     // Function Key #3: Delete
     this->ControlMenu_btn3.CreateButton(200.f, 50.f, 250.f, 1080 / 2.f + 225.f, sf::Color(106, 231, 255, 0), "Delete", this->font, sf::Color(106, 231, 255));
     this->DeleteFrontButton.CreateButton(130.f, 50.f, this->ControlMenu_btn3.rect.getPosition().x + this->ControlMenu_btn3.rect.getSize().x / 2.f + 20.f + 130/2.f + 10.f, this->ControlMenu_btn3.rect.getPosition().y, sf::Color(106, 231, 255, 0), "Front", this->font, sf::Color(106, 231, 255));
@@ -188,19 +187,19 @@ DataVisualization_2::DataVisualization_2()
     
     for (int i = 0; i < 10; i++)
     {
-        this->Vector[i].value = i;
-        this->Vector[i].rect.setSize(sf::Vector2f(100.f, 100.f));
-        this->Vector[i].rect.setPosition(sf::Vector2f(450 + 100 * i, 400));
-        this->Vector[i].rect.setOrigin(sf::Vector2f(50, 50));
-        this->Vector[i].rect.setFillColor(sf::Color(106, 231, 255));
-        this->Vector[i].rect.setOutlineColor(sf::Color::Black);
-        this->Vector[i].rect.setOutlineThickness(2.f);
+        this->Vector.at(i).value = i;
+        this->Vector.at(i).rect.setSize(sf::Vector2f(100.f, 100.f));
+        this->Vector.at(i).rect.setPosition(sf::Vector2f(450 + 100 * i, 400));
+        this->Vector.at(i).rect.setOrigin(sf::Vector2f(50, 50));
+        this->Vector.at(i).rect.setFillColor(sf::Color(106, 231, 255));
+        this->Vector.at(i).rect.setOutlineColor(sf::Color::Black);
+        this->Vector.at(i).rect.setOutlineThickness(2.f);
 
-        this->Vector[i].data.setCharacterSize(30);
-        this->Vector[i].data.setFont(this->font);
-        this->Vector[i].data.setFillColor(sf::Color::Black);
-        this->Vector[i].data.setString(std::to_string(this->Vector[i].value));
-        this->Vector[i].setValue();
+        this->Vector.at(i).data.setCharacterSize(30);
+        this->Vector.at(i).data.setFont(this->font);
+        this->Vector.at(i).data.setFillColor(sf::Color::Black);
+        this->Vector.at(i).data.setString(std::to_string(this->Vector.at(i).value));
+        this->Vector.at(i).setValue();
     }
     this->size = 0;
     this->capacity = 0;
@@ -543,18 +542,18 @@ void DataVisualization_2::drawVector(sf::RenderWindow &window)
         index.setCharacterSize(30);
         index.setString(std::to_string(i));
         index.setFont(font);
-        index.setPosition(this->Vector[i].rect.getPosition().x, this->Vector[i].rect.getPosition().y + 100);
+        index.setPosition(this->Vector.at(i).rect.getPosition().x, this->Vector.at(i).rect.getPosition().y + 100);
         index.setOrigin(index.getLocalBounds().width / 2.f, index.getLocalBounds().height / 2.f);
-        // Vector[i].rect.setFillColor(sf::Color(106, 231, 255));
-        window.draw(this->Vector[i].rect);
-        window.draw(this->Vector[i].data);
+        // Vector.at(i).rect.setFillColor(sf::Color(106, 231, 255));
+        window.draw(this->Vector.at(i).rect);
+        window.draw(this->Vector.at(i).data);
         window.draw(index);
     }
     for (int i = this->size; i < this->capacity; i++)
     {
-        Vector[i].rect.setFillColor(sf::Color(7, 155, 184));
-        window.draw(this->Vector[i].rect);
-        window.draw(this->Vector[i].data);
+        Vector.at(i).rect.setFillColor(sf::Color(7, 155, 184));
+        window.draw(this->Vector.at(i).rect);
+        window.draw(this->Vector.at(i).data);
     }
 }
 
@@ -582,14 +581,24 @@ void DataVisualization_2::createVectorFromFile()
             int num; int index = 0;
             inputFile >> this->size;
             this->capacity = this->size;
-            
+            int i = 0;
+
             while (inputFile >> num)
             {
-                this->Vector[index].value = num;
-                this->Vector[index].rect.setFillColor(sf::Color(106, 231, 255));
-                this->Vector[index++].setValue();
+                this->Vector.at(index).value = num;
+                this->Vector.at(index).rect.setFillColor(sf::Color(106, 231, 255));
+                this->Vector.at(index++).setValue();
+                i++;
+                if (i == this->capacity)
+                    break;
             }
-
+            while (i < this->capacity)
+            {
+                this->Vector.at(index).value = -1;
+                this->Vector.at(index).rect.setFillColor(sf::Color(106, 231, 255));
+                this->Vector.at(index++).setValue();                
+                i++;
+            }
             inputFile.close();
 
         }
@@ -606,14 +615,14 @@ void DataVisualization_2::createVectorFromFile()
 }
 
 void DataVisualization_2::createRandomVector()
-{
+{ 
     this->size = 2 + rand() % 8;
     this->capacity = this->size;
     for (int i = 0; i < this->size; i++)
     {
-        this->Vector[i].value = 1 + rand() % 99;
-        this->Vector[i].rect.setFillColor(sf::Color(106, 231, 255));
-        this->Vector[i].setValue();
+        this->Vector.at(i).value = 1 + rand() % 99;
+        this->Vector.at(i).rect.setFillColor(sf::Color(106, 231, 255));
+        this->Vector.at(i).setValue();
     }
 }
 
@@ -623,9 +632,9 @@ void DataVisualization_2::createRandomSort()
     this->capacity = this->size;
     for (int i = 0; i < this->size; i++)
     {
-        this->Vector[i].value = 1 + rand() % 99;
-        this->Vector[i].rect.setFillColor(sf::Color(106, 231, 255));
-        this->Vector[i].setValue();
+        this->Vector.at(i).value = 1 + rand() % 99;
+        this->Vector.at(i).rect.setFillColor(sf::Color(106, 231, 255));
+        this->Vector.at(i).setValue();
     }
     // this->SortAscendingVector(window);
 }
@@ -636,9 +645,9 @@ void DataVisualization_2::createRandomFixedSize(int size)
     this->capacity = this->size;
     for (int i = 0; i < this->size; i++)
     {
-        this->Vector[i].value = 1 + rand() % 99;
-        this->Vector[i].rect.setFillColor(sf::Color(106, 231, 255));
-        this->Vector[i].setValue();
+        this->Vector.at(i).value = 1 + rand() % 99;
+        this->Vector.at(i).rect.setFillColor(sf::Color(106, 231, 255));
+        this->Vector.at(i).setValue();
     }
 }
 
@@ -718,9 +727,9 @@ void DataVisualization_2::createUserDefined(sf::RenderWindow &window, std::vecto
     this->capacity = this->size;
     for (int i = 0; i < this->size; i++)
     {
-        this->Vector[i].value = values[i];
-        this->Vector[i].rect.setFillColor(sf::Color(106, 231, 255));
-        this->Vector[i].setValue();
+        this->Vector.at(i).value = values[i];
+        this->Vector.at(i).rect.setFillColor(sf::Color(106, 231, 255));
+        this->Vector.at(i).setValue();
     }
 }
 
@@ -751,7 +760,7 @@ void DataVisualization_2::AddFront(sf::RenderWindow &window, int value)
     }
     Image arrow;
     arrow.setImage("media/DataVisualization1/arrowright.png");
-    this->Vector[0].rect.setFillColor(sf::Color::White);
+    this->Vector.at(0).rect.setFillColor(sf::Color::White);
     for (int i = 0; i < size; i++)
     {
         arrow.setPosition(sf::Vector2f(467 + arrow.ImageHolder.getLocalBounds().width / 2.f + 100 * i, 350 - arrow.ImageHolder.getLocalBounds().height + 4));
@@ -763,12 +772,12 @@ void DataVisualization_2::AddFront(sf::RenderWindow &window, int value)
     this->size++;
     for (int i = this->size - 1; i >= 0; i--)
     {
-        this->Vector[i+1].value = this->Vector[i].value;
-        this->Vector[i+1].setValue();
+        this->Vector.at(i+1).value = this->Vector.at(i).value;
+        this->Vector.at(i+1).setValue();
     }
     // make the first element white and return it back
-    this->Vector[0].rect.setFillColor(sf::Color::White);
-    this->Vector[size - 1].rect.setFillColor(sf::Color(106, 231, 255));
+    this->Vector.at(0).rect.setFillColor(sf::Color::White);
+    this->Vector.at(size - 1).rect.setFillColor(sf::Color(106, 231, 255));
     window.clear();
     window.draw(DefaultBackground);
     this->display(window);
@@ -776,14 +785,14 @@ void DataVisualization_2::AddFront(sf::RenderWindow &window, int value)
     window.display();
     sf::sleep(sf::milliseconds(2000 / speed));
 
-    this->Vector[0].value = value;
-    this->Vector[0].setValue();
+    this->Vector.at(0).value = value;
+    this->Vector.at(0).setValue();
     window.clear();
     window.draw(DefaultBackground);
     this->display(window);
     this->drawVector(window);
     window.display();
-    this->Vector[0].rect.setFillColor(sf::Color(106, 231, 255));
+    this->Vector.at(0).rect.setFillColor(sf::Color(106, 231, 255));
 }
 void DataVisualization_2::AddBackVector(sf::RenderWindow &window, sf::Event &event)
 {
@@ -811,7 +820,7 @@ void DataVisualization_2::AddBack(sf::RenderWindow &window, int value)
         return;
     }
     this->size++;
-    this->Vector[size-1].rect.setFillColor(sf::Color::White);
+    this->Vector.at(size - 1).rect.setFillColor(sf::Color::White);
     window.clear();
     window.draw(DefaultBackground);
     this->display(window);
@@ -819,9 +828,9 @@ void DataVisualization_2::AddBack(sf::RenderWindow &window, int value)
     window.display();
     sf::sleep(sf::milliseconds(2000 / speed));
 
-    this->Vector[size-1].value = value;
-    this->Vector[size-1].setValue();
-    this->Vector[size-1].rect.setFillColor(sf::Color(106, 231, 255));
+    this->Vector.at(size - 1).value = value;
+    this->Vector.at(size - 1).setValue();
+    this->Vector.at(size - 1).rect.setFillColor(sf::Color(106, 231, 255));
 }
 void DataVisualization_2::AddMiddleVector(sf::RenderWindow &window, sf::Event &event)
 {
@@ -871,15 +880,15 @@ void DataVisualization_2::AddMiddle(sf::RenderWindow &window, int index, int val
         AddFront(window, value);
         return;
     }
-    if (index == size - 1)
+    if (index == size)
     {
         AddBack(window, value);
         return;
     }
     Image arrow;
     arrow.setImage("media/DataVisualization1/arrowright.png");
-    // this->Vector[0].rect.setFillColor(sf::Color::White);
-    this->Vector[index].rect.setFillColor(sf::Color::White);
+    // this->Vector.at(0).rect.setFillColor(sf::Color::White);
+    this->Vector.at(index).rect.setFillColor(sf::Color::White);
     for (int i = index; i < size; i++)
     {
         arrow.setPosition(sf::Vector2f(467 + arrow.ImageHolder.getLocalBounds().width / 2.f + 100 * i, 350 - arrow.ImageHolder.getLocalBounds().height + 4));
@@ -891,11 +900,11 @@ void DataVisualization_2::AddMiddle(sf::RenderWindow &window, int index, int val
     this->size++;
     for (int i = this->size - 1; i >= index; i--)
     {
-        this->Vector[i+1].value = this->Vector[i].value;
-        this->Vector[i+1].setValue();
+        this->Vector.at(i+1).value = this->Vector.at(i).value;
+        this->Vector.at(i+1).setValue();
     }
     // make the first element white and return it back
-    this->Vector[size - 1].rect.setFillColor(sf::Color(106, 231, 255));
+    this->Vector.at(size - 1).rect.setFillColor(sf::Color(106, 231, 255));
     window.clear();
     window.draw(DefaultBackground);
     this->display(window);
@@ -903,14 +912,14 @@ void DataVisualization_2::AddMiddle(sf::RenderWindow &window, int index, int val
     window.display();
     sf::sleep(sf::milliseconds(2000 / speed));
 
-    this->Vector[index].value = value;
-    this->Vector[index].setValue();
+    this->Vector.at(index).value = value;
+    this->Vector.at(index).setValue();
     window.clear();
     window.draw(DefaultBackground);
     this->display(window);
     this->drawVector(window);
     window.display();
-    this->Vector[index].rect.setFillColor(sf::Color(106, 231, 255));
+    this->Vector.at(index).rect.setFillColor(sf::Color(106, 231, 255));
 }
 
 void DataVisualization_2::AllocateSizeVector(sf::RenderWindow &window, sf::Event &event)
@@ -939,20 +948,10 @@ void DataVisualization_2::AllocateSize(sf::RenderWindow &window, int size)
         this->printMessage(window, "Size must be greater than 0");
         return;
     }
-    // if (size == this->capacity)
-    // {
-    //     this->printMessage(window, "Size is equal to capacity");
-    //     return;
-    // }
-    // if (size > this->capacity)
-    // {
-    //     this->printMessage(window, "Size is greater than capacity");
-    //     return;
-    // }
     for (int i = this->size; i < size; i++)
     {
-        this->Vector[i].value = -1;
-        this->Vector[i].setValue();
+        this->Vector.at(i).value = -1;
+        this->Vector.at(i).setValue();
     }
     this->size = size;
     this->capacity = size;
@@ -979,8 +978,8 @@ void DataVisualization_2::DeleteFront(sf::RenderWindow &window)
     this->size--;
     for (int i = 0; i < this->size; i++)
     {
-        this->Vector[i].value = this->Vector[i + 1].value;
-        this->Vector[i].setValue();
+        this->Vector.at(i).value = this->Vector.at(i + 1).value;
+        this->Vector.at(i).setValue();
     }
     
 }
@@ -1045,8 +1044,8 @@ void DataVisualization_2::DeleteMiddle(sf::RenderWindow &window, int index)
     this->size--;
     for (int i = index; i < this->size; i++)
     {
-        this->Vector[i].value = this->Vector[i + 1].value;
-        this->Vector[i].setValue();
+        this->Vector.at(i).value = this->Vector.at(i + 1).value;
+        this->Vector.at(i).setValue();
     }
 }
 
@@ -1066,6 +1065,7 @@ void DataVisualization_2::AccessVector(sf::RenderWindow &window, sf::Event &even
         this->AccessButton_Textbox.pressEnter = false;
     }
 }
+
 void DataVisualization_2::AccessValue(sf::RenderWindow &window, int index)
 {
     // CodeScript.setPosition(CodeScriptPosition);
@@ -1090,7 +1090,7 @@ void DataVisualization_2::AccessValue(sf::RenderWindow &window, int index)
         printMessage(window, "Index is out of range!");
         return;
     }
-    this->Vector[index].rect.setFillColor(sf::Color::White);
+    this->Vector.at(index).rect.setFillColor(sf::Color::White);
     window.clear();
     window.draw(DefaultBackground);
     this->drawVector(window);
@@ -1098,10 +1098,10 @@ void DataVisualization_2::AccessValue(sf::RenderWindow &window, int index)
     // window.draw(CodeHighLight);
     window.display();
     std::this_thread::sleep_for(delayTime);
-    std::string mess = "Vector[" + std::to_string(index) + "] = " + std::to_string(this->Vector[index].value);
+    std::string mess = "Vector[" + std::to_string(index) + "] = " + std::to_string(this->Vector.at(index).value);
     printMessage(window, mess);
 
-    this->Vector[index].rect.setFillColor(sf::Color(106, 231, 255));
+    this->Vector.at(index).rect.setFillColor(sf::Color(106, 231, 255));
     return;
 }
 
@@ -1155,7 +1155,7 @@ void DataVisualization_2::Update(sf::RenderWindow &window, int index, int value)
         return;
     } 
     
-    this->Vector[index].rect.setFillColor(sf::Color::White);
+    this->Vector.at(index).rect.setFillColor(sf::Color::White);
     window.clear();
     window.draw(DefaultBackground);
     this->display(window);
@@ -1165,8 +1165,8 @@ void DataVisualization_2::Update(sf::RenderWindow &window, int index, int value)
     window.display();
     std::this_thread::sleep_for(delayTime);
     
-    this->Vector[index].value = value;
-    this->Vector[index].setValue();
+    this->Vector.at(index).value = value;
+    this->Vector.at(index).setValue();
     window.clear();
     window.draw(DefaultBackground);
     this->display(window);
@@ -1175,12 +1175,12 @@ void DataVisualization_2::Update(sf::RenderWindow &window, int index, int value)
     // NotificationImage.drawImage(window);
     window.display();
     std::this_thread::sleep_for(delayTime);
-    this->Vector[index].rect.setFillColor(sf::Color(106, 231, 255));
+    this->Vector.at(index).rect.setFillColor(sf::Color(106, 231, 255));
 }
 
 void DataVisualization_2::swapNodes(sf::RenderWindow &window, int index1, int index2) {
-    sf::Vector2f pos1 = Vector[index1].rect.getPosition();
-    sf::Vector2f pos2 = Vector[index2].rect.getPosition();
+    sf::Vector2f pos1 = Vector.at(index1).rect.getPosition();
+    sf::Vector2f pos2 = Vector.at(index2).rect.getPosition();
     float distance = pos2.x - pos1.x;
     float fps = 60 / speed;
     if (distance < 200){
@@ -1189,10 +1189,10 @@ void DataVisualization_2::swapNodes(sf::RenderWindow &window, int index1, int in
     float movePerFrame = distance / fps;
     // moving up
     for (float i = 0; i < 60 / speed; i++) {
-        Vector[index1].rect.move(0, -1 * 150 * speed / 60.f);
-        Vector[index1].data.move(0, -1 * 150 * speed / 60.f);
-        Vector[index2].rect.move(0, -1 * 150 * speed / 60.f);
-        Vector[index2].data.move(0, -1 * 150 * speed / 60.f);
+        Vector.at(index1).rect.move(0, -1 * 150 * speed / 60.f);
+        Vector.at(index1).data.move(0, -1 * 150 * speed / 60.f);
+        Vector.at(index2).rect.move(0, -1 * 150 * speed / 60.f);
+        Vector.at(index2).data.move(0, -1 * 150 * speed / 60.f);
 
         window.clear();
         window.draw(DefaultBackground);
@@ -1202,10 +1202,10 @@ void DataVisualization_2::swapNodes(sf::RenderWindow &window, int index1, int in
     }
 
     for (float i = 0; i < fps; i++) {
-        Vector[index1].rect.move(movePerFrame, 0);
-        Vector[index1].data.move(movePerFrame, 0);
-        Vector[index2].rect.move(-1 * movePerFrame, 0);
-        Vector[index2].data.move(-1 * movePerFrame, 0);
+        Vector.at(index1).rect.move(movePerFrame, 0);
+        Vector.at(index1).data.move(movePerFrame, 0);
+        Vector.at(index2).rect.move(-1 * movePerFrame, 0);
+        Vector.at(index2).data.move(-1 * movePerFrame, 0);
 
         window.clear();
         window.draw(DefaultBackground);
@@ -1215,10 +1215,10 @@ void DataVisualization_2::swapNodes(sf::RenderWindow &window, int index1, int in
     }
     // moving down
     for (float i = 0; i < 60 / speed; i++) {
-        Vector[index1].rect.move(0, 150 * speed / 60.f);
-        Vector[index1].data.move(0, 150 * speed / 60.f);
-        Vector[index2].rect.move(0, 150 * speed / 60.f);
-        Vector[index2].data.move(0, 150 * speed / 60.f);
+        Vector.at(index1).rect.move(0, 150 * speed / 60.f);
+        Vector.at(index1).data.move(0, 150 * speed / 60.f);
+        Vector.at(index2).rect.move(0, 150 * speed / 60.f);
+        Vector.at(index2).data.move(0, 150 * speed / 60.f);
 
         window.clear();
         window.draw(DefaultBackground);
@@ -1227,9 +1227,9 @@ void DataVisualization_2::swapNodes(sf::RenderWindow &window, int index1, int in
         window.display();
     }
 
-    std::swap(Vector[index1], Vector[index2]);
-    Vector[index1].setValue();
-    Vector[index2].setValue();
+    std::swap(Vector.at(index1), Vector.at(index2));
+    Vector.at(index1).setValue();
+    Vector.at(index2).setValue();
 
     window.clear();
     window.draw(DefaultBackground);
@@ -1277,8 +1277,8 @@ void DataVisualization_2::Search(sf::RenderWindow &window, int value)
     std::string mess = "Value not found!";
     for (int i = 0; i < size; i++)
     {
-        this->Vector[i].rect.setFillColor(sf::Color::White);
-        if (this->Vector[i].value == value)
+        this->Vector.at(i).rect.setFillColor(sf::Color::White);
+        if (this->Vector.at(i).value == value)
         {
             mess = "Founded at index " + std::to_string(index);
             break;
@@ -1303,7 +1303,7 @@ void DataVisualization_2::Search(sf::RenderWindow &window, int value)
 
     for (int i = 0; i <= index; i++)
     {
-        this->Vector[i].rect.setFillColor(sf::Color(106, 231, 255));
+        this->Vector.at(i).rect.setFillColor(sf::Color(106, 231, 255));
     }
     return;
 }
@@ -1328,7 +1328,7 @@ void DataVisualization_2::SortAscendingVector(sf::RenderWindow& window)
     for (int i = 0; i < size - 1; ++i) {
         int minIndex = i;
         for (int j = i + 1; j < size; ++j) {
-            if (Vector[j].value < Vector[minIndex].value) {
+            if (Vector.at(j).value < Vector.at(minIndex).value) {
                 minIndex = j;
             }
         }
@@ -1359,7 +1359,7 @@ void DataVisualization_2::SortDescendingVector(sf::RenderWindow& window)
     for (int i = 0; i < size - 1; ++i) {
         int maxIndex = i;
         for (int j = i + 1; j < size; ++j) {
-            if (Vector[j].value > Vector[maxIndex].value) {
+            if (Vector.at(j).value > Vector.at(maxIndex).value) {
                 maxIndex = j;
             }
         }
@@ -1369,50 +1369,6 @@ void DataVisualization_2::SortDescendingVector(sf::RenderWindow& window)
     }
     printMessage(window, "Vector sorted");
 }
-
-// void DataVisualization_2::sortAscending()
-// {
-//     for (int i = 0; i < size; i++)
-//     {
-//         int min = i;
-//         for (int j = i + 1; j < size; j++)
-//         {
-//             if (this->Vector[min].value > this->Vector[j].value)
-//             {
-//                 min = j;
-//             }
-//         }
-//         int temp = this->Vector[min].value;
-//         this->Vector[min].value = this->Vector[i].value;
-//         this->Vector[i].value = temp;
-//     }
-//     for (int i = 0; i < size; i++)
-//     {
-//         this->Vector[i].setValue();
-//     }
-// }
-
-// void DataVisualization_2::sortDescending()
-// {
-//     for (int i = 0; i < size; i++)
-//     {
-//         int max = i;
-//         for (int j = i + 1; j < size; j++)
-//         {
-//             if (this->Vector[max].value < this->Vector[j].value)
-//             {
-//                 max = j;
-//             }
-//         }
-//         int temp = this->Vector[max].value;
-//         this->Vector[max].value = this->Vector[i].value;
-//         this->Vector[i].value = temp;
-//     }
-//     for (int i = 0; i < size; i++)
-//     {
-//         this->Vector[i].setValue();
-//     }
-// }
 
 bool DataVisualization_2::checksize(sf::RenderWindow &window, int size)
 {
