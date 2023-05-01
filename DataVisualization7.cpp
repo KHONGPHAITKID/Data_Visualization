@@ -26,21 +26,21 @@ DataVisualization_7::DataVisualization_7()
     FlowControlMenu.setOutlineThickness(2);
     FlowControlMenu.setSize(sf::Vector2f(1920, 100));
     FlowControlMenu.setPosition(sf::Vector2f(0, 980));
-    PauseButton.setImage("media/img/pause_button.png");
+    PauseButton.setImage(WorkingPath + "media/img/pause_button.png");
     PauseButton.setPosition(sf::Vector2f(960, 1000));
-    ReplayButton.setImage("media/img/play_button.png");
+    ReplayButton.setImage(WorkingPath + "media/img/play_button.png");
     ReplayButton.setPosition(sf::Vector2f(960, 1000));
-    NextButton.setImage("media/img/next_button.png");
+    NextButton.setImage(WorkingPath + "media/img/next_button.png");
     NextButton.setPosition(sf::Vector2f(1010, 1000));
-    SkipButton.setImage("media/img/skip_button.png");
+    SkipButton.setImage(WorkingPath + "media/img/skip_button.png");
     SkipButton.setPosition(sf::Vector2f(1060, 1000));
-    NextButtonReverse.setImage("media/img/next_button_reverse.png");
+    NextButtonReverse.setImage(WorkingPath + "media/img/next_button_reverse.png");
     NextButtonReverse.setPosition(sf::Vector2f(910, 1000));
-    SkipButtonReverse.setImage("media/img/skip_button_reverse.png");
+    SkipButtonReverse.setImage(WorkingPath + "media/img/skip_button_reverse.png");
     SkipButtonReverse.setPosition(sf::Vector2f(860, 1000));
-    IncreaseSpeedButton.setImage("media/img/add_button.png");
+    IncreaseSpeedButton.setImage(WorkingPath + "media/img/add_button.png");
     IncreaseSpeedButton.setPosition(sf::Vector2f(330, 1002));
-    DecreaseSpeedButton.setImage("media/img/minus_btn.png");
+    DecreaseSpeedButton.setImage(WorkingPath + "media/img/minus_btn.png");
     DecreaseSpeedButton.setPosition(sf::Vector2f(380, 1002));
     isPause = true;
 
@@ -63,7 +63,6 @@ DataVisualization_7::DataVisualization_7()
     this->Title.setFillColor(sf::Color(106, 231, 255));
 
     // Back button
-    // this->backButton.CreateButton(100.f, 50.f, 70.f, 45.f, sf::Color(128, 128, 128), "Back", this->font, sf::Color::White);
     this->backButton.CreateButton(100.f, 50.f, 70.f, 72.5f, sf::Color(128, 128, 128), "Back", this->font, sf::Color::White);
 
     // building the Queue
@@ -264,7 +263,6 @@ void DataVisualization_7::handleEvent(sf::RenderWindow &window, sf::Vector2f &mo
             }
             if (this->ImportFromFileButton.rect.getGlobalBounds().contains(mousePos))
             {
-                // this->NodeArray->ImportFromFileButtonQueue(this->NodeArray, this->size, this->font);
                 ImportFromFile(window);
             }
             if (this->CreateRandomFixedSize.rect.getGlobalBounds().contains(mousePos))
@@ -338,7 +336,6 @@ void DataVisualization_7::handleEvent(sf::RenderWindow &window, sf::Vector2f &mo
     // free
 }
 
-
 void DataVisualization_7::ImportFromFile(sf::RenderWindow &window)
 {
     OPENFILENAME ofn;
@@ -359,8 +356,6 @@ void DataVisualization_7::ImportFromFile(sf::RenderWindow &window)
 
         if (inputFile.is_open())
         {
-            // std::vector<int> array;
-            // delete the Node
             this->NodeArray->DeleteQueue(this->NodeArray);
             int num;
             int i = 0;
@@ -485,6 +480,15 @@ void DataVisualization_7::InsertNodeBack(sf::RenderWindow &window, int data)
 {
     std::chrono::milliseconds delayTime(1000 / speed); 
     std::chrono::milliseconds delayTime1(25);
+
+    CodeScript.setImage(WorkingPath + "media/DataVisualization7/push.png");
+    CodeHighLight.setPosition(CodeHighLightPosition);
+    CodeScript.setPosition(CodeScriptPosition);
+    window.clear();
+    window.draw(DefaultBackground);
+    this->drawNodes(window);
+    this->display(window);
+    window.display();
 
     // std::this_thread::sleep_for(delayTime); 
     if (this->NodeArray == nullptr)
@@ -635,13 +639,23 @@ int DataVisualization_7::getQueueSize()
 
 void DataVisualization_7::DeleteNodeFront(sf::RenderWindow &window)
 {   
+    std::chrono::milliseconds delayTime(1500 / speed); // 0.5 seconds
+    std::chrono::milliseconds delayTime1(50); // 0.05
+
+    CodeScript.setImage(WorkingPath + "media/DataVisualization7/pop.png");
+    CodeHighLight.setPosition(CodeHighLightPosition);
+    CodeScript.setPosition(CodeScriptPosition);
+    window.clear();
+    window.draw(DefaultBackground);
+    this->drawNodes(window);
+    this->display(window);
+    window.display();
+
     if (this->NodeArray == nullptr)
     {
         printMessage(window, "There is no Node to be deleted!");
         return;
     }
-    std::chrono::milliseconds delayTime(1500 / speed); // 0.5 seconds
-    std::chrono::milliseconds delayTime1(50); // 0.05
 
     if (this->NodeArray->next == nullptr)
     {
@@ -744,13 +758,23 @@ void DataVisualization_7::DeleteNodeFront(sf::RenderWindow &window)
 void DataVisualization_7::PeekFrontQueue(sf::RenderWindow &window)
 {
     // coding
+    std::chrono::milliseconds delayTime(1500 / speed); // 0.5 seconds
+    std::chrono::milliseconds delayTime1(50); // 0.05
+
+    CodeScript.setImage(WorkingPath + "media/DataVisualization7/peekfront.png");
+    CodeHighLight.setPosition(CodeHighLightPosition);
+    CodeScript.setPosition(CodeScriptPosition);
+    window.clear();
+    window.draw(DefaultBackground);
+    this->drawNodes(window);
+    this->display(window);
+    window.display();
+
     if (this->NodeArray == nullptr)
     {
         printMessage(window, "Queue is empty!");
         return;
     }
-    std::chrono::milliseconds delayTime(1500 / speed); // 0.5 seconds
-    std::chrono::milliseconds delayTime1(50); // 0.05
     this->NodeArray->circle.setFillColor(sf::Color(106, 231, 255));
     this->NodeArray->text.setFillColor(sf::Color::Black);
     window.clear();
@@ -772,13 +796,23 @@ void DataVisualization_7::PeekFrontQueue(sf::RenderWindow &window)
 
 void DataVisualization_7::PeekBackQueue(sf::RenderWindow &window)
 {
+    std::chrono::milliseconds delayTime(1500 / speed); // 0.5 seconds
+    std::chrono::milliseconds delayTime1(50); // 0.05
+
+    CodeScript.setImage(WorkingPath + "media/DataVisualization7/peekback.png");
+    CodeHighLight.setPosition(CodeHighLightPosition);
+    CodeScript.setPosition(CodeScriptPosition);
+    window.clear();
+    window.draw(DefaultBackground);
+    this->drawNodes(window);
+    this->display(window);
+    window.display();
+
     if (this->NodeArray == nullptr)
     {
         printMessage(window, "Queue is empty!");
         return;
     }
-    std::chrono::milliseconds delayTime(1500 / speed); // 0.5 seconds
-    std::chrono::milliseconds delayTime1(50); // 0.05
     Queue_Node* temp = this->NodeArray;
     while (temp->next != nullptr) temp = temp->next;
     temp->circle.setFillColor(sf::Color(106, 231, 255));
@@ -803,7 +837,6 @@ void DataVisualization_7::PeekBackQueue(sf::RenderWindow &window)
 
 bool DataVisualization_7::printMessage(sf::RenderWindow &window, std::string message/*, int min_range, int max_range, int value*/)
 {
-    // if (size < 10) return true;
     std::chrono::milliseconds delayTime(750);
     sf::Text WarningMessage;
     WarningMessage.setString(message);

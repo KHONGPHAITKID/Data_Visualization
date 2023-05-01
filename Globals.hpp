@@ -1,6 +1,10 @@
 #ifndef GLOBALS_HPP
 #define GLOBALS_HPP
 
+#include <string>
+#include <cstdlib>
+#include <iostream>
+#include <fstream>
 #include "ScreenState.hpp"
 #include <SFML/Graphics.hpp>
 #include "Image.hpp"
@@ -22,5 +26,6 @@ extern Image NotificationImage;
 
 void CreateTitle(sf::Text &Title, float PosX, float PosY);
 
-
+extern std::string getCurrentPath();
+extern std::string WorkingPath;
 #endif // GLOBALS_HPP

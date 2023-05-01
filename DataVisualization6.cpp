@@ -26,26 +26,26 @@ DataVisualization_6::DataVisualization_6()
     FlowControlMenu.setOutlineThickness(2);
     FlowControlMenu.setSize(sf::Vector2f(1920, 100));
     FlowControlMenu.setPosition(sf::Vector2f(0, 980));
-    PauseButton.setImage("media/img/pause_button.png");
+    PauseButton.setImage(WorkingPath + "media/img/pause_button.png");
     PauseButton.setPosition(sf::Vector2f(960, 1000));
-    ReplayButton.setImage("media/img/play_button.png");
+    ReplayButton.setImage(WorkingPath + "media/img/play_button.png");
     ReplayButton.setPosition(sf::Vector2f(960, 1000));
-    NextButton.setImage("media/img/next_button.png");
+    NextButton.setImage(WorkingPath + "media/img/next_button.png");
     NextButton.setPosition(sf::Vector2f(1010, 1000));
-    SkipButton.setImage("media/img/skip_button.png");
+    SkipButton.setImage(WorkingPath + "media/img/skip_button.png");
     SkipButton.setPosition(sf::Vector2f(1060, 1000));
-    NextButtonReverse.setImage("media/img/next_button_reverse.png");
+    NextButtonReverse.setImage(WorkingPath + "media/img/next_button_reverse.png");
     NextButtonReverse.setPosition(sf::Vector2f(910, 1000));
-    SkipButtonReverse.setImage("media/img/skip_button_reverse.png");
+    SkipButtonReverse.setImage(WorkingPath + "media/img/skip_button_reverse.png");
     SkipButtonReverse.setPosition(sf::Vector2f(860, 1000));
-    IncreaseSpeedButton.setImage("media/img/add_button.png");
+    IncreaseSpeedButton.setImage(WorkingPath + "media/img/add_button.png");
     IncreaseSpeedButton.setPosition(sf::Vector2f(330, 1002));
-    DecreaseSpeedButton.setImage("media/img/minus_btn.png");
+    DecreaseSpeedButton.setImage(WorkingPath + "media/img/minus_btn.png");
     DecreaseSpeedButton.setPosition(sf::Vector2f(380, 1002));
     isPause = true;
 
     // Code Script
-    CodeScriptPosition = sf::Vector2f(1520,640);
+    CodeScriptPosition = sf::Vector2f(1520,740);
     CodeHighLightPosition = sf::Vector2f(1170, 697.5f);
     CodeScript.setPosition(CodeScriptPosition);
     CodeHighLight.setSize(sf::Vector2f(700, 30));
@@ -478,6 +478,15 @@ void DataVisualization_6::InsertNodeFrontStack(sf::RenderWindow &window, sf::Eve
 void DataVisualization_6::InsertNodeFront(sf::RenderWindow &window, int data)
 {
     std::chrono::milliseconds delayTime(1500 / speed);
+    CodeScript.setImage(WorkingPath + "media/DataVisualization6/push.png");
+    CodeHighLight.setPosition(CodeHighLightPosition);
+    CodeScript.setPosition(CodeScriptPosition);
+    window.clear();
+    window.draw(DefaultBackground);
+    this->drawNodes(window);
+    this->display(window);
+    window.display();
+
     if (this->NodeArray == nullptr)
     {
         this->NodeArray = this->NodeArray->createNode(960, 627.5, 75, 300, font, data);
@@ -579,13 +588,22 @@ int DataVisualization_6::getStackSize()
 
 void DataVisualization_6::DeleteNodeFront(sf::RenderWindow &window)
 {   
+    
+    std::chrono::milliseconds delayTime(1500 / speed); // 0.5 seconds
+    std::chrono::milliseconds delayTime1(50); // 0.05
+    CodeScript.setImage(WorkingPath + "media/DataVisualization6/pop.png");
+    CodeHighLight.setPosition(CodeHighLightPosition);
+    CodeScript.setPosition(CodeScriptPosition);
+    window.clear();
+    window.draw(DefaultBackground);
+    this->drawNodes(window);
+    this->display(window);
+    window.display();
     if (this->NodeArray == nullptr)
     {
         printMessage(window, "There is no Node to be deleted!");
         return;
     }
-    std::chrono::milliseconds delayTime(1500 / speed); // 0.5 seconds
-    std::chrono::milliseconds delayTime1(50); // 0.05
 
     this->NodeArray->rec.setFillColor(sf::Color::Red);
     window.clear();
@@ -630,7 +648,15 @@ void DataVisualization_6::DeleteNodeFront(sf::RenderWindow &window)
 
 void DataVisualization_6::PeekNode(sf::RenderWindow &window)
 {
-    // coding
+    CodeScript.setImage(WorkingPath + "media/DataVisualization6/peek.png");
+    CodeHighLight.setPosition(CodeHighLightPosition);
+    CodeScript.setPosition(CodeScriptPosition);
+    window.clear();
+    window.draw(DefaultBackground);
+    this->drawNodes(window);
+    this->display(window);
+    window.display();
+
     if (this->NodeArray == nullptr)
     {
         printMessage(window, "Stack is empty!");

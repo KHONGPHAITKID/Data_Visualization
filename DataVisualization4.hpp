@@ -13,6 +13,7 @@
 #include <chrono> 
 #include <thread> 
 #include <unistd.h>
+#include <cstdlib>
 #include "Button.hpp"
 #include "DLL.hpp"
 #include "Textbox.hpp"

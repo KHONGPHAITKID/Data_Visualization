@@ -14,6 +14,7 @@
 #include <chrono> 
 #include <thread>
 #include <unistd.h>
+#include <cstdlib>
 #include "Button.hpp"
 #include "Textbox.hpp"
 #include "Globals.hpp"
@@ -159,6 +160,8 @@ public:
 
     bool checksize(sf::RenderWindow &window, int size);
     bool printMessage(sf::RenderWindow &window, std::string message);
+
+    void updateChanges(sf::Font tempFont);
 };
 void pause_for(std::chrono::milliseconds duration);
 

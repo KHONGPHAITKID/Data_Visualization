@@ -12,7 +12,7 @@ DataVisualization_2::DataVisualization_2()
 //Fonts
     this->font = defautFont;
     this->titlefont = defautTitleFont;
-    NotificationImage.setImage("media/img/noti_board.png");
+    NotificationImage.setImage(WorkingPath + "media/img/noti_board.png");
     NotificationImage.setPosition(sf::Vector2f(1920/2.f, 1080/4.f - 150));
 
     this->speed = 2;
@@ -28,21 +28,21 @@ DataVisualization_2::DataVisualization_2()
     FlowControlMenu.setOutlineThickness(2);
     FlowControlMenu.setSize(sf::Vector2f(1920, 100));
     FlowControlMenu.setPosition(sf::Vector2f(0, 980));
-    PauseButton.setImage("media/img/pause_button.png");
+    PauseButton.setImage(WorkingPath + "media/img/pause_button.png");
     PauseButton.setPosition(sf::Vector2f(960, 1000));
-    ReplayButton.setImage("media/img/play_button.png");
+    ReplayButton.setImage(WorkingPath + "media/img/play_button.png");
     ReplayButton.setPosition(sf::Vector2f(960, 1000));
-    NextButton.setImage("media/img/next_button.png");
+    NextButton.setImage(WorkingPath + "media/img/next_button.png");
     NextButton.setPosition(sf::Vector2f(1010, 1000));
-    SkipButton.setImage("media/img/skip_button.png");
+    SkipButton.setImage(WorkingPath + "media/img/skip_button.png");
     SkipButton.setPosition(sf::Vector2f(1060, 1000));
-    NextButtonReverse.setImage("media/img/next_button_reverse.png");
+    NextButtonReverse.setImage(WorkingPath + "media/img/next_button_reverse.png");
     NextButtonReverse.setPosition(sf::Vector2f(910, 1000));
-    SkipButtonReverse.setImage("media/img/skip_button_reverse.png");
+    SkipButtonReverse.setImage(WorkingPath + "media/img/skip_button_reverse.png");
     SkipButtonReverse.setPosition(sf::Vector2f(860, 1000));
-    IncreaseSpeedButton.setImage("media/img/add_button.png");
+    IncreaseSpeedButton.setImage(WorkingPath + "media/img/add_button.png");
     IncreaseSpeedButton.setPosition(sf::Vector2f(330, 1002));
-    DecreaseSpeedButton.setImage("media/img/minus_btn.png");
+    DecreaseSpeedButton.setImage(WorkingPath + "media/img/minus_btn.png");
     DecreaseSpeedButton.setPosition(sf::Vector2f(380, 1002));
     isPause = true;
 
@@ -406,6 +406,7 @@ void DataVisualization_2::handleEvent(sf::RenderWindow &window, sf::Vector2f mou
             {
                 this->capacity = 0;
                 this->size = 0;
+                CodeScript.setImage(WorkingPath + "media/DataVisualization2/DeAllocated.png");
             }
             break;
         case 4:
@@ -738,15 +739,26 @@ void DataVisualization_2::AddFrontVector(sf::RenderWindow &window, sf::Event &ev
 }
 void DataVisualization_2::AddFront(sf::RenderWindow &window, int value)
 {
-    // coding...
+    CodeScript.setImage(WorkingPath + "media/DataVisualization1/AddFront.png");
+    CodeHighLight.setPosition(CodeHighLightPosition);
+    CodeScript.setPosition(CodeScriptPosition);
+    window.clear();
+    window.draw(DefaultBackground);
+    this->drawVector(window);
+    this->display(window);
+    window.display();
     if (this->size == this->capacity)
     {
         this->printMessage(window, "Vector's capacity is full");
         return;
     }
     Image arrow;
-    arrow.setImage("media/DataVisualization1/arrowright.png");
+    arrow.setImage(WorkingPath + "media/DataVisualization1/arrowright.png");
     this->Vector.at(0).rect.setFillColor(sf::Color::White);
+    window.clear();
+    window.draw(DefaultBackground);
+    this->drawVector(window);
+    this->display(window);
     for (int i = 0; i < size; i++)
     {
         arrow.setPosition(sf::Vector2f(467 + arrow.ImageHolder.getLocalBounds().width / 2.f + 100 * i, 350 - arrow.ImageHolder.getLocalBounds().height + 4));
@@ -799,7 +811,14 @@ void DataVisualization_2::AddBackVector(sf::RenderWindow &window, sf::Event &eve
 }
 void DataVisualization_2::AddBack(sf::RenderWindow &window, int value)
 {
-    // coding...
+    CodeScript.setImage(WorkingPath + "media/DataVisualization1/AddBack.png");
+    CodeHighLight.setPosition(CodeHighLightPosition);
+    CodeScript.setPosition(CodeScriptPosition);
+    window.clear();
+    window.draw(DefaultBackground);
+    this->drawVector(window);
+    this->display(window);
+    window.display();
     if (this->size == this->capacity)
     {
         this->printMessage(window, "Vector's capacity is full");
@@ -850,7 +869,14 @@ void DataVisualization_2::AddMiddleVector(sf::RenderWindow &window, sf::Event &e
 }
 void DataVisualization_2::AddMiddle(sf::RenderWindow &window, int index, int value)
 {
-    // coding...
+    CodeScript.setImage(WorkingPath + "media/DataVisualization1/AddMid.png");
+    CodeHighLight.setPosition(CodeHighLightPosition);
+    CodeScript.setPosition(CodeScriptPosition);
+    window.clear();
+    window.draw(DefaultBackground);
+    this->drawVector(window);
+    this->display(window);
+    window.display();
     if (this->size == this->capacity)
     {
         this->printMessage(window, "Vector's capacity is full");
@@ -872,9 +898,12 @@ void DataVisualization_2::AddMiddle(sf::RenderWindow &window, int index, int val
         return;
     }
     Image arrow;
-    arrow.setImage("media/DataVisualization1/arrowright.png");
-    // this->Vector.at(0).rect.setFillColor(sf::Color::White);
+    arrow.setImage(WorkingPath + "media/DataVisualization1/arrowright.png");
     this->Vector.at(index).rect.setFillColor(sf::Color::White);
+    window.clear();
+    window.draw(DefaultBackground);
+    this->drawVector(window);
+    this->display(window);
     for (int i = index; i < size; i++)
     {
         arrow.setPosition(sf::Vector2f(467 + arrow.ImageHolder.getLocalBounds().width / 2.f + 100 * i, 350 - arrow.ImageHolder.getLocalBounds().height + 4));
@@ -928,7 +957,9 @@ void DataVisualization_2::AllocateSizeVector(sf::RenderWindow &window, sf::Event
 
 void DataVisualization_2::AllocateSize(sf::RenderWindow &window, int size)
 {
-    // coding...
+    CodeScript.setImage(WorkingPath + "media/DataVisualization2/Allocated.png");
+    CodeHighLight.setPosition(CodeHighLightPosition);
+    CodeScript.setPosition(CodeScriptPosition);
     if (size < 0)
     {
         this->printMessage(window, "Size must be greater than 0");
@@ -938,6 +969,7 @@ void DataVisualization_2::AllocateSize(sf::RenderWindow &window, int size)
     {
         this->Vector.at(i).value = -1;
         this->Vector.at(i).setValue();
+        this->Vector.at(i).rect.setFillColor(MainColor);
     }
     this->size = size;
     this->capacity = size;
@@ -945,14 +977,25 @@ void DataVisualization_2::AllocateSize(sf::RenderWindow &window, int size)
 
 void DataVisualization_2::DeleteFront(sf::RenderWindow &window)
 {
-    // coding...
+    CodeScript.setImage(WorkingPath + "media/DataVisualization1/DeleteFront.png");
+    CodeHighLight.setPosition(CodeHighLightPosition);
+    CodeScript.setPosition(CodeScriptPosition);
+    window.clear();
+    window.draw(DefaultBackground);
+    this->drawVector(window);
+    this->display(window);
+    window.display();
     if (this->size == 0)
     {
         this->printMessage(window, "Vector is empty");
         return;
     }
     Image arrow;
-    arrow.setImage("media/DataVisualization1/arrowleft.png");
+    arrow.setImage(WorkingPath + "media/DataVisualization1/arrowleft.png");
+    window.clear();
+    window.draw(DefaultBackground);
+    this->drawVector(window);
+    this->display(window);
     for (int i = 0; i < size - 1; i++)
     {
         arrow.setPosition(sf::Vector2f(467 + arrow.ImageHolder.getLocalBounds().width / 2.f + 100 * i, 350 - arrow.ImageHolder.getLocalBounds().height + 4));
@@ -967,11 +1010,17 @@ void DataVisualization_2::DeleteFront(sf::RenderWindow &window)
         this->Vector.at(i).value = this->Vector.at(i + 1).value;
         this->Vector.at(i).setValue();
     }
-    
 }
 void DataVisualization_2::DeleteBack(sf::RenderWindow &window)
 {
-    // coding...
+    CodeScript.setImage(WorkingPath + "media/DataVisualization1/DeleteBack.png");
+    CodeHighLight.setPosition(CodeHighLightPosition);
+    CodeScript.setPosition(CodeScriptPosition);
+    window.clear();
+    window.draw(DefaultBackground);
+    this->drawVector(window);
+    this->display(window);
+    window.display();
     if (this->size == 0)
     {
         this->printMessage(window, "Vector is empty");
@@ -997,6 +1046,14 @@ void DataVisualization_2::DeleteMiddleVector(sf::RenderWindow &window, sf::Event
 }
 void DataVisualization_2::DeleteMiddle(sf::RenderWindow &window, int index)
 {
+    CodeScript.setImage(WorkingPath + "media/DataVisualization1/DeleteMid.png");
+    CodeHighLight.setPosition(CodeHighLightPosition);
+    CodeScript.setPosition(CodeScriptPosition);
+    window.clear();
+    window.draw(DefaultBackground);
+    this->drawVector(window);
+    this->display(window);
+    window.display();
     if (this->size == 0)
     {
         this->printMessage(window, "Vector is empty");
@@ -1018,7 +1075,11 @@ void DataVisualization_2::DeleteMiddle(sf::RenderWindow &window, int index)
         return;
     }
     Image arrow;
-    arrow.setImage("media/DataVisualization1/arrowleft.png");
+    arrow.setImage(WorkingPath + "media/DataVisualization1/arrowleft.png");
+    window.clear();
+    window.draw(DefaultBackground);
+    this->drawVector(window);
+    this->display(window);
     for (int i = index; i < size - 1; i++)
     {
         arrow.setPosition(sf::Vector2f(467 + arrow.ImageHolder.getLocalBounds().width / 2.f + 100 * i, 350 - arrow.ImageHolder.getLocalBounds().height + 4));
@@ -1055,11 +1116,21 @@ void DataVisualization_2::AccessVector(sf::RenderWindow &window, sf::Event &even
 void DataVisualization_2::AccessValue(sf::RenderWindow &window, int index)
 {
     // CodeScript.setPosition(CodeScriptPosition);
-    // CodeScript.setImage("media/DataVisualization3/Search.png");
+    // CodeScript.setImage(WorkingPath + "media/DataVisualization3/Search.png");
+    // CodeHighLight.setPosition(CodeHighLightPosition);
+    
     std::chrono::milliseconds delayTime(1000 / speed); 
     std::chrono::milliseconds delayTime1(50);
     std::chrono::milliseconds delayTime2(500 / speed);
-    // CodeHighLight.setPosition(CodeHighLightPosition);
+
+    CodeScript.setImage(WorkingPath + "media/DataVisualization1/Access.png");
+    CodeHighLight.setPosition(CodeHighLightPosition);
+    CodeScript.setPosition(CodeScriptPosition);
+    window.clear();
+    window.draw(DefaultBackground);
+    this->drawVector(window);
+    this->display(window);
+    window.display();
 
     // handle special case;
     if (this->size == 0)
@@ -1127,6 +1198,15 @@ void DataVisualization_2::Update(sf::RenderWindow &window, int index, int value)
     std::chrono::milliseconds delayTime1(50);
     std::chrono::milliseconds delayTime2(500 / speed);
  
+    CodeScript.setImage(WorkingPath + "media/DataVisualization1/Update.png");
+    CodeHighLight.setPosition(CodeHighLightPosition);
+    CodeScript.setPosition(CodeScriptPosition);
+    window.clear();
+    window.draw(DefaultBackground);
+    this->drawVector(window);
+    this->display(window);
+    window.display();
+
      if (this->size == 0)
     {
         window.draw(CodeHighLight);
@@ -1244,11 +1324,20 @@ void DataVisualization_2::SearchVector(sf::RenderWindow &window, sf::Event &even
 void DataVisualization_2::Search(sf::RenderWindow &window, int value)
 {
     // CodeScript.setPosition(CodeScriptPosition);
-    // CodeScript.setImage("media/DataVisualization3/Search.png");
+    // CodeScript.setImage(WorkingPath + "media/DataVisualization3/Search.png");
+    // CodeHighLight.setPosition(CodeHighLightPosition);
     std::chrono::milliseconds delayTime(1000 / speed); 
     std::chrono::milliseconds delayTime1(50);
     std::chrono::milliseconds delayTime2(500 / speed);
-    // CodeHighLight.setPosition(CodeHighLightPosition);
+    
+    CodeScript.setImage(WorkingPath + "media/DataVisualization1/Search.png");
+    CodeHighLight.setPosition(CodeHighLightPosition);
+    CodeScript.setPosition(CodeScriptPosition);
+    window.clear();
+    window.draw(DefaultBackground);
+    this->drawVector(window);
+    this->display(window);
+    window.display();
 
     // handle special case;
     if (this->size == 0)

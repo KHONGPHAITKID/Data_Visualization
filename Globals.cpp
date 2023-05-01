@@ -17,10 +17,24 @@ sf::Color MainColor;
 
 Image NotificationImage;
 
+std::string WorkingPath;
+
 void CreateTitle(sf::Text &Title, float PosX, float PosY)
 {
     Title.setFillColor(sf::Color(106, 231, 255));
     Title.setOrigin(Title.getLocalBounds().width / 2.f, Title.getLocalBounds().height / 2.f);
     Title.setPosition(PosX, PosY);
+}
+
+std::string getCurrentPath()
+{
+    system("cd > tmp.txt");
+    std::ifstream file("tmp.txt");
+    std::string path;
+    std::getline(file, path);
+    file.close();
+    path += '/';
+    std::remove("tmp.txt");
+    return path;
 }
 

@@ -119,6 +119,7 @@ void MenuPage::updateChanges()
 SettingPage::SettingPage()
 {
     this->font = defautFont;
+    this->tempFont = defautFont;
     this->titlefont = defautTitleFont;
 
     //Title
@@ -128,26 +129,52 @@ SettingPage::SettingPage()
 
     //Back button
     this->backButton.CreateButton(100.f, 50.f, 70.f, 45.f, sf::Color(128, 128, 128), "Back", font, sf::Color::White);
+    //Apply Button
+    ApplyButton.CreateButton(400, 120, 1920 / 2.f, 900, MainColor, "Apply", font, sf::Color::Black);
+    ApplyButton.rect.setOutlineColor(ButtonOutlineColor);
+    ApplyButton.rect.setOutlineThickness(2.f);
+
+    pageText.setFont(this->font);
+    pageText.setCharacterSize(30);
+    pageText.setFillColor(MainColor);
+    pageText.setString("Page: ");
+    pageText.setPosition(280, 400);
+    pageText.setOrigin(pageText.getLocalBounds().width / 2.f, pageText.getLocalBounds().height / 2.f);
 
     FontText.setFont(this->font);
     FontText.setCharacterSize(30);
     FontText.setFillColor(MainColor);
     FontText.setString("Font: ");
-    FontText.setPosition(280, 380);
-
+    FontText.setPosition(280, 600);
+    FontText.setOrigin(FontText.getLocalBounds().width / 2.f, FontText.getLocalBounds().height / 2.f);
     // Button FontTextButton;
-    FontTextButton.CreateButton(200, 100, 450, 400, ButtonColor, "Import", font, sf::Color::White);
+    FontTextButton.CreateButton(100, 50, 750, 610, ButtonColor, "Import", font, sf::Color::White);
+    FontTextButton.rect.setOutlineColor(ButtonOutlineColor);
+    FontTextButton.rect.setOutlineThickness(2.f);
 
+    ColorText.setFont(this->font);
+    ColorText.setCharacterSize(30);
+    ColorText.setFillColor(MainColor);
+    ColorText.setString("Color: ");
+    ColorText.setPosition(280, 800);
+    ColorText.setOrigin(ColorText.getLocalBounds().width / 2.f, ColorText.getLocalBounds().height / 2.f);
 }
 void SettingPage::display(sf::RenderWindow &window)
 {
     window.draw(this->Title);
     this->backButton.displayButton(window);
 
+    ApplyButton.displayButton(window);
+
     window.draw(FontText);
+    window.draw(pageText);
+    window.draw(ColorText);
     this->FontTextButton.displayButton(window);
+    Colordropdown.draw(window);
+    Fontdropdown.draw(window);
+    Pagedropdown.draw(window);
 }
-void SettingPage::handleEvent(sf::RenderWindow &window, sf::Vector2f mousePos, sf::Event &event)
+void SettingPage::handleEvent(sf::RenderWindow &window, sf::Vector2f mousePos, sf::Event &event, DataVisualization_1 &dv1, DataVisualization_2 &dv2, DataVisualization_3 &dv3, DataVisualization_4 &dv4, DataVisualization_5 &dv5, DataVisualization_6 &dv6, DataVisualization_7 &dv7)
 {
     if (event.type == sf::Event::MouseButtonPressed)
     {
@@ -160,15 +187,20 @@ void SettingPage::handleEvent(sf::RenderWindow &window, sf::Vector2f mousePos, s
         {
             loadFont();
         }
+        if (this->ApplyButton.rect.getGlobalBounds().contains(mousePos))
+        {
+            updateChangeGlobals(dv1, dv2, dv3, dv4, dv5, dv6, dv7);
+        }
     }
+    Fontdropdown.handleEvent(event);
+    Pagedropdown.handleEvent(event);
+    Colordropdown.handleEvent(event);
 }
 
 void SettingPage::updateChanges()
 {
-    std::cout << "hehe" << std::endl;
-
     //Title
-    sf::Text SettingTitle("Setting", this->titlefont, 130);
+    sf::Text SettingTitle("Setting", this->titlefont, 130); 
     CreateTitle(SettingTitle, 1920 / 2.f, 250.f);
     this->Title = SettingTitle;
 
@@ -179,8 +211,8 @@ void SettingPage::updateChanges()
     FontText.setCharacterSize(30);
     FontText.setFillColor(MainColor);
     FontText.setString("Font: ");
-    FontText.setPosition(280, 380);
-
+    FontText.setPosition(280, 400);
+    FontText.setOrigin(FontText.getLocalBounds().width / 2.f, FontText.getLocalBounds().height / 2.f);
     // Button FontTextButton;
     FontTextButton.CreateButton(200, 100, 450, 400, ButtonColor, "Import", font, sf::Color::White);
 }
@@ -201,16 +233,48 @@ void SettingPage::loadFont()
 
     if (GetOpenFileName(&ofn) == TRUE)
     {
-        if (!font.loadFromFile(ofn.lpstrFile))
+        if (!this->tempFont.loadFromFile(ofn.lpstrFile))
         {
             // Handle error
             std::cerr << "Error loading font file." << std::endl;
         }
-        this->updateChanges();
     }
     else
     {
         std::cout << "Cancelled" << std::endl;
+    }
+}
+
+void SettingPage::updateChangeGlobals(DataVisualization_1 &dv1, DataVisualization_2 &dv2, DataVisualization_3 &dv3, DataVisualization_4 &dv4, DataVisualization_5 &dv5, DataVisualization_6 &dv6, DataVisualization_7 &dv7)
+{
+    if (this->Pagedropdown.storage == "Static Array")
+    {
+        dv1.updateChanges(tempFont);
+        std::cout << 1 << std::endl;
+    }
+    else if (this->Pagedropdown.storage == "Dynamic Array")
+    {
+
+    }
+    else if (this->Pagedropdown.storage == "Singly Linked List")
+    {
+
+    }
+    else if (this->Pagedropdown.storage == "Doubly Linked List")
+    {
+
+    }
+    else if (this->Pagedropdown.storage == "Circular Linked List")
+    {
+
+    }
+    else if (this->Pagedropdown.storage == "Stack")
+    {
+
+    }
+    else if (this->Pagedropdown.storage == "Queue")
+    {
+
     }
 }
 

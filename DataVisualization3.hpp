@@ -13,6 +13,7 @@
 #include <chrono> // for std::chrono
 #include <thread> // for std::this_thread::sleep_for
 #include <unistd.h>
+#include <cstdlib>
 #include "Button.hpp"
 #include "SLL.hpp"
 #include "Textbox.hpp"

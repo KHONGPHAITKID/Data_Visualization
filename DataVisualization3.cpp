@@ -14,7 +14,7 @@ DataVisualization_3::DataVisualization_3()
     //Fonts
     this->font = defautFont;
     this->titlefont = defautTitleFont;
-    NotificationImage.setImage("media/img/noti_board.png");
+    NotificationImage.setImage(WorkingPath + "media/img/noti_board.png");
     NotificationImage.setPosition(sf::Vector2f(1920/2.f, 1080/4.f - 150));
 
     this->speed = 2;
@@ -30,21 +30,21 @@ DataVisualization_3::DataVisualization_3()
     FlowControlMenu.setOutlineThickness(2);
     FlowControlMenu.setSize(sf::Vector2f(1920, 100));
     FlowControlMenu.setPosition(sf::Vector2f(0, 980));
-    PauseButton.setImage("media/img/pause_button.png");
+    PauseButton.setImage(WorkingPath + "media/img/pause_button.png");
     PauseButton.setPosition(sf::Vector2f(960, 1000));
-    ReplayButton.setImage("media/img/play_button.png");
+    ReplayButton.setImage(WorkingPath + "media/img/play_button.png");
     ReplayButton.setPosition(sf::Vector2f(960, 1000));
-    NextButton.setImage("media/img/next_button.png");
+    NextButton.setImage(WorkingPath + "media/img/next_button.png");
     NextButton.setPosition(sf::Vector2f(1010, 1000));
-    SkipButton.setImage("media/img/skip_button.png");
+    SkipButton.setImage(WorkingPath + "media/img/skip_button.png");
     SkipButton.setPosition(sf::Vector2f(1060, 1000));
-    NextButtonReverse.setImage("media/img/next_button_reverse.png");
+    NextButtonReverse.setImage(WorkingPath + "media/img/next_button_reverse.png");
     NextButtonReverse.setPosition(sf::Vector2f(910, 1000));
-    SkipButtonReverse.setImage("media/img/skip_button_reverse.png");
+    SkipButtonReverse.setImage(WorkingPath + "media/img/skip_button_reverse.png");
     SkipButtonReverse.setPosition(sf::Vector2f(860, 1000));
-    IncreaseSpeedButton.setImage("media/img/add_button.png");
+    IncreaseSpeedButton.setImage(WorkingPath + "media/img/add_button.png");
     IncreaseSpeedButton.setPosition(sf::Vector2f(330, 1002));
-    DecreaseSpeedButton.setImage("media/img/minus_btn.png");
+    DecreaseSpeedButton.setImage(WorkingPath + "media/img/minus_btn.png");
     DecreaseSpeedButton.setPosition(sf::Vector2f(380, 1002));
     isPause = true;
 
@@ -273,7 +273,6 @@ void DataVisualization_3::display(sf::RenderWindow &window)
 void DataVisualization_3::NodeTextsetPos(sf::Text &text, SLL_Node* &pHead)
 {
     if (pHead == nullptr) {
-        // text.setString("");
         return;
     }
     text.setPosition(sf::Vector2f(pHead->circle.getPosition().x, pHead->circle.getPosition().y + 50));
@@ -748,7 +747,7 @@ void DataVisualization_3::InsertNodeFront(sf::RenderWindow &window, int data)
     std::chrono::milliseconds delayTime1(500 / speed);
     CodeHighLight.setPosition(CodeHighLightPosition);
     CodeScript.setPosition(CodeScriptPosition);
-    CodeScript.setImage("media/DataVisualization3/InsertHead.png");
+    CodeScript.setImage(WorkingPath + "media/DataVisualization3/InsertHead.png");
 
     if (this->NodeArray == nullptr)
     {
@@ -827,7 +826,7 @@ void DataVisualization_3::InsertNodeBack(sf::RenderWindow &window, int data)
     std::chrono::milliseconds delayTime(500 / speed); // 0.5 seconds
     CodeHighLight.setPosition(CodeHighLightPosition);
     CodeScript.setPosition(CodeScriptPosition);
-    CodeScript.setImage("media/DataVisualization3/InsertBack.png");
+    CodeScript.setImage(WorkingPath + "media/DataVisualization3/InsertBack.png");
     if (this->NodeArray == nullptr)
     {
         this->NodeArray = this->NodeArray->createNode(250, 250, 30, font, data);
@@ -979,7 +978,7 @@ void DataVisualization_3::InsertNodeMid(sf::RenderWindow &window, int data, int 
     CodeHighLight.setPosition(CodeHighLightPosition);
     std::chrono::milliseconds delayTime(500 / speed);
     CodeScript.setPosition(CodeScriptPosition);
-    CodeScript.setImage("media/DataVisualization3/InsertMid.png");
+    CodeScript.setImage(WorkingPath + "media/DataVisualization3/InsertMid.png");
 
     // special case
     if (this->NodeArray == nullptr)
@@ -1207,7 +1206,7 @@ int DataVisualization_3::getSLLSize()
 void DataVisualization_3::DeleteNodeFront(sf::RenderWindow &window)
 {   
     CodeScript.setPosition(CodeScriptPosition);
-    CodeScript.setImage("media/DataVisualization3/RemoveHead.png");
+    CodeScript.setImage(WorkingPath + "media/DataVisualization3/RemoveHead.png");
     std::chrono::milliseconds delayTime(1000 / speed); 
     std::chrono::milliseconds delayTime1(50); 
     std::chrono::milliseconds delayTime2(500 / speed); 
@@ -1361,7 +1360,7 @@ void DataVisualization_3::DeleteNodeBack(sf::RenderWindow &window)
     std::chrono::milliseconds delayTime1(50); 
     std::chrono::milliseconds delayTime2(500 / speed);
     CodeScript.setPosition(CodeScriptPosition);
-    CodeScript.setImage("media/DataVisualization3/RemoveTail.png");
+
     CodeHighLight.setPosition(CodeHighLightPosition);
 
     // handle special case
@@ -1546,7 +1545,7 @@ void DataVisualization_3::DeleteNodeBack(sf::RenderWindow &window)
 
 void DataVisualization_3::DeleteNodeMid(sf::RenderWindow &window, int index)
 {   
-    CodeScript.setImage("media/DataVisualization3/RemoveMid.png");
+    CodeScript.setImage(WorkingPath + "media/DataVisualization3/RemoveMid.png");
     CodeScript.setPosition(CodeScriptPosition);
     CodeHighLight.setPosition(CodeHighLightPosition);
     std::chrono::milliseconds delayTime(1000 / speed); // 1 second
@@ -1804,7 +1803,7 @@ void DataVisualization_3::DeleteNodeMidSLL(sf::RenderWindow &window, sf::Event &
 void DataVisualization_3::UpdateNode(sf::RenderWindow &window, int index, int value)
 {
     CodeScript.setPosition(CodeScriptPosition);
-    CodeScript.setImage("media/DataVisualization3/Update.png");
+    CodeScript.setImage(WorkingPath + "media/DataVisualization3/Update.png");
     CodeHighLight.setPosition(CodeHighLightPosition);
     std::chrono::milliseconds delayTime(1000 / speed); // 2 second
     std::chrono::milliseconds delayTime1(50); // 50ms
@@ -1963,7 +1962,7 @@ void DataVisualization_3::UpdateNodeSLL(sf::RenderWindow &window, sf::Event &eve
 void DataVisualization_3::SearchNode(sf::RenderWindow &window, int value)
 {
     CodeScript.setPosition(CodeScriptPosition);
-    CodeScript.setImage("media/DataVisualization3/Search.png");
+    CodeScript.setImage(WorkingPath + "media/DataVisualization3/Search.png");
     std::chrono::milliseconds delayTime(1000 / speed); 
     std::chrono::milliseconds delayTime1(50);
     std::chrono::milliseconds delayTime2(500 / speed);

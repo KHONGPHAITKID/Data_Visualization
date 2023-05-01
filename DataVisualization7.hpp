@@ -14,6 +14,7 @@
 #include <chrono> 
 #include <thread> 
 #include <unistd.h>
+#include <cstdlib>
 #include "Button.hpp"
 #include "Queue.hpp"
 #include "Textbox.hpp"

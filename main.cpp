@@ -6,29 +6,30 @@ int main()
     srand(time(NULL)); // Random number generate
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "Data Visualization", sf::Style::Titlebar | sf::Style::Close);
     window.setFramerateLimit(60);
+    
+    WorkingPath = getCurrentPath();
 
 // Set icon
     sf::Image icon;
-    if (!icon.loadFromFile("media/img/binary.png"))
+    if (!icon.loadFromFile(WorkingPath + "media/img/binary.png"))
     {
         std::cerr << "Failed to load image" << "\n";
         return 1;
     }
     window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
-// Load background1
-
-    if (!BackGround0.loadFromFile("media/img/background1.jpg")) 
+// Load background
+    if (!BackGround0.loadFromFile(WorkingPath + "media/img/background1.jpg")) 
     {
         std::cerr << "Failed to load BackGround0" << "\n";
         return 1;
     }
-    if (!BackGround1.loadFromFile("media/img/menubackground.jpg")) 
+    if (!BackGround1.loadFromFile(WorkingPath + "media/img/menubackground.jpg")) 
     {
         std::cerr << "Failed to load BackGround2" << "\n";
         return 1;
     }
-    if (!BackGround2.loadFromFile("media/img/background2.jpg")) 
+    if (!BackGround2.loadFromFile(WorkingPath + "media/img/background2.jpg")) 
     {
         std::cerr << "Failed to load BackGround1" << "\n";
         return 1;
@@ -38,22 +39,20 @@ int main()
     ButtonOutlineColor = sf::Color(106, 231, 255);
     MainColor = sf::Color(106, 231, 255);
 
-    if (!defautFont.loadFromFile("Fonts/iCielBCCubano_Normal.otf"))
+    if (!defautFont.loadFromFile(WorkingPath + "Fonts/iCielBCCubano_Normal.otf"))
     {
         std::cerr << "Failed to load Fonts" << "\n";
         return 0;
     }
 
-    if (!defautTitleFont.loadFromFile("Fonts/SVN_Blade_runner.ttf"))
+    if (!defautTitleFont.loadFromFile(WorkingPath + "Fonts/SVN_Blade_runner.ttf"))
     {
         std::cerr << "Failed to load Fonts" << "\n";
         return 0;
     }
 
     //----------TESTING------------
-    // sf::ColorPicker colorPicker;
-    // colorPicker.setPosition(100, 100);
-    // colorPicker.setFillColor(sf::Color::White);
+    // DropdownBox dropdown(sf::Vector2f(50, 50), sf::Vector2f(200, 30), "Select an option", { "Option 1", "Option 2", "Option 3" });
     //----------TESTING------------
 
     MenuPage menu;
@@ -85,7 +84,7 @@ int main()
                     StartMenu.handleEvent(window, mousePos, event);
                     break;
                 case Settings:
-                    setting.handleEvent(window, mousePos, event);
+                    setting.handleEvent(window, mousePos, event, dv1, dv2, dv3, dv4, dv5, dv6, dv7);
                     break;
                 case About:
                     aboutMenu.handleEvent(window, mousePos, event);
@@ -118,10 +117,13 @@ int main()
             {
                 window.close();
             }
+            // dropdown.handleEvent(event);
         }
+        // dropdownBox.update();
         //-----------------
         window.clear();
         window.draw(DefaultBackground);
+        // dropdown.draw(window);
         switch (currentState)
         {
             case Menu:
