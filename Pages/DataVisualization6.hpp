@@ -14,13 +14,11 @@
 #include <thread>
 #include <unistd.h>
 #include <cstdlib>
-#include "Button.hpp"
-#include "Stack.hpp"
-#include "Textbox.hpp"
-#include "Globals.hpp"
-#include "Image.hpp"
-
-void CreateTitle6(sf::Text &Title, float PosX, float PosY);
+#include "../Components/Button.hpp"
+#include "../Components/Stack.hpp"
+#include "../Components/Textbox.hpp"
+#include "../Components/Image.hpp"
+#include "../Globals.hpp"
 
 class DataVisualization_6
 {

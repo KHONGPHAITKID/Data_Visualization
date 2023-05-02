@@ -1,5 +1,5 @@
-#ifndef _DATAVISUALIZATION2_HPP_
-#define _DATAVISUALIZATION2_HPP_
+#ifndef _DATAVISUALIZATION1_HPP_
+#define _DATAVISUALIZATION1_HPP_
 
 #include <iostream>
 #include <string>
@@ -15,12 +15,12 @@
 #include <thread>
 #include <unistd.h>
 #include <cstdlib>
-#include "Button.hpp"
-#include "Textbox.hpp"
-#include "Globals.hpp"
-#include "Image.hpp"
+#include "../Components/Button.hpp"
+#include "../Components/Textbox.hpp"
+#include "../Components/Image.hpp"
+#include "../Globals.hpp"
 
-class VectorElement // one memory slot
+class ArrayElement // one memory slot
 {
 public:
     int value;
@@ -32,7 +32,7 @@ public:
     void setValue();
 };
 
-class DataVisualization_2
+class DataVisualization_1
 {
 private:
 public:
@@ -85,9 +85,7 @@ public:
     Textbox AddBack_Textbox;
     Button AddMiddleButton;
     Textbox AddMiddle_Textbox;
-    Button AllocateSizeButton;
-    Textbox AllocateSize_Textbox;
-
+    
     // #3
     Button ControlMenu_btn3;
     Button DeleteFrontButton;
@@ -96,7 +94,7 @@ public:
     // Textbox DeleteBack_Textbox;
     Button DeleteMiddleButton;
     Textbox DeleteMiddle_Textbox;
-    Button ClearVectorButton;
+    Button ClearArrayButton;
 
     // #4
     Button ControlMenu_btn4;
@@ -116,57 +114,55 @@ public:
     int size;
     int capacity;
     int funcstate;
-    // VectorElement Vector[10];
-    std::vector<VectorElement> Vector = std::vector<VectorElement>(10);
+    ArrayElement Array[10];
 
-
-    DataVisualization_2();
+    DataVisualization_1();
     
     void display(sf::RenderWindow &window);
     void handleEvent(sf::RenderWindow &window, sf::Vector2f mousePos, sf::Event &ev);
-    void drawVector(sf::RenderWindow &window);
+    void drawArray(sf::RenderWindow &window);
 
     // #1
-    void createVectorFromFile();
-    void createRandomVector();
+    void createArrayFromFile();
+    void createRandomArray();
     void createRandomSort();
-    void createRandomFixedSizeVector(sf::RenderWindow &window, sf::Event &event);
+    void createRandomFixedSizeArray(sf::RenderWindow &window, sf::Event &event);
     void createRandomFixedSize(int size);
-    void createUserDefinedVector(sf::RenderWindow &window, sf::Event &event);
+    void createUserDefinedArray(sf::RenderWindow &window, sf::Event &event);
     void createUserDefined(sf::RenderWindow &window, std::vector<int> &values);
 
-    void AddFrontVector(sf::RenderWindow &window, sf::Event &event);
+    void AddFrontArray(sf::RenderWindow &window, sf::Event &event);
     void AddFront(sf::RenderWindow &window, int value);
-    void AddBackVector(sf::RenderWindow &window, sf::Event &event);
+    void AddBackArray(sf::RenderWindow &window, sf::Event &event);
     void AddBack(sf::RenderWindow &window, int value);
-    void AddMiddleVector(sf::RenderWindow &window, sf::Event &event);
+    void AddMiddleArray(sf::RenderWindow &window, sf::Event &event);
     void AddMiddle(sf::RenderWindow &window, int index, int value);
-    void AllocateSizeVector(sf::RenderWindow &window, sf::Event &event);
-    void AllocateSize(sf::RenderWindow &window, int size);
 
     void DeleteFront(sf::RenderWindow &window);
     void DeleteBack(sf::RenderWindow &window);
-    void DeleteMiddleVector(sf::RenderWindow &window, sf::Event &event);
+    void DeleteMiddleArray(sf::RenderWindow &window, sf::Event &event);
     void DeleteMiddle(sf::RenderWindow &window, int index);
 
-    void UpdateVector(sf::RenderWindow &window, sf::Event &event);
+    void UpdateArray(sf::RenderWindow &window, sf::Event &event);
     void Update(sf::RenderWindow &window, int index, int value);
-    void AccessVector(sf::RenderWindow &window, sf::Event &event);
+    void AccessArray(sf::RenderWindow &window, sf::Event &event);
     void AccessValue(sf::RenderWindow &window, int index);
 
-    void SearchVector(sf::RenderWindow &window, sf::Event &event);
+    void SearchArray(sf::RenderWindow &window, sf::Event &event);
     void Search(sf::RenderWindow &window, int value);
 
     void swapNodes(sf::RenderWindow &window, int index1, int index2);
-    void SortAscendingVector(sf::RenderWindow& window);
-    void SortDescendingVector(sf::RenderWindow& window);
+    void SortAscendingArray(sf::RenderWindow& window);
+    void SortDescendingArray(sf::RenderWindow& window);
 
     // void sortAscending();
     // void sortDescending();
 
     bool checksize(sf::RenderWindow &window, int size);
     bool printMessage(sf::RenderWindow &window, std::string message);
-};
 
+    void updateChanges(sf::Font tempFont);
+};
+void pause_for(std::chrono::milliseconds duration);
 
 #endif

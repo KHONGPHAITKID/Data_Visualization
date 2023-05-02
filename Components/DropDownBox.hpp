@@ -1,7 +1,7 @@
 #ifndef _DROPDOWNBOX_HPP_
 #define _DROPDOWNBOX_HPP_
 #include <SFML/Graphics.hpp>
-#include "Globals.hpp"
+#include "../Globals.hpp"
 #include <iostream>
 
 struct DropdownBox

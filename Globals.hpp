@@ -5,15 +5,13 @@
 #include <cstdlib>
 #include <iostream>
 #include <fstream>
-#include "ScreenState.hpp"
+#include "Components/ScreenState.hpp"
 #include <SFML/Graphics.hpp>
-#include "Image.hpp"
+#include "Components/Image.hpp"
 
 extern ScreenState currentState;
-
 extern sf::Font defautFont;
 extern sf::Font defautTitleFont;
-
 extern sf::Color BackGroundColor;
 extern sf::Sprite DefaultBackground;
 extern sf::Texture BackGround0;
@@ -28,4 +26,6 @@ void CreateTitle(sf::Text &Title, float PosX, float PosY);
 
 extern std::string getCurrentPath();
 extern std::string WorkingPath;
+
+
 #endif // GLOBALS_HPP

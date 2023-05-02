@@ -1,14 +1,14 @@
 #ifndef _HEADER_HPP_
 #define _HEADER_HPP_
 
-#include "DataVisualization1.hpp"
-#include "DataVisualization2.hpp"
-#include "DataVisualization3.hpp"
-#include "DataVisualization4.hpp"
-#include "DataVisualization5.hpp"
-#include "DataVisualization6.hpp"
-#include "DataVisualization7.hpp"
-#include "DropDownBox.hpp"
+#include "Pages/DataVisualization1.hpp"
+#include "Pages/DataVisualization2.hpp"
+#include "Pages/DataVisualization3.hpp"
+#include "Pages/DataVisualization4.hpp"
+#include "Pages/DataVisualization5.hpp"
+#include "Pages/DataVisualization6.hpp"
+#include "Pages/DataVisualization7.hpp"
+#include "Components/DropDownBox.hpp"
 
 #include <regex>
 
