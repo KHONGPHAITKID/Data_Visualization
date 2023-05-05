@@ -20,9 +20,8 @@
 #include "../Components/Image.hpp"
 #include "../Globals.hpp"
 
-class VectorElement // one memory slot
+struct VectorElement // one memory slot
 {
-public:
     int value;
     sf::RectangleShape rect;
     sf::Text data;
@@ -32,10 +31,8 @@ public:
     void setValue();
 };
 
-class DataVisualization_2
+struct DataVisualization_2
 {
-private:
-public:
     sf::Font font;
     sf::Font titlefont;
     sf::Text Title;
@@ -166,6 +163,8 @@ public:
 
     bool checksize(sf::RenderWindow &window, int size);
     bool printMessage(sf::RenderWindow &window, std::string message);
+
+    void updateChanges(sf::Font tempFont);
 };
 
 

@@ -21,10 +21,8 @@
 #include "../Components/Image.hpp"
 #include "../Globals.hpp"
 
-class DataVisualization_7
+struct DataVisualization_7
 {
-private:
-public:
     sf::Font font;
     sf::Font titlefont;
     sf::Text Title;
@@ -110,6 +108,7 @@ public:
     void PeekBackQueue(sf::RenderWindow &window);
 
     bool printMessage(sf::RenderWindow &window, std::string message);
+    void updateChanges(sf::Font tempFont);
 };
 
 

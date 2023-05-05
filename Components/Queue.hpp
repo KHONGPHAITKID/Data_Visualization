@@ -6,8 +6,6 @@
 #include <cstdlib>
 #include <SFML/Graphics.hpp>
 
-// int randNumNode();
-
 struct Queue_Node
 {
     int data;
@@ -20,9 +18,7 @@ struct Queue_Node
 
     void addBack(Queue_Node* &pHead, Queue_Node* &temp);
 
-    // void addSort(Queue_Node* &pHead, Queue_Node* &temp);
-
-    void CreateRandomSortQueue(Queue_Node* &head, int &n, sf::Font &font); // chua
+    void CreateRandomSortQueue(Queue_Node* &head, int &n, sf::Font &font);
 
     // create a Node
     Queue_Node* createNode(float x, float y, float radius, sf::Font &font, int value);

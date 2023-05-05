@@ -20,10 +20,8 @@
 #include "../Components/Image.hpp"
 #include "../Globals.hpp"
 
-class DataVisualization_3
+struct DataVisualization_3
 {
-private:
-public:
     sf::Font font;
     sf::Font titlefont;
     sf::Text Title;
@@ -140,6 +138,8 @@ public:
     void SearchNodeSLL(sf::RenderWindow &window, sf::Event &event);
 
     bool printMessage(sf::RenderWindow &window, std::string message);
+
+    void updateChanges(sf::Font tempFont);
 };
 
 

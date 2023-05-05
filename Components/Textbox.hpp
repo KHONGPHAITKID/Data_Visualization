@@ -10,8 +10,8 @@
 #define ENTER_KEY 13
 #define ESCAPE_KEY 27
 
-class Textbox {
-public:
+struct Textbox {
+
     sf::Text EnterMessage;
 
     sf::Text textbox;
@@ -31,7 +31,7 @@ public:
     void inputLogic(int charTyped);
 
     void ExportString(std::string &destination);
-//-----------------
+    
     Textbox();
 
     void TextboxHandleEvent(sf::Event event, std::string &Mes);
@@ -57,10 +57,6 @@ public:
     void typedOn(sf::Event input);
 };
 
-// void InitTextbox(Textbox &box, int size, sf::Color color, bool sel);
-// void InitTextbox(Textbox &box, int size, sf::Color color, bool sel, float PosX, float PosY, sf::Font &font);
 void InitTextbox(Textbox &box, int size, sf::Color color, bool sel, float PosX, float PosY, sf::Font &font, bool ToF, int lim);
-// void InitTextbox(Textbox &box, int size, sf::Color color, bool sel, sf::Vector2f Pos, bool ToF, int lim, sf::Font font);
-
 
 #endif 

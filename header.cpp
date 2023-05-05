@@ -90,11 +90,11 @@ void MenuPage::handleEvent(sf::RenderWindow &window, sf::Vector2f mousePos, sf::
 
 }
 
-void MenuPage::updateChanges()
+void MenuPage::updateChanges(sf::Font tempFont)
 {
     // coding
-    this->font = defautFont;
-    this->titlefont = defautTitleFont;
+    this->font = tempFont;
+    this->titlefont = tempFont;
 
     sf::Text temp("Data Visualization", this->font, 120);
     CreateTitle(temp, 1920 / 2.f, 250.f);
@@ -122,6 +122,14 @@ SettingPage::SettingPage()
     this->tempFont = defautFont;
     this->titlefont = defautTitleFont;
 
+    haveImportedFont = false;
+    TempFontText.setFont(this->font);
+    TempFontText.setCharacterSize(30);
+    TempFontText.setFillColor(MainColor);
+    TempFontText.setPosition(550, 690);
+    TempFontText.setOrigin(TempFontText.getLocalBounds().width / 2.f, TempFontText.getLocalBounds().height / 2.f);
+    TempFontText.setFillColor(sf::Color::White);
+
     //Title
     sf::Text SettingTitle("Setting", this->titlefont, 130);
     CreateTitle(SettingTitle, 1920 / 2.f, 250.f);
@@ -129,6 +137,7 @@ SettingPage::SettingPage()
 
     //Back button
     this->backButton.CreateButton(100.f, 50.f, 70.f, 45.f, sf::Color(128, 128, 128), "Back", font, sf::Color::White);
+    
     //Apply Button
     ApplyButton.CreateButton(400, 120, 1920 / 2.f, 900, MainColor, "Apply", font, sf::Color::Black);
     ApplyButton.rect.setOutlineColor(ButtonOutlineColor);
@@ -145,10 +154,10 @@ SettingPage::SettingPage()
     FontText.setCharacterSize(30);
     FontText.setFillColor(MainColor);
     FontText.setString("Font: ");
-    FontText.setPosition(280, 600);
+    FontText.setPosition(280, 700);
     FontText.setOrigin(FontText.getLocalBounds().width / 2.f, FontText.getLocalBounds().height / 2.f);
     // Button FontTextButton;
-    FontTextButton.CreateButton(100, 50, 750, 610, ButtonColor, "Import", font, sf::Color::White);
+    FontTextButton.CreateButton(100, 50, 450, 710, ButtonColor, "Import", font, sf::Color::White);
     FontTextButton.rect.setOutlineColor(ButtonOutlineColor);
     FontTextButton.rect.setOutlineThickness(2.f);
 
@@ -156,7 +165,7 @@ SettingPage::SettingPage()
     ColorText.setCharacterSize(30);
     ColorText.setFillColor(MainColor);
     ColorText.setString("Color: ");
-    ColorText.setPosition(280, 800);
+    ColorText.setPosition(880, 400);
     ColorText.setOrigin(ColorText.getLocalBounds().width / 2.f, ColorText.getLocalBounds().height / 2.f);
 }
 void SettingPage::display(sf::RenderWindow &window)
@@ -166,15 +175,19 @@ void SettingPage::display(sf::RenderWindow &window)
 
     ApplyButton.displayButton(window);
 
+    if (haveImportedFont)
+    {
+        window.draw(TempFontText);
+    }
+
     window.draw(FontText);
     window.draw(pageText);
     window.draw(ColorText);
     this->FontTextButton.displayButton(window);
     Colordropdown.draw(window);
-    Fontdropdown.draw(window);
     Pagedropdown.draw(window);
 }
-void SettingPage::handleEvent(sf::RenderWindow &window, sf::Vector2f mousePos, sf::Event &event, DataVisualization_1 &dv1, DataVisualization_2 &dv2, DataVisualization_3 &dv3, DataVisualization_4 &dv4, DataVisualization_5 &dv5, DataVisualization_6 &dv6, DataVisualization_7 &dv7)
+void SettingPage::handleEvent(sf::RenderWindow &window, sf::Vector2f mousePos, sf::Event &event, DataVisualization_1 &dv1, DataVisualization_2 &dv2, DataVisualization_3 &dv3, DataVisualization_4 &dv4, DataVisualization_5 &dv5, DataVisualization_6 &dv6, DataVisualization_7 &dv7, MenuPage &menu, SettingPage &setting, StartingPage &StartMenu)
 {
     if (event.type == sf::Event::MouseButtonPressed)
     {
@@ -186,35 +199,68 @@ void SettingPage::handleEvent(sf::RenderWindow &window, sf::Vector2f mousePos, s
         if (this->FontTextButton.rect.getGlobalBounds().contains(mousePos))
         {
             loadFont();
+            TempFontText.setPosition(550, 690);
         }
         if (this->ApplyButton.rect.getGlobalBounds().contains(mousePos))
         {
-            updateChangeGlobals(dv1, dv2, dv3, dv4, dv5, dv6, dv7);
+            updateChangeGlobals(dv1, dv2, dv3, dv4, dv5, dv6, dv7, menu, setting, StartMenu);
+            this->printMessage(window, "Update Applied");
         }
     }
-    Fontdropdown.handleEvent(event);
     Pagedropdown.handleEvent(event);
     Colordropdown.handleEvent(event);
 }
 
-void SettingPage::updateChanges()
+void SettingPage::updateChanges(sf::Font tempFont)
 {
+    this->font = tempFont;
+    this->titlefont = tempFont;
+
+    haveImportedFont = false;
+    TempFontText.setFont(this->font);
+    TempFontText.setCharacterSize(30);
+    TempFontText.setFillColor(MainColor);
+    TempFontText.setPosition(550, 690);
+    TempFontText.setOrigin(TempFontText.getLocalBounds().width / 2.f, TempFontText.getLocalBounds().height / 2.f);
+    TempFontText.setFillColor(sf::Color::White);
+
     //Title
-    sf::Text SettingTitle("Setting", this->titlefont, 130); 
+    sf::Text SettingTitle("Setting", this->titlefont, 130);
     CreateTitle(SettingTitle, 1920 / 2.f, 250.f);
     this->Title = SettingTitle;
 
     //Back button
     this->backButton.CreateButton(100.f, 50.f, 70.f, 45.f, sf::Color(128, 128, 128), "Back", font, sf::Color::White);
+    
+    //Apply Button
+    ApplyButton.CreateButton(400, 120, 1920 / 2.f, 900, MainColor, "Apply", font, sf::Color::Black);
+    ApplyButton.rect.setOutlineColor(ButtonOutlineColor);
+    ApplyButton.rect.setOutlineThickness(2.f);
+
+    pageText.setFont(this->font);
+    pageText.setCharacterSize(30);
+    pageText.setFillColor(MainColor);
+    pageText.setString("Page: ");
+    pageText.setPosition(280, 400);
+    pageText.setOrigin(pageText.getLocalBounds().width / 2.f, pageText.getLocalBounds().height / 2.f);
 
     FontText.setFont(this->font);
     FontText.setCharacterSize(30);
     FontText.setFillColor(MainColor);
     FontText.setString("Font: ");
-    FontText.setPosition(280, 400);
+    FontText.setPosition(280, 700);
     FontText.setOrigin(FontText.getLocalBounds().width / 2.f, FontText.getLocalBounds().height / 2.f);
     // Button FontTextButton;
-    FontTextButton.CreateButton(200, 100, 450, 400, ButtonColor, "Import", font, sf::Color::White);
+    FontTextButton.CreateButton(100, 50, 450, 710, ButtonColor, "Import", font, sf::Color::White);
+    FontTextButton.rect.setOutlineColor(ButtonOutlineColor);
+    FontTextButton.rect.setOutlineThickness(2.f);
+
+    ColorText.setFont(this->font);
+    ColorText.setCharacterSize(30);
+    ColorText.setFillColor(MainColor);
+    ColorText.setString("Color: ");
+    ColorText.setPosition(880, 400);
+    ColorText.setOrigin(ColorText.getLocalBounds().width / 2.f, ColorText.getLocalBounds().height / 2.f);
 }
 
 void SettingPage::loadFont()
@@ -238,6 +284,12 @@ void SettingPage::loadFont()
             // Handle error
             std::cerr << "Error loading font file." << std::endl;
         }
+        std::string fontPath = ofn.lpstrFile;
+        std::filesystem::path fontFilePath(fontPath);
+        std::string fontFilename = fontFilePath.filename().string();
+
+        haveImportedFont = true;
+        TempFontText.setString(fontFilename);
     }
     else
     {
@@ -245,39 +297,82 @@ void SettingPage::loadFont()
     }
 }
 
-void SettingPage::updateChangeGlobals(DataVisualization_1 &dv1, DataVisualization_2 &dv2, DataVisualization_3 &dv3, DataVisualization_4 &dv4, DataVisualization_5 &dv5, DataVisualization_6 &dv6, DataVisualization_7 &dv7)
+void SettingPage::updateChangeGlobals(DataVisualization_1 &dv1, DataVisualization_2 &dv2, DataVisualization_3 &dv3, DataVisualization_4 &dv4, DataVisualization_5 &dv5, DataVisualization_6 &dv6, DataVisualization_7 &dv7, MenuPage &menu, SettingPage &setting, StartingPage &StartMenu)
 {
     if (this->Pagedropdown.storage == "Static Array")
     {
         dv1.updateChanges(tempFont);
-        std::cout << 1 << std::endl;
     }
     else if (this->Pagedropdown.storage == "Dynamic Array")
     {
-
+        dv2.updateChanges(tempFont);
     }
     else if (this->Pagedropdown.storage == "Singly Linked List")
     {
-
+        dv3.updateChanges(tempFont);
     }
     else if (this->Pagedropdown.storage == "Doubly Linked List")
     {
-
+        dv4.updateChanges(tempFont);
     }
     else if (this->Pagedropdown.storage == "Circular Linked List")
     {
-
+        dv5.updateChanges(tempFont);
     }
     else if (this->Pagedropdown.storage == "Stack")
     {
-
+        dv6.updateChanges(tempFont);
     }
     else if (this->Pagedropdown.storage == "Queue")
     {
-
+        dv7.updateChanges(tempFont);
+    }
+    else if (this->Pagedropdown.storage == "All")
+    {
+        dv1.updateChanges(tempFont);
+        dv2.updateChanges(tempFont);
+        dv3.updateChanges(tempFont);
+        dv4.updateChanges(tempFont);
+        dv5.updateChanges(tempFont);
+        dv6.updateChanges(tempFont);
+        dv7.updateChanges(tempFont);
+    }
+    else if (this->Pagedropdown.storage == "Start Page")
+    {
+        StartMenu.updateChanges(tempFont);
+    }
+    else if (this->Pagedropdown.storage == "Menu Page")
+    {
+        menu.updateChanges(tempFont);
+    }
+    else if (this->Pagedropdown.storage == "Setting Page")
+    {
+        setting.updateChanges(tempFont);
     }
 }
 
+bool SettingPage::printMessage(sf::RenderWindow &window, std::string message)
+{
+    std::chrono::milliseconds delayTime(1000);
+    sf::Text WarningMessage;
+    WarningMessage.setString(message);
+    WarningMessage.setCharacterSize(50);
+    WarningMessage.setFillColor(sf::Color::White);
+    WarningMessage.setOutlineColor(sf::Color::Red);
+    WarningMessage.setOutlineThickness(5);
+    WarningMessage.setFont(this->font);
+    WarningMessage.setOrigin(WarningMessage.getLocalBounds().width/2.f, WarningMessage.getLocalBounds().height/2.f);
+    WarningMessage.setPosition(window.getSize().x / 2.f + 20, window.getSize().y / 2.f - 240.f);
+    window.clear();
+    window.draw(DefaultBackground);
+    this->display(window);
+    // this->drawArray(window);
+    NotificationImage.drawImage(window);
+    window.draw(WarningMessage);
+    window.display();
+    std::this_thread::sleep_for(delayTime);
+    return true;
+}
 
 StartingPage::StartingPage()
 {
@@ -479,6 +574,68 @@ void StartingPage::handleEvent(sf::RenderWindow &window, sf::Vector2f mousePos, 
         }
     }   
 }
+void StartingPage::updateChanges(sf::Font tempFont)
+{
+    //Font
+    this->font = tempFont;
+    this->titlefont = tempFont;
+
+    //Title
+    sf::Text StartTitle("Menu", this->titlefont, 130);
+    CreateTitle(StartTitle, 1920 / 2.f, 250.f);
+    this->Title = StartTitle;
+    //Back button
+    this->backButton.CreateButton(100.f, 50.f, 70.f, 72.5f, sf::Color(128, 128, 128), "Back", this->font, sf::Color::White);
+
+    // Option
+    // Rectangle dimensions
+    const float rectWidth = 450.f;
+    const float rectHeight = 90.f;
+    const float padding = 40.f;
+    // Start position
+    const float startX1 = 1920 / 2.f - padding - rectWidth / 2.f - 70.f;
+    const float startY1 = StartTitle.getPosition().y + StartTitle.getLocalBounds().height / 2.f + padding * 2 + rectHeight / 2.f;
+    const float startX2 = 1920 / 2.f + rectWidth / 2.f + 70.f;
+    const float startY2 = StartTitle.getPosition().y + StartTitle.getLocalBounds().height / 2.f + padding * 2 + rectHeight / 2.f;
+
+    // #1. Static array rectangle
+    rect1.CreateButton(rectWidth, rectHeight, startX1, startY1, sf::Color(0, 154, 172, 0), "Static Array", font, MainColor);
+    rect1.rect.setOutlineColor(ButtonOutlineColor);
+    rect1.rect.setOutlineThickness(5);
+    rect1.setSize(40);
+    
+    // #2. Dynamic array rectangle
+    rect2.CreateButton(rectWidth, rectHeight, startX1, startY1 + rectHeight + padding, sf::Color(218, 83, 44, 0), "Dynamic Array", font, MainColor);
+    rect2.rect.setOutlineColor(ButtonOutlineColor);
+    rect2.rect.setOutlineThickness(5);
+    rect2.setSize(40);
+    // #3. Singly linked list rectangle
+    rect3.CreateButton(rectWidth, rectHeight, startX1, startY1 + (rectHeight + padding) * 2.f, sf::Color(160, 0, 167, 0), "Singly Linked List", font, MainColor);
+    rect3.rect.setOutlineColor(ButtonOutlineColor);
+    rect3.rect.setOutlineThickness(5);
+    rect3.setSize(40);
+    // #4. Doubly linked list rectangle
+    rect4.CreateButton(rectWidth, rectHeight, startX2, startY2, sf::Color(186, 29, 71, 0), "Doubly Linked List", font, MainColor);
+    rect4.rect.setOutlineColor(ButtonOutlineColor);
+    rect4.rect.setOutlineThickness(5);
+    rect4.setSize(40);
+    // #5. Circular linked list rectangle
+    rect5.CreateButton(rectWidth, rectHeight, startX2, startY2 + rectHeight + padding, sf::Color(124, 192, 204, 0), "Circular Linked List", font, MainColor);
+    rect5.rect.setOutlineColor(ButtonOutlineColor);
+    rect5.rect.setOutlineThickness(5);
+    rect5.setSize(40);
+    // #6. Stack rectangle
+    rect6.CreateButton(rectWidth, rectHeight, startX2, startY2 + (rectHeight + padding) * 2.f, sf::Color(0, 160, 0, 0), "Stack", font, MainColor);
+    rect6.rect.setOutlineColor(ButtonOutlineColor);
+    rect6.rect.setOutlineThickness(5);
+    rect6.setSize(40);
+    // #7. Queue rectangle
+    rect7.CreateButton(rectWidth + padding*2, rectHeight, 1920 / 2.f,  startY2 + (rectHeight + padding) * 3.f, sf::Color(38, 116, 236, 0), "Queue", font, MainColor);
+    rect7.rect.setOutlineColor(ButtonOutlineColor);
+    rect7.rect.setOutlineThickness(5);
+    rect7.setSize(40);
+}
+
 
 AboutPage::AboutPage()
 {

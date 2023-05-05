@@ -20,10 +20,8 @@
 #include "../Components/Image.hpp"
 #include "../Globals.hpp"
 
-class DataVisualization_6
+struct DataVisualization_6
 {
-private:
-public:
     sf::Font font;
     sf::Font titlefont;
     sf::Text Title;
@@ -115,6 +113,7 @@ public:
     void PeekNode(sf::RenderWindow &window);
 
     bool printMessage(sf::RenderWindow &window, std::string message);
+    void updateChanges(sf::Font tempFont);
 };
 
 

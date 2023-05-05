@@ -10,8 +10,6 @@ void Button::CreateButton(float recwidth, float recheight, float PosX, float Pos
     this->rect.setSize(sf::Vector2f(recwidth, recheight));
     this->rect.setPosition(sf::Vector2f(PosX, PosY));
     this->rect.setFillColor(buttonbgcolor);
-    // this->rect.setOutlineThickness(5);
-    // this->rect.setOutlineColor(buttonOutlineColor);
     this->rect.setOrigin(this->rect.getSize().x / 2.f, this->rect.getSize().y / 2.f);
 
     // Set up the text
@@ -23,7 +21,6 @@ void Button::CreateButton(float recwidth, float recheight, float PosX, float Pos
     // Center the text
     sf::FloatRect textRect = this->text.getLocalBounds();
     this->text.setOrigin(textRect.width/2.f, textRect.height/2.f);
-    // this->text.setPosition(this->rect.getPosition().x + this->rect.getSize().x/ 2.f, this->rect.getPosition().y + this->rect.getSize().y/ 2.f);
     this->text.setPosition(this->rect.getPosition().x , this->rect.getPosition().y - this->text.getLocalBounds().height / 3.f);
 }
 void Button::displayButton(sf::RenderWindow &window)

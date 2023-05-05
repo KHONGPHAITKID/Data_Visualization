@@ -53,9 +53,7 @@ DataVisualization_1::DataVisualization_1()
     CodeHighLight.setSize(sf::Vector2f(700, 30));
     CodeHighLight.setFillColor(sf::Color(106, 231, 255, 100));
     CodeHighLight.setOutlineColor(ButtonOutlineColor);
-    //---------------------
     CodeHighLight.setPosition(CodeHighLightPosition); // 1170 - 697.5 ~ 35
-    //---------------------
 
     //Title
     sf::Text DV1Title("Static Array", this->titlefont, 35);
@@ -124,8 +122,6 @@ DataVisualization_1::DataVisualization_1()
     this->DeleteFrontButton.CreateButton(130.f, 50.f, this->ControlMenu_btn3.rect.getPosition().x + this->ControlMenu_btn3.rect.getSize().x / 2.f + 20.f + 130/2.f + 10.f, this->ControlMenu_btn3.rect.getPosition().y, ButtonColor, "Front", this->font, MainColor);
     this->DeleteFrontButton.rect.setOutlineThickness(2.f);
     this->DeleteFrontButton.rect.setOutlineColor(ButtonOutlineColor);
-    // InitTextbox(this->DeleteFront_Textbox, 20, sf::Color::White, true, this->DeleteFrontButton.rect.getPosition().x, this->DeleteFrontButton.rect.getPosition().y + 50, font, true, 3);
-    // this->DeleteFront_Textbox.EnterMessage.setString("Index: ");
     this->DeleteMiddleButton.CreateButton(130.f, 50.f, this->DeleteFrontButton.rect.getPosition().x + this->DeleteFrontButton.rect.getSize().x / 2.f + 130/2.f + 10.f, this->ControlMenu_btn3.rect.getPosition().y, ButtonColor, "Middle", this->font, MainColor);
     this->DeleteMiddleButton.rect.setOutlineThickness(2.f);
     this->DeleteMiddleButton.rect.setOutlineColor(ButtonOutlineColor);
@@ -134,8 +130,6 @@ DataVisualization_1::DataVisualization_1()
     this->DeleteBackButton.CreateButton(130.f, 50.f, this->DeleteMiddleButton.rect.getPosition().x + this->DeleteMiddleButton.rect.getSize().x / 2.f + 130/2.f + 10.f, this->ControlMenu_btn3.rect.getPosition().y, ButtonColor, "Back", this->font, MainColor);
     this->DeleteBackButton.rect.setOutlineThickness(2.f);
     this->DeleteBackButton.rect.setOutlineColor(ButtonOutlineColor);
-    // InitTextbox(this->DeleteBack_Textbox, 20, sf::Color::White, true, this->DeleteBackButton.rect.getPosition().x, this->DeleteBackButton.rect.getPosition().y + 50, font, true, 3);
-    // this->DeleteBack_Textbox.EnterMessage.setString("Index: ");
     this->ClearArrayButton.CreateButton(130.f, 50.f, this->DeleteBackButton.rect.getPosition().x + this->DeleteBackButton.rect.getSize().x / 2.f + 130/2.f + 10.f, this->ControlMenu_btn3.rect.getPosition().y, ButtonColor, "Clear", this->font, MainColor);
     this->ClearArrayButton.rect.setOutlineThickness(2.f);
     this->ClearArrayButton.rect.setOutlineColor(ButtonOutlineColor);
@@ -260,7 +254,7 @@ void DataVisualization_1::display(sf::RenderWindow &window)
         this->SortButtonAscending.displayButton(window);
         this->SortButtonDescending.displayButton(window);
         break;
-    default: // NONE - 0
+    default:
         break;
     }
 }
@@ -519,7 +513,6 @@ void DataVisualization_1::drawArray(sf::RenderWindow &window)
         index.setFont(font);
         index.setPosition(this->Array[i].rect.getPosition().x, this->Array[i].rect.getPosition().y + 100);
         index.setOrigin(index.getLocalBounds().width / 2.f, index.getLocalBounds().height / 2.f);
-        // Array[i].rect.setFillColor(MainColor);
         window.draw(this->Array[i].rect);
         window.draw(this->Array[i].data);
         window.draw(index);
@@ -552,9 +545,12 @@ void DataVisualization_1::createArrayFromFile()
 
         if (inputFile.is_open())
         {
-            // std::vector<int> array;
             int num; int index = 0;
             inputFile >> this->size;
+            if (this->size > 10)
+            {
+                this->size = 10;
+            }
             this->capacity = this->size;
             int i = 0;
             
@@ -611,7 +607,6 @@ void DataVisualization_1::createRandomSort()
         this->Array[i].rect.setFillColor(MainColor);
         this->Array[i].setValue();
     }
-    // this->SortAscendingArray(window);
 }
 
 void DataVisualization_1::createRandomFixedSize(int size)
@@ -889,7 +884,6 @@ void DataVisualization_1::AddMiddle(sf::RenderWindow &window, int index, int val
     }
     Image arrow;
     arrow.setImage("media/DataVisualization1/arrowright.png");
-    // this->Array[0].rect.setFillColor(sf::Color::White);
     window.clear();
     window.draw(DefaultBackground);
     this->drawArray(window);
@@ -1082,12 +1076,9 @@ void DataVisualization_1::AccessValue(sf::RenderWindow &window, int index)
     this->display(window);
     window.display();
 
-    // CodeScript.setPosition(CodeScriptPosition);
-    // CodeScript.setImage("media/DataVisualization3/Search.png");
     std::chrono::milliseconds delayTime(1000 / speed); 
     std::chrono::milliseconds delayTime1(50);
     std::chrono::milliseconds delayTime2(500 / speed);
-    // CodeHighLight.setPosition(CodeHighLightPosition);
 
     // handle special case;
     if (this->size == 0)
@@ -1099,8 +1090,6 @@ void DataVisualization_1::AccessValue(sf::RenderWindow &window, int index)
     }
     if (index >= this->size || index < 0)
     {
-        // CodeScript.drawImage(window);
-        // window.draw(CodeHighLight);
         printMessage(window, "Index is out of range!");
         return;
     }
@@ -1109,7 +1098,6 @@ void DataVisualization_1::AccessValue(sf::RenderWindow &window, int index)
     window.draw(DefaultBackground);
     this->drawArray(window);
     this->display(window);
-    // window.draw(CodeHighLight);
     window.display();
     std::this_thread::sleep_for(delayTime);
     std::string mess = "Array[" + std::to_string(index) + "] = " + std::to_string(this->Array[index].value);
@@ -1183,8 +1171,6 @@ void DataVisualization_1::Update(sf::RenderWindow &window, int index, int value)
     window.draw(DefaultBackground);
     this->display(window);
     this->drawArray(window);
-    // window.draw(CodeHighLight);
-    // NotificationImage.drawImage(window);
     window.display();
     std::this_thread::sleep_for(delayTime);
     
@@ -1194,8 +1180,6 @@ void DataVisualization_1::Update(sf::RenderWindow &window, int index, int value)
     window.draw(DefaultBackground);
     this->display(window);
     this->drawArray(window);
-    // window.draw(CodeHighLight);
-    // NotificationImage.drawImage(window);
     window.display();
     std::this_thread::sleep_for(delayTime);
     this->Array[index].rect.setFillColor(MainColor);
@@ -1210,20 +1194,6 @@ void DataVisualization_1::swapNodes(sf::RenderWindow &window, int index1, int in
         fps = 15 / speed;
     }
     float movePerFrame = distance / fps;
-    // moving up
-    // for (float i = 0; i < 30 / speed; i++) {
-    //     Array[index1].rect.move(0, -1 * 150 * speed / 30.f);
-    //     Array[index1].data.move(0, -1 * 150 * speed / 30.f);
-    //     Array[index2].rect.move(0, -1 * 150 * speed / 30.f);
-    //     Array[index2].data.move(0, -1 * 150 * speed / 30.f);
-
-    //     window.clear();
-    //     window.draw(DefaultBackground);
-    //     this->drawArray(window);
-    //     this->display(window);
-    //     window.display();
-    // }
-
     for (float i = 0; i < fps; i++) {
         Array[index1].rect.move(movePerFrame, 0);
         Array[index1].data.move(movePerFrame, 0);
@@ -1236,19 +1206,6 @@ void DataVisualization_1::swapNodes(sf::RenderWindow &window, int index1, int in
         this->display(window);
         window.display();
     }
-    // moving down
-    // for (float i = 0; i < 30 / speed; i++) {
-    //     Array[index1].rect.move(0, 150 * speed / 30.f);
-    //     Array[index1].data.move(0, 150 * speed / 30.f);
-    //     Array[index2].rect.move(0, 150 * speed / 30.f);
-    //     Array[index2].data.move(0, 150 * speed / 30.f);
-
-    //     window.clear();
-    //     window.draw(DefaultBackground);
-    //     this->drawArray(window);
-    //     this->display(window);
-    //     window.display();
-    // }
 
     std::swap(Array[index1], Array[index2]);
     Array[index1].setValue();
@@ -1280,9 +1237,6 @@ void DataVisualization_1::SearchArray(sf::RenderWindow &window, sf::Event &event
 
 void DataVisualization_1::Search(sf::RenderWindow &window, int value)
 {
-    // CodeScript.setPosition(CodeScriptPosition);
-    // CodeScript.setImage("media/DataVisualization3/Search.png");
-    // CodeHighLight.setPosition(CodeHighLightPosition);
     std::chrono::milliseconds delayTime(1000 / speed); 
     std::chrono::milliseconds delayTime1(50);
     std::chrono::milliseconds delayTime2(500 / speed);
@@ -1298,8 +1252,6 @@ void DataVisualization_1::Search(sf::RenderWindow &window, int value)
     // handle special case;
     if (this->size == 0)
     {
-        // CodeScript.drawImage(window);
-        // window.draw(CodeHighLight);
         printMessage(window, "No element to be searched");
         return;
     }
@@ -1318,7 +1270,6 @@ void DataVisualization_1::Search(sf::RenderWindow &window, int value)
         window.draw(DefaultBackground);
         this->drawArray(window);
         this->display(window);
-        // window.draw(CodeHighLight);
         window.display();
         std::this_thread::sleep_for(delayTime);
         index++;
@@ -1327,7 +1278,6 @@ void DataVisualization_1::Search(sf::RenderWindow &window, int value)
     window.draw(DefaultBackground);
     this->drawArray(window);
     this->display(window);
-    // window.draw(CodeHighLight);
     window.display();
     std::this_thread::sleep_for(delayTime2);
     printMessage(window, mess);
@@ -1368,10 +1318,6 @@ void DataVisualization_1::SortAscendingArray(sf::RenderWindow& window)
 
 void DataVisualization_1::SortDescendingArray(sf::RenderWindow& window) 
 {
-    // std::chrono::milliseconds delayTime(1000 / speed);
-    // std::chrono::milliseconds delayTime1(50);
-    // std::chrono::milliseconds delayTime2(500 / speed);
-
     if (size == 0)
     {
         printMessage(window, "No element to be sorted");
@@ -1396,50 +1342,6 @@ void DataVisualization_1::SortDescendingArray(sf::RenderWindow& window)
     }
     printMessage(window, "Array sorted");
 }
-
-// void DataVisualization_1::sortAscending()
-// {
-//     for (int i = 0; i < size; i++)
-//     {
-//         int min = i;
-//         for (int j = i + 1; j < size; j++)
-//         {
-//             if (this->Array[min].value > this->Array[j].value)
-//             {
-//                 min = j;
-//             }
-//         }
-//         int temp = this->Array[min].value;
-//         this->Array[min].value = this->Array[i].value;
-//         this->Array[i].value = temp;
-//     }
-//     for (int i = 0; i < size; i++)
-//     {
-//         this->Array[i].setValue();
-//     }
-// }
-
-// void DataVisualization_1::sortDescending()
-// {
-//     for (int i = 0; i < size; i++)
-//     {
-//         int max = i;
-//         for (int j = i + 1; j < size; j++)
-//         {
-//             if (this->Array[max].value < this->Array[j].value)
-//             {
-//                 max = j;
-//             }
-//         }
-//         int temp = this->Array[max].value;
-//         this->Array[max].value = this->Array[i].value;
-//         this->Array[i].value = temp;
-//     }
-//     for (int i = 0; i < size; i++)
-//     {
-//         this->Array[i].setValue();
-//     }
-// }
 
 bool DataVisualization_1::checksize(sf::RenderWindow &window, int size)
 {
@@ -1481,7 +1383,6 @@ bool DataVisualization_1::printMessage(sf::RenderWindow &window, std::string mes
     window.draw(DefaultBackground);
     this->display(window);
     this->drawArray(window);
-    // window.draw(CodeHighLight);
     NotificationImage.drawImage(window);
     window.draw(WarningMessage);
     window.display();
@@ -1494,7 +1395,6 @@ void pause_for(std::chrono::milliseconds duration) {
     auto end_time = start_time + duration;
     
     while (std::chrono::steady_clock::now() < end_time) {
-        // Do other work while waiting
         std::this_thread::yield();
     }
 }
@@ -1503,7 +1403,7 @@ void DataVisualization_1::updateChanges(sf::Font tempFont)
 {
     // coding ...
     this->font = tempFont;
-    this->titlefont = defautTitleFont;
+    this->titlefont = tempFont;
     NotificationImage.setImage(WorkingPath + "media/img/noti_board.png");
     NotificationImage.setPosition(sf::Vector2f(1920/2.f, 1080/4.f - 150));
 
@@ -1545,9 +1445,7 @@ void DataVisualization_1::updateChanges(sf::Font tempFont)
     CodeHighLight.setSize(sf::Vector2f(700, 30));
     CodeHighLight.setFillColor(sf::Color(106, 231, 255, 100));
     CodeHighLight.setOutlineColor(ButtonOutlineColor);
-    //---------------------
     CodeHighLight.setPosition(CodeHighLightPosition); // 1170 - 697.5 ~ 35
-    //---------------------
 
     //Title
     sf::Text DV1Title("Static Array", this->titlefont, 35);
@@ -1616,8 +1514,6 @@ void DataVisualization_1::updateChanges(sf::Font tempFont)
     this->DeleteFrontButton.CreateButton(130.f, 50.f, this->ControlMenu_btn3.rect.getPosition().x + this->ControlMenu_btn3.rect.getSize().x / 2.f + 20.f + 130/2.f + 10.f, this->ControlMenu_btn3.rect.getPosition().y, ButtonColor, "Front", this->font, MainColor);
     this->DeleteFrontButton.rect.setOutlineThickness(2.f);
     this->DeleteFrontButton.rect.setOutlineColor(ButtonOutlineColor);
-    // InitTextbox(this->DeleteFront_Textbox, 20, sf::Color::White, true, this->DeleteFrontButton.rect.getPosition().x, this->DeleteFrontButton.rect.getPosition().y + 50, font, true, 3);
-    // this->DeleteFront_Textbox.EnterMessage.setString("Index: ");
     this->DeleteMiddleButton.CreateButton(130.f, 50.f, this->DeleteFrontButton.rect.getPosition().x + this->DeleteFrontButton.rect.getSize().x / 2.f + 130/2.f + 10.f, this->ControlMenu_btn3.rect.getPosition().y, ButtonColor, "Middle", this->font, MainColor);
     this->DeleteMiddleButton.rect.setOutlineThickness(2.f);
     this->DeleteMiddleButton.rect.setOutlineColor(ButtonOutlineColor);
@@ -1626,8 +1522,6 @@ void DataVisualization_1::updateChanges(sf::Font tempFont)
     this->DeleteBackButton.CreateButton(130.f, 50.f, this->DeleteMiddleButton.rect.getPosition().x + this->DeleteMiddleButton.rect.getSize().x / 2.f + 130/2.f + 10.f, this->ControlMenu_btn3.rect.getPosition().y, ButtonColor, "Back", this->font, MainColor);
     this->DeleteBackButton.rect.setOutlineThickness(2.f);
     this->DeleteBackButton.rect.setOutlineColor(ButtonOutlineColor);
-    // InitTextbox(this->DeleteBack_Textbox, 20, sf::Color::White, true, this->DeleteBackButton.rect.getPosition().x, this->DeleteBackButton.rect.getPosition().y + 50, font, true, 3);
-    // this->DeleteBack_Textbox.EnterMessage.setString("Index: ");
     this->ClearArrayButton.CreateButton(130.f, 50.f, this->DeleteBackButton.rect.getPosition().x + this->DeleteBackButton.rect.getSize().x / 2.f + 130/2.f + 10.f, this->ControlMenu_btn3.rect.getPosition().y, ButtonColor, "Clear", this->font, MainColor);
     this->ClearArrayButton.rect.setOutlineThickness(2.f);
     this->ClearArrayButton.rect.setOutlineColor(ButtonOutlineColor);
@@ -1681,5 +1575,4 @@ void DataVisualization_1::updateChanges(sf::Font tempFont)
     this->size = 0;
     this->capacity = 0;
     funcstate = 0;
-    // printMessage(window, "Updates Applied");
 }

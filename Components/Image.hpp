@@ -4,10 +4,8 @@
 #include "SFML/Graphics.hpp"
 #include <iostream>
 
-class Image
+struct Image
 {
-private:
-public:
     sf::Texture image;
     sf::Sprite ImageHolder;
     void setImage(std::string path);

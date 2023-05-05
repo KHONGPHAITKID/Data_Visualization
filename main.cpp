@@ -52,7 +52,6 @@ int main()
     }
 
     //----------TESTING------------
-    // DropdownBox dropdown(sf::Vector2f(50, 50), sf::Vector2f(200, 30), "Select an option", { "Option 1", "Option 2", "Option 3" });
     //----------TESTING------------
 
     MenuPage menu;
@@ -73,7 +72,6 @@ int main()
         sf::Event event;
         while (window.pollEvent(event))
         {
-            //----
             sf::Vector2f mousePos = sf::Vector2f(sf::Mouse::getPosition(window));
             switch (currentState)
             {
@@ -84,7 +82,7 @@ int main()
                     StartMenu.handleEvent(window, mousePos, event);
                     break;
                 case Settings:
-                    setting.handleEvent(window, mousePos, event, dv1, dv2, dv3, dv4, dv5, dv6, dv7);
+                    setting.handleEvent(window, mousePos, event, dv1, dv2, dv3, dv4, dv5, dv6, dv7, menu, setting, StartMenu);
                     break;
                 case About:
                     aboutMenu.handleEvent(window, mousePos, event);
@@ -117,13 +115,10 @@ int main()
             {
                 window.close();
             }
-            // dropdown.handleEvent(event);
         }
-        // dropdownBox.update();
         //-----------------
         window.clear();
         window.draw(DefaultBackground);
-        // dropdown.draw(window);
         switch (currentState)
         {
             case Menu:

@@ -6,13 +6,10 @@
 #include <cstdlib>
 #include <SFML/Graphics.hpp>
 
-// int randNumNode();
-
 struct Stack_Node
 {
     int data;
     Stack_Node* next;
-    // sf::CircleShape circle;
     sf::RectangleShape rec;
     sf::Text text;
     void DeleteStack(Stack_Node* &pHead);
@@ -21,9 +18,7 @@ struct Stack_Node
 
     void addBack(Stack_Node* &pHead, Stack_Node* &temp);
 
-    // void addSort(Stack_Node* &pHead, Stack_Node* &temp);
-
-    void CreateRandomSortStack(Stack_Node* &head, int &n, sf::Font &font); // chua
+    void CreateRandomSortStack(Stack_Node* &head, int &n, sf::Font &font);
 
     // create a Node
     Stack_Node* createNode(float x, float y, float height, float width, sf::Font &font, int value);

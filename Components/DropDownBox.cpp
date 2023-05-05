@@ -44,7 +44,6 @@ void DropdownBox::draw(sf::RenderWindow& window)
 {
     window.draw(background);
     window.draw(title);
-    // window.draw(Titlebackground);
     if (isExpanded)
     {
         for (sf::Text option : options)

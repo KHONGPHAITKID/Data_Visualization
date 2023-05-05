@@ -1,5 +1,4 @@
 #include "Stack.hpp"
-//circle
 
 void Stack_Node::DeleteStack(Stack_Node* &pHead)
 {

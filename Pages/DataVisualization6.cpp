@@ -504,7 +504,6 @@ void DataVisualization_6::InsertNodeFront(sf::RenderWindow &window, int data)
         window.draw(newNode->text);
         window.display();
     }
-    // first node is currently at the bottom so it cause the fking bug!!!
     float distance = (this->NodeArray->rec.getPosition().y - 75 - newNode->rec.getPosition().y) / 25.0;
     for (int i = 0; i < 25; i++)
     {
@@ -512,7 +511,6 @@ void DataVisualization_6::InsertNodeFront(sf::RenderWindow &window, int data)
         newNode->text.move(0, distance);
         window.clear();
         window.draw(DefaultBackground);
-        // this->NodeArray->drawArrow(window, newNode->rec.getPosition(), this->NodeArray->rec.getPosition());
         this->drawNodes(window);
         this->display(window);
         window.draw(newNode->rec);
@@ -674,8 +672,7 @@ void DataVisualization_6::PeekNode(sf::RenderWindow &window)
 
 bool DataVisualization_6::printMessage(sf::RenderWindow &window, std::string message/*, int min_range, int max_range, int value*/)
 {
-    // if (size < 10) return true;
-    std::chrono::milliseconds delayTime(1500 / speed);
+    std::chrono::milliseconds delayTime(1000);
     sf::Text WarningMessage;
     WarningMessage.setString(message);
     WarningMessage.setCharacterSize(50);
@@ -684,9 +681,139 @@ bool DataVisualization_6::printMessage(sf::RenderWindow &window, std::string mes
     WarningMessage.setOutlineThickness(5);
     WarningMessage.setFont(this->font);
     WarningMessage.setOrigin(WarningMessage.getLocalBounds().width/2.f, WarningMessage.getLocalBounds().height/2.f);
-    WarningMessage.setPosition(window.getSize().x / 2.f, window.getSize().y / 2.f + 100.f);
+    WarningMessage.setPosition(window.getSize().x / 2.f + 20, window.getSize().y / 2.f - 240.f);
+    window.clear();
+    window.draw(DefaultBackground);
+    this->display(window);
+    this->drawNodes(window);
+    NotificationImage.drawImage(window);
     window.draw(WarningMessage);
     window.display();
     std::this_thread::sleep_for(delayTime);
     return true;
+}
+
+void DataVisualization_6::updateChanges(sf::Font tempFont)
+{
+    this->font = tempFont;
+    this->titlefont = tempFont;
+    this->speed = 2;
+    speedText.setCharacterSize(20);
+    speedText.setFont(font);
+    speedText.setFillColor(sf::Color::White);
+    speedText.setString("Speed: x" + std::to_string(speed));
+    speedText.setOrigin(sf::Vector2f(speedText.getLocalBounds().width / 2.f, speedText.getLocalBounds().height / 2.f));
+    speedText.setPosition(sf::Vector2f(250, 1010));
+
+    FlowControlMenu.setFillColor(sf::Color::Black);
+    FlowControlMenu.setOutlineColor(sf::Color::White);
+    FlowControlMenu.setOutlineThickness(2);
+    FlowControlMenu.setSize(sf::Vector2f(1920, 100));
+    FlowControlMenu.setPosition(sf::Vector2f(0, 980));
+    PauseButton.setImage(WorkingPath + "media/img/pause_button.png");
+    PauseButton.setPosition(sf::Vector2f(960, 1000));
+    ReplayButton.setImage(WorkingPath + "media/img/play_button.png");
+    ReplayButton.setPosition(sf::Vector2f(960, 1000));
+    NextButton.setImage(WorkingPath + "media/img/next_button.png");
+    NextButton.setPosition(sf::Vector2f(1010, 1000));
+    SkipButton.setImage(WorkingPath + "media/img/skip_button.png");
+    SkipButton.setPosition(sf::Vector2f(1060, 1000));
+    NextButtonReverse.setImage(WorkingPath + "media/img/next_button_reverse.png");
+    NextButtonReverse.setPosition(sf::Vector2f(910, 1000));
+    SkipButtonReverse.setImage(WorkingPath + "media/img/skip_button_reverse.png");
+    SkipButtonReverse.setPosition(sf::Vector2f(860, 1000));
+    IncreaseSpeedButton.setImage(WorkingPath + "media/img/add_button.png");
+    IncreaseSpeedButton.setPosition(sf::Vector2f(330, 1002));
+    DecreaseSpeedButton.setImage(WorkingPath + "media/img/minus_btn.png");
+    DecreaseSpeedButton.setPosition(sf::Vector2f(380, 1002));
+    isPause = true;
+
+    // Code Script
+    CodeScriptPosition = sf::Vector2f(1520,740);
+    CodeHighLightPosition = sf::Vector2f(1170, 697.5f);
+    CodeScript.setPosition(CodeScriptPosition);
+    CodeHighLight.setSize(sf::Vector2f(700, 30));
+    CodeHighLight.setFillColor(sf::Color(106, 231, 255, 100));
+    CodeHighLight.setOutlineColor(sf::Color(106, 231, 255));
+    //---------------------
+    CodeHighLight.setPosition(CodeHighLightPosition); // 1170 - 697.5 ~ 35
+    //---------------------
+
+    //Title
+    sf::Text DV6Title("Stack", this->titlefont, 35);
+    CreateTitle(DV6Title, 400, 60.f);
+    this->Title = DV6Title;
+    this->Title.setOutlineThickness(0.f);
+    this->Title.setFillColor(sf::Color(106, 231, 255));
+    //Back button
+    this->backButton.CreateButton(100.f, 50.f, 70.f, 72.5f, sf::Color(128, 128, 128), "Back", this->font, sf::Color::White);
+    
+    // Menu table
+    this->menuTable.setSize(sf::Vector2f(200.f, 200.f));
+    this->menuTable.setFillColor(sf::Color(106, 231, 255, 0));
+    this->menuTable.setOutlineColor(sf::Color(106, 231, 255));
+    this->menuTable.setOutlineThickness(5.f);
+    this->menuTable.setPosition(150.f, 1080 / 2.f + 200.f);
+
+    //build the stack image
+    this->Stackbody1.setSize(sf::Vector2f(470.f, 20.f));
+    this->Stackbody1.setFillColor(sf::Color::White);
+    this->Stackbody1.setRotation(270);
+    this->Stackbody1.setOrigin(sf::Vector2f(0, 10));
+    this->Stackbody1.setPosition(sf::Vector2f(798, 675));
+
+    this->Stackbody2.setSize(sf::Vector2f(344.f, 20.f));
+    this->Stackbody2.setFillColor(sf::Color::White);
+    this->Stackbody2.setRotation(0);
+    this->Stackbody2.setOrigin(sf::Vector2f(172.f, 10));
+    this->Stackbody2.setPosition(sf::Vector2f(960, 675));
+
+    this->Stackbody3.setSize(sf::Vector2f(470.f, 20.f));
+    this->Stackbody3.setFillColor(sf::Color::White);
+    this->Stackbody3.setRotation(270);
+    this->Stackbody3.setOrigin(sf::Vector2f(0, 10));
+    this->Stackbody3.setPosition(sf::Vector2f(1122, 675));
+
+    //Function Key #1
+    this->ControlMenu_btn1.CreateButton(200.f, 50.f, 250.f, 1080 / 2.f + 225.f, sf::Color(106, 231, 255, 0), "Create", this->font, sf::Color(106, 231, 255));
+    this->CreateEmpty.CreateButton(130.f, 50.f, this->ControlMenu_btn1.rect.getPosition().x + this->ControlMenu_btn1.rect.getSize().x / 2.f + 20.f + 130/2.f + 10.f, this->ControlMenu_btn1.rect.getPosition().y, sf::Color(106, 231, 255, 0), "Empty", this->font, sf::Color(106, 231, 255));
+    this->CreateEmpty.rect.setOutlineColor(sf::Color(106, 231, 255));
+    this->CreateEmpty.rect.setOutlineThickness(2.f);
+
+    this->CreateRadom.CreateButton(130.f, 50.f, this->CreateEmpty.rect.getPosition().x + this->CreateEmpty.rect.getSize().x / 2.f + 130/2.f + 10.f, this->ControlMenu_btn1.rect.getPosition().y, sf::Color(106, 231, 255, 0), "Random", this->font, sf::Color(106, 231, 255));
+    this->CreateRadom.rect.setOutlineColor(sf::Color(106, 231, 255));
+    this->CreateRadom.rect.setOutlineThickness(2.f);
+    
+    this->ImportFromFileButton.CreateButton(130.f, 50.f, this->CreateRadom.rect.getPosition().x + this->CreateRadom.rect.getSize().x / 2.f + 130/2.f + 10.f, this->ControlMenu_btn1.rect.getPosition().y, sf::Color(106, 231, 255, 0), "Import", this->font, sf::Color(106, 231, 255));
+    this->ImportFromFileButton.rect.setOutlineColor(sf::Color(106, 231, 255));
+    this->ImportFromFileButton.rect.setOutlineThickness(2.f);
+
+    this->CreateRandomFixedSize.CreateButton(180.f, 50.f, this->ImportFromFileButton.rect.getPosition().x + this->ImportFromFileButton.rect.getSize().x / 2.f + 160.f / 2.f + 20.f, this->ControlMenu_btn1.rect.getPosition().y, sf::Color(106, 231, 255, 0), "Random Fixed Size", this->font, sf::Color(106, 231, 255));
+    this->CreateRandomFixedSize.rect.setOutlineColor(sf::Color(106, 231, 255));
+    this->CreateRandomFixedSize.rect.setOutlineThickness(2.f);
+    InitTextbox(this->CreateRandomFixedSize_Textbox, 20, sf::Color::White, true, this->CreateRandomFixedSize.rect.getPosition().x , this->CreateRandomFixedSize.rect.getPosition().y + 50, font, true, 3);
+    this->CreateRandomFixedSize_Textbox.EnterMessage.setString("Size: ");
+    
+    this->CreateUserDefinedListButton.CreateButton(130.f, 50.f, this->CreateRandomFixedSize.rect.getPosition().x + this->CreateRandomFixedSize.rect.getSize().x / 2.f + 130.f/2.f + 10.f, this->ControlMenu_btn1.rect.getPosition().y, sf::Color(106, 231, 255, 0), "User Defined", this->font, sf::Color(106, 231, 255));
+    this->CreateUserDefinedListButton.rect.setOutlineColor(sf::Color(106, 231, 255));
+    this->CreateUserDefinedListButton.rect.setOutlineThickness(2.f);
+    InitTextbox(this->CreateUserDefinedList_Textbox, 20, sf::Color::White, true, this->CreateUserDefinedListButton.rect.getPosition().x, this->CreateUserDefinedListButton.rect.getPosition().y + 50, font, true, 3);
+    this->CreateUserDefinedList_Textbox.EnterMessage.setString("Size: ");
+
+    //Function Key #2: Pushing
+    this->ControlMenu_btn2.CreateButton(200.f, 50.f, 250.f, 1080 / 2.f + 275.f, sf::Color(106, 231, 255, 0), "Push", this->font, sf::Color(106, 231, 255));
+    InitTextbox(this->InsertHead_Textbox, 20, sf::Color::White, true, this->CreateEmpty.rect.getPosition().x, this->CreateEmpty.rect.getPosition().y + 50, font, true, 3);
+    this->InsertHead_Textbox.EnterMessage.setString("Value: ");
+    
+    //Function Key #3: Pop
+    this->ControlMenu_btn3.CreateButton(200.f, 50.f, 250.f, 1080 / 2.f + 325.f, sf::Color(106, 231, 255, 0), "Pop", this->font, sf::Color(106, 231, 255));
+    this->DeleteHead.CreateButton(130.f, 50.f, this->ControlMenu_btn3.rect.getPosition().x + this->ControlMenu_btn3.rect.getSize().x / 2.f + 20.f + 130/2.f + 10.f, 1080 / 2.f + 225.f, sf::Color(106, 231, 255, 0), "Head", this->font, sf::Color(106, 231, 255));
+
+    //Function Key #4: Peek
+    this->ControlMenu_btn4.CreateButton(200.f, 50.f, 250.f, 1080 / 2.f + 375.f, sf::Color(106, 231, 255, 0), "Peek", this->font, sf::Color(106, 231, 255));
+
+    this->size = 0;
+    this->NodeArray = nullptr;
+
+    funcstate = 0;
 }

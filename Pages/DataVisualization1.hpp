@@ -20,9 +20,8 @@
 #include "../Components/Image.hpp"
 #include "../Globals.hpp"
 
-class ArrayElement // one memory slot
+struct ArrayElement // one memory slot
 {
-public:
     int value;
     sf::RectangleShape rect;
     sf::Text data;
@@ -32,10 +31,8 @@ public:
     void setValue();
 };
 
-class DataVisualization_1
+struct DataVisualization_1
 {
-private:
-public:
     sf::Font font;
     sf::Font titlefont;
     sf::Text Title;
@@ -52,8 +49,8 @@ public:
     Image SkipButtonReverse;
     bool isPause;
 
-    int speed;
     sf::Text speedText;
+    int speed;
 
     Image IncreaseSpeedButton;
     Image DecreaseSpeedButton;
@@ -89,9 +86,7 @@ public:
     // #3
     Button ControlMenu_btn3;
     Button DeleteFrontButton;
-    // Textbox DeleteFront_Textbox;
     Button DeleteBackButton;
-    // Textbox DeleteBack_Textbox;
     Button DeleteMiddleButton;
     Textbox DeleteMiddle_Textbox;
     Button ClearArrayButton;

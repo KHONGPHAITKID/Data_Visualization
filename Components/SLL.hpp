@@ -6,8 +6,6 @@
 #include <cstdlib>
 #include <SFML/Graphics.hpp>
 
-// int randNumNode();
-
 struct SLL_Node
 {
     int data;
