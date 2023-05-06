@@ -26,6 +26,16 @@ void CreateTitle(sf::Text &Title, float PosX, float PosY)
     Title.setPosition(PosX, PosY);
 }
 
+void pause_for(std::chrono::milliseconds duration) 
+{
+    auto start_time = std::chrono::steady_clock::now();
+    auto end_time = start_time + duration;
+    
+    while (std::chrono::steady_clock::now() < end_time) {
+        std::this_thread::yield();
+    }
+}
+
 std::string getCurrentPath()
 {
     system("cd > tmp.txt");

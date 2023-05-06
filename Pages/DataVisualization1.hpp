@@ -1,20 +1,6 @@
 #ifndef _DATAVISUALIZATION1_HPP_
 #define _DATAVISUALIZATION1_HPP_
 
-#include <iostream>
-#include <string>
-#include <SFML/Graphics.hpp>
-#include <ctime>
-#include <cmath>
-#include <sstream>
-#include <fstream>
-#include <vector>
-#include <functional>
-#include <windows.h>
-#include <chrono> 
-#include <thread>
-#include <unistd.h>
-#include <cstdlib>
 #include "../Components/Button.hpp"
 #include "../Components/Textbox.hpp"
 #include "../Components/Image.hpp"
@@ -56,10 +42,12 @@ struct DataVisualization_1
     Image DecreaseSpeedButton;
 
 // HighLight Code
-    Image CodeScript;
     sf::Vector2f CodeScriptPosition;
     sf::RectangleShape CodeHighLight;
     sf::Vector2f CodeHighLightPosition;
+    Image CodeScript;
+    Image DeleteCodeScriptButton;
+    bool CodeScriptVisible = false;
 
     sf::RectangleShape menuTable;
 
@@ -158,6 +146,5 @@ struct DataVisualization_1
 
     void updateChanges(sf::Font tempFont);
 };
-void pause_for(std::chrono::milliseconds duration);
 
 #endif

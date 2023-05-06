@@ -37,6 +37,8 @@ DataVisualization_4::DataVisualization_4()
     IncreaseSpeedButton.setPosition(sf::Vector2f(330, 1002));
     DecreaseSpeedButton.setImage(WorkingPath + "media/img/minus_btn.png");
     DecreaseSpeedButton.setPosition(sf::Vector2f(380, 1002));
+    DeleteCodeScriptButton.setImage(WorkingPath + "media/img/deleteCodeHightLight.png");
+    DeleteCodeScriptButton.setPosition(sf::Vector2f(1870, 630));
     isPause = true;
 
     // Code Script
@@ -46,9 +48,7 @@ DataVisualization_4::DataVisualization_4()
     CodeHighLight.setSize(sf::Vector2f(700, 30));
     CodeHighLight.setFillColor(sf::Color(106, 231, 255, 100));
     CodeHighLight.setOutlineColor(sf::Color(106, 231, 255));
-    //---------------------
     CodeHighLight.setPosition(CodeHighLightPosition); // 1170 - 697.5 ~ 35
-    //---------------------
 
     //Title
     sf::Text DV4Title("Doubly Linked List", this->titlefont, 35);
@@ -201,7 +201,11 @@ void DataVisualization_4::display(sf::RenderWindow &window)
         this->HeadText.setPosition(sf::Vector2f(this->NodeArray->circle.getPosition().x, this->NodeArray->circle.getPosition().y + 50));
         window.draw(this->HeadText);
     }
-    CodeScript.drawImage(window);
+    if (CodeScriptVisible)
+    {
+        CodeScript.drawImage(window);
+        DeleteCodeScriptButton.drawImage(window);
+    }
     this->ImportFromFileButton.displayButton(window);
     this->ControlMenu_btn1.displayButton(window);
     this->ControlMenu_btn2.displayButton(window);
@@ -283,6 +287,7 @@ void DataVisualization_4::handleEvent(sf::RenderWindow &window, sf::Vector2f &mo
             this->size = 0;
             this->funcstate = 0;
             this->speed = 2;
+            this->CodeScriptVisible = false;
         }
         else if (this->ImportFromFileButton.rect.getGlobalBounds().contains(mousePos))
         {
@@ -323,6 +328,10 @@ void DataVisualization_4::handleEvent(sf::RenderWindow &window, sf::Vector2f &mo
             if (this->speed > 1) {
                 this->speed--;
             }
+        }
+        else if (this->DeleteCodeScriptButton.ImageHolder.getGlobalBounds().contains(mousePos))
+        {
+            CodeScriptVisible = false;
         }
         else {
             this->CreateRandomFixedSize_Textbox.isSelected = false;
@@ -564,19 +573,27 @@ void DataVisualization_4::CreateUserDefinedListDLL(sf::RenderWindow &window, sf:
 
         std::string str = "";
         this->CreateUserDefinedList_Textbox.TextboxHandleEvent(event, str);
-        // if (str != "" && (std::stoi(str) < 0 || std::stoi(str) > 10))
-        // {
-        //     this->printMessage(window, "Size must be from 1 to 10");
-        //     str = "";
-        //     this->CreateUserDefinedList_Textbox.isSelected = false;
-        //     values.clear(); // clear Vector
-        //     return;
-        // }
         if (str != "" && this->CreateUserDefinedList_Textbox.pressEnter == true)
         {
+            // if (num_values == 0) 
+            // {
+            //     num_values = std::stoi(str);
+            //     this->CreateUserDefinedList_Textbox.EnterMessage.setString("Value:");
+            // }
             if (num_values == 0) 
             {
                 num_values = std::stoi(str);
+                if (num_values > 10)
+                {
+                    this->printMessage(window, "Size must be from 1 to 10");
+                    num_values = 0;
+                    str = "";
+                    values.clear();
+                    this->CreateUserDefinedList_Textbox.isSelected = false;
+                    this->CreateUserDefinedList_Textbox.EnterMessage.setString("Size:");
+                    this->CreateUserDefinedList_Textbox.pressEnter = false;
+                    return;
+                }
                 this->CreateUserDefinedList_Textbox.EnterMessage.setString("Value:");
             }
             else 
@@ -731,6 +748,7 @@ void DataVisualization_4::InsertNodeFront(sf::RenderWindow &window, int data)
 {
     CodeScript.setPosition(CodeScriptPosition);
     CodeScript.setImage(WorkingPath + "media/DataVisualization4/InsertHead.png");
+    CodeScriptVisible = true;
     std::chrono::milliseconds delayTime(1000 / speed);
     std::chrono::milliseconds delayTime1(500 / speed);
     CodeHighLight.setPosition(CodeHighLightPosition);
@@ -811,6 +829,7 @@ void DataVisualization_4::InsertNodeBack(sf::RenderWindow &window, int data)
 {
     CodeScript.setPosition(CodeScriptPosition);
     CodeScript.setImage(WorkingPath + "media/DataVisualization4/InsertBack.png");
+    CodeScriptVisible = true;
     std::chrono::milliseconds delayTime(500 / speed); // 0.5 seconds
     CodeHighLight.setPosition(CodeHighLightPosition);
     if (this->NodeArray == nullptr)
@@ -965,6 +984,7 @@ void DataVisualization_4::InsertNodeMid(sf::RenderWindow &window, int data, int 
     std::chrono::milliseconds delayTime(500 / speed);
     CodeScript.setPosition(CodeScriptPosition);
     CodeScript.setImage(WorkingPath + "media/DataVisualization4/InsertMid.png");
+    CodeScriptVisible = true;
 
     // special case
     if (this->NodeArray == nullptr)
@@ -1193,6 +1213,7 @@ void DataVisualization_4::DeleteNodeFront(sf::RenderWindow &window)
 {   
     CodeScript.setPosition(CodeScriptPosition);
     CodeScript.setImage(WorkingPath + "media/DataVisualization4/RemoveHead.png");
+    CodeScriptVisible = true;
     std::chrono::milliseconds delayTime(1000 / speed); 
     std::chrono::milliseconds delayTime1(50); 
     std::chrono::milliseconds delayTime2(500 / speed); 
@@ -1348,6 +1369,7 @@ void DataVisualization_4::DeleteNodeBack(sf::RenderWindow &window)
     std::chrono::milliseconds delayTime2(500 / speed);
     CodeScript.setPosition(CodeScriptPosition);
     CodeScript.setImage(WorkingPath + "media/DataVisualization4/RemoveTail.png");
+    CodeScriptVisible = true;
     CodeHighLight.setPosition(CodeHighLightPosition);
 
     // special case
@@ -1533,6 +1555,7 @@ void DataVisualization_4::DeleteNodeMid(sf::RenderWindow &window, int index)
 {   
     CodeScript.setPosition(CodeScriptPosition);
     CodeScript.setImage(WorkingPath + "media/DataVisualization4/RemoveMid.png");
+    CodeScriptVisible = true;
     CodeHighLight.setPosition(CodeHighLightPosition);
     std::chrono::milliseconds delayTime(1000 / speed); // 1 second
     std::chrono::milliseconds delayTime1(50); // 05
@@ -1789,6 +1812,7 @@ void DataVisualization_4::UpdateNode(sf::RenderWindow &window, int index, int va
 {
     CodeScript.setPosition(CodeScriptPosition);
     CodeScript.setImage(WorkingPath + "media/DataVisualization4/Update.png");
+    CodeScriptVisible = true;
     CodeHighLight.setPosition(CodeHighLightPosition);
     std::chrono::milliseconds delayTime(1000 / speed); // 2 second
     std::chrono::milliseconds delayTime1(50); // 50ms
@@ -1948,6 +1972,7 @@ void DataVisualization_4::SearchNode(sf::RenderWindow &window, int value)
     CodeHighLight.setPosition(CodeHighLightPosition);
     CodeScript.setPosition(CodeScriptPosition);
     CodeScript.setImage(WorkingPath + "media/DataVisualization4/Search.png");
+    CodeScriptVisible = true;
     DLL_Node* temp = NodeArray;
     std::chrono::milliseconds delayTime(1000 / speed); 
     std::chrono::milliseconds delayTime1(50);

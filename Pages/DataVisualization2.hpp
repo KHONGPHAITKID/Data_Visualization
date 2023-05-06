@@ -1,20 +1,6 @@
 #ifndef _DATAVISUALIZATION2_HPP_
 #define _DATAVISUALIZATION2_HPP_
 
-#include <iostream>
-#include <string>
-#include <SFML/Graphics.hpp>
-#include <ctime>
-#include <cmath>
-#include <sstream>
-#include <fstream>
-#include <vector>
-#include <functional>
-#include <windows.h>
-#include <chrono> 
-#include <thread>
-#include <unistd.h>
-#include <cstdlib>
 #include "../Components/Button.hpp"
 #include "../Components/Textbox.hpp"
 #include "../Components/Image.hpp"
@@ -60,7 +46,9 @@ struct DataVisualization_2
     sf::Vector2f CodeScriptPosition;
     sf::RectangleShape CodeHighLight;
     sf::Vector2f CodeHighLightPosition;
-
+    Image DeleteCodeScriptButton;
+    bool CodeScriptVisible = false;
+    
     sf::RectangleShape menuTable;
 
 // Create Buttons

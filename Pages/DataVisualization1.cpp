@@ -44,6 +44,8 @@ DataVisualization_1::DataVisualization_1()
     IncreaseSpeedButton.setPosition(sf::Vector2f(330, 1002));
     DecreaseSpeedButton.setImage(WorkingPath + "media/img/minus_btn.png");
     DecreaseSpeedButton.setPosition(sf::Vector2f(380, 1002));
+    DeleteCodeScriptButton.setImage(WorkingPath + "media/img/deleteCodeHightLight.png");
+    DeleteCodeScriptButton.setPosition(sf::Vector2f(1870, 630));
     isPause = true;
 
     // Code Script
@@ -192,7 +194,11 @@ void DataVisualization_1::display(sf::RenderWindow &window)
     window.draw(this->menuTable);
     speedText.setString("Speed: x" + std::to_string(speed));
     window.draw(speedText);
-    CodeScript.drawImage(window);
+    if (CodeScriptVisible)
+    {
+        CodeScript.drawImage(window);
+        DeleteCodeScriptButton.drawImage(window);
+    }
     this->ControlMenu_btn1.displayButton(window);
     this->ControlMenu_btn2.displayButton(window);
     this->ControlMenu_btn3.displayButton(window);
@@ -271,6 +277,7 @@ void DataVisualization_1::handleEvent(sf::RenderWindow &window, sf::Vector2f mou
             this->capacity = 0;
             this->funcstate = 0;
             this->speed = 2;
+            this->CodeScriptVisible = false;
         }
         else if (this->ControlMenu_btn1.rect.getGlobalBounds().contains(mousePos))
         {
@@ -311,6 +318,10 @@ void DataVisualization_1::handleEvent(sf::RenderWindow &window, sf::Vector2f mou
             if (this->speed > 1) {
                 this->speed--;
             }
+        }
+        else if (this->DeleteCodeScriptButton.ImageHolder.getGlobalBounds().contains(mousePos))
+        {
+            CodeScriptVisible = false;
         }
         else {
             this->CreateRandomFixedSize_Textbox.isSelected = false;
@@ -722,6 +733,7 @@ void DataVisualization_1::AddFrontArray(sf::RenderWindow &window, sf::Event &eve
 void DataVisualization_1::AddFront(sf::RenderWindow &window, int value)
 {
     CodeScript.setImage(WorkingPath + "media/DataVisualization1/AddFront.png");
+    CodeScriptVisible = true;
     CodeHighLight.setPosition(CodeHighLightPosition);
     CodeScript.setPosition(CodeScriptPosition);
     window.clear();
@@ -748,7 +760,7 @@ void DataVisualization_1::AddFront(sf::RenderWindow &window, int value)
         arrow.drawImage(window);
     }
     window.display();
-    sf::sleep(sf::milliseconds(2000 / speed));
+    pause_for(std::chrono::milliseconds(2000 / speed));
 
     this->size++;
     for (int i = this->size - 1; i >= 0; i--)
@@ -764,7 +776,7 @@ void DataVisualization_1::AddFront(sf::RenderWindow &window, int value)
     this->display(window);
     this->drawArray(window);
     window.display();
-    sf::sleep(sf::milliseconds(2000 / speed));
+    pause_for(std::chrono::milliseconds(2000 / speed));
 
     this->Array[0].value = value;
     this->Array[0].setValue();
@@ -795,6 +807,7 @@ void DataVisualization_1::AddBackArray(sf::RenderWindow &window, sf::Event &even
 void DataVisualization_1::AddBack(sf::RenderWindow &window, int value)
 {
     CodeScript.setImage(WorkingPath + "media/DataVisualization1/AddBack.png");
+    CodeScriptVisible = true;
     CodeHighLight.setPosition(CodeHighLightPosition);
     CodeScript.setPosition(CodeScriptPosition);
     window.clear();
@@ -815,7 +828,7 @@ void DataVisualization_1::AddBack(sf::RenderWindow &window, int value)
     this->display(window);
     this->drawArray(window);
     window.display();
-    sf::sleep(sf::milliseconds(2000 / speed));
+    pause_for(std::chrono::milliseconds(2000 / speed));
 
     this->Array[size-1].value = value;
     this->Array[size-1].setValue();
@@ -854,6 +867,7 @@ void DataVisualization_1::AddMiddleArray(sf::RenderWindow &window, sf::Event &ev
 void DataVisualization_1::AddMiddle(sf::RenderWindow &window, int index, int value)
 {
     CodeScript.setImage(WorkingPath + "media/DataVisualization1/AddMid.png");
+    CodeScriptVisible = true;
     CodeHighLight.setPosition(CodeHighLightPosition);
     CodeScript.setPosition(CodeScriptPosition);
     window.clear();
@@ -895,7 +909,7 @@ void DataVisualization_1::AddMiddle(sf::RenderWindow &window, int index, int val
         arrow.drawImage(window);
     }
     window.display();
-    sf::sleep(sf::milliseconds(2000 / speed));
+    pause_for(std::chrono::milliseconds(2000 / speed));
 
     this->size++;
     for (int i = this->size - 1; i >= index; i--)
@@ -910,7 +924,7 @@ void DataVisualization_1::AddMiddle(sf::RenderWindow &window, int index, int val
     this->display(window);
     this->drawArray(window);
     window.display();
-    sf::sleep(sf::milliseconds(2000 / speed));
+    pause_for(std::chrono::milliseconds(2000 / speed));
 
     this->Array[index].value = value;
     this->Array[index].setValue();
@@ -925,6 +939,7 @@ void DataVisualization_1::AddMiddle(sf::RenderWindow &window, int index, int val
 void DataVisualization_1::DeleteFront(sf::RenderWindow &window)
 {
     CodeScript.setImage(WorkingPath + "media/DataVisualization1/DeleteFront.png");
+    CodeScriptVisible = true;
     CodeHighLight.setPosition(CodeHighLightPosition);
     CodeScript.setPosition(CodeScriptPosition);
     window.clear();
@@ -950,7 +965,7 @@ void DataVisualization_1::DeleteFront(sf::RenderWindow &window)
         arrow.drawImage(window);
     }
     window.display();
-    sf::sleep(sf::milliseconds(2000 / speed));
+    pause_for(std::chrono::milliseconds(2000 / speed));
 
     this->size--;
     for (int i = 0; i < this->size; i++)
@@ -962,8 +977,8 @@ void DataVisualization_1::DeleteFront(sf::RenderWindow &window)
 }
 void DataVisualization_1::DeleteBack(sf::RenderWindow &window)
 {
-    // coding...
     CodeScript.setImage(WorkingPath + "media/DataVisualization1/DeleteBack.png");
+    CodeScriptVisible = true;
     CodeHighLight.setPosition(CodeHighLightPosition);
     CodeScript.setPosition(CodeScriptPosition);
     window.clear();
@@ -998,6 +1013,7 @@ void DataVisualization_1::DeleteMiddleArray(sf::RenderWindow &window, sf::Event 
 void DataVisualization_1::DeleteMiddle(sf::RenderWindow &window, int index)
 {
     CodeScript.setImage(WorkingPath + "media/DataVisualization1/DeleteMid.png");
+    CodeScriptVisible = true;
     CodeHighLight.setPosition(CodeHighLightPosition);
     CodeScript.setPosition(CodeScriptPosition);
     window.clear();
@@ -1038,7 +1054,7 @@ void DataVisualization_1::DeleteMiddle(sf::RenderWindow &window, int index)
         arrow.drawImage(window);
     }
     window.display();
-    sf::sleep(sf::milliseconds(2000 / speed));
+    pause_for(std::chrono::milliseconds(2000 / speed));
 
     this->size--;
     for (int i = index; i < this->size; i++)
@@ -1068,6 +1084,7 @@ void DataVisualization_1::AccessArray(sf::RenderWindow &window, sf::Event &event
 void DataVisualization_1::AccessValue(sf::RenderWindow &window, int index)
 {
     CodeScript.setImage(WorkingPath + "media/DataVisualization1/Access.png");
+    CodeScriptVisible = true;
     CodeHighLight.setPosition(CodeHighLightPosition);
     CodeScript.setPosition(CodeScriptPosition);
     window.clear();
@@ -1144,6 +1161,7 @@ void DataVisualization_1::Update(sf::RenderWindow &window, int index, int value)
     std::chrono::milliseconds delayTime1(50);
     std::chrono::milliseconds delayTime2(500 / speed);
     CodeScript.setImage(WorkingPath + "media/DataVisualization1/Update.png");
+    CodeScriptVisible = true;
     CodeHighLight.setPosition(CodeHighLightPosition);
     CodeScript.setPosition(CodeScriptPosition);
     window.clear();
@@ -1241,6 +1259,7 @@ void DataVisualization_1::Search(sf::RenderWindow &window, int value)
     std::chrono::milliseconds delayTime1(50);
     std::chrono::milliseconds delayTime2(500 / speed);
     CodeScript.setImage(WorkingPath + "media/DataVisualization1/Search.png");
+    CodeScriptVisible = true;
     CodeHighLight.setPosition(CodeHighLightPosition);
     CodeScript.setPosition(CodeScriptPosition);
     window.clear();
@@ -1388,15 +1407,6 @@ bool DataVisualization_1::printMessage(sf::RenderWindow &window, std::string mes
     window.display();
     std::this_thread::sleep_for(delayTime);
     return true;
-}
-
-void pause_for(std::chrono::milliseconds duration) {
-    auto start_time = std::chrono::steady_clock::now();
-    auto end_time = start_time + duration;
-    
-    while (std::chrono::steady_clock::now() < end_time) {
-        std::this_thread::yield();
-    }
 }
 
 void DataVisualization_1::updateChanges(sf::Font tempFont)

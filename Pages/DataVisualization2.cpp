@@ -44,6 +44,8 @@ DataVisualization_2::DataVisualization_2()
     IncreaseSpeedButton.setPosition(sf::Vector2f(330, 1002));
     DecreaseSpeedButton.setImage(WorkingPath + "media/img/minus_btn.png");
     DecreaseSpeedButton.setPosition(sf::Vector2f(380, 1002));
+    DeleteCodeScriptButton.setImage(WorkingPath + "media/img/deleteCodeHightLight.png");
+    DeleteCodeScriptButton.setPosition(sf::Vector2f(1870, 630));
     isPause = true;
 
     // Code Script
@@ -197,7 +199,11 @@ void DataVisualization_2::display(sf::RenderWindow &window)
     window.draw(this->menuTable);
     speedText.setString("Speed: x" + std::to_string(speed));
     window.draw(speedText);
-    CodeScript.drawImage(window);
+    if (CodeScriptVisible)
+    {
+        CodeScript.drawImage(window);
+        DeleteCodeScriptButton.drawImage(window);
+    }
     this->ControlMenu_btn1.displayButton(window);
     this->ControlMenu_btn2.displayButton(window);
     this->ControlMenu_btn3.displayButton(window);
@@ -278,6 +284,7 @@ void DataVisualization_2::handleEvent(sf::RenderWindow &window, sf::Vector2f mou
             this->capacity = 0;
             this->funcstate = 0;
             this->speed = 2;
+            this->CodeScriptVisible = false;
         }
         else if (this->ControlMenu_btn1.rect.getGlobalBounds().contains(mousePos))
         {
@@ -318,6 +325,10 @@ void DataVisualization_2::handleEvent(sf::RenderWindow &window, sf::Vector2f mou
             if (this->speed > 1) {
                 this->speed--;
             }
+        }
+        else if (this->DeleteCodeScriptButton.ImageHolder.getGlobalBounds().contains(mousePos))
+        {
+            CodeScriptVisible = false;
         }
         else {
             this->CreateRandomFixedSize_Textbox.isSelected = false;
@@ -405,6 +416,7 @@ void DataVisualization_2::handleEvent(sf::RenderWindow &window, sf::Vector2f mou
                 this->capacity = 0;
                 this->size = 0;
                 CodeScript.setImage(WorkingPath + "media/DataVisualization2/DeAllocated.png");
+                CodeScriptVisible = true;
             }
             break;
         case 4:
@@ -737,6 +749,7 @@ void DataVisualization_2::AddFrontVector(sf::RenderWindow &window, sf::Event &ev
 void DataVisualization_2::AddFront(sf::RenderWindow &window, int value)
 {
     CodeScript.setImage(WorkingPath + "media/DataVisualization1/AddFront.png");
+    CodeScriptVisible = true;
     CodeHighLight.setPosition(CodeHighLightPosition);
     CodeScript.setPosition(CodeScriptPosition);
     window.clear();
@@ -808,6 +821,7 @@ void DataVisualization_2::AddBackVector(sf::RenderWindow &window, sf::Event &eve
 void DataVisualization_2::AddBack(sf::RenderWindow &window, int value)
 {
     CodeScript.setImage(WorkingPath + "media/DataVisualization1/AddBack.png");
+    CodeScriptVisible = true;
     CodeHighLight.setPosition(CodeHighLightPosition);
     CodeScript.setPosition(CodeScriptPosition);
     window.clear();
@@ -865,6 +879,7 @@ void DataVisualization_2::AddMiddleVector(sf::RenderWindow &window, sf::Event &e
 void DataVisualization_2::AddMiddle(sf::RenderWindow &window, int index, int value)
 {
     CodeScript.setImage(WorkingPath + "media/DataVisualization1/AddMid.png");
+    CodeScriptVisible = true;
     CodeHighLight.setPosition(CodeHighLightPosition);
     CodeScript.setPosition(CodeScriptPosition);
     window.clear();
@@ -952,6 +967,7 @@ void DataVisualization_2::AllocateSizeVector(sf::RenderWindow &window, sf::Event
 void DataVisualization_2::AllocateSize(sf::RenderWindow &window, int size)
 {
     CodeScript.setImage(WorkingPath + "media/DataVisualization2/Allocated.png");
+    CodeScriptVisible = true;
     CodeHighLight.setPosition(CodeHighLightPosition);
     CodeScript.setPosition(CodeScriptPosition);
     if (size < 0)
@@ -972,6 +988,7 @@ void DataVisualization_2::AllocateSize(sf::RenderWindow &window, int size)
 void DataVisualization_2::DeleteFront(sf::RenderWindow &window)
 {
     CodeScript.setImage(WorkingPath + "media/DataVisualization1/DeleteFront.png");
+    CodeScriptVisible = true;
     CodeHighLight.setPosition(CodeHighLightPosition);
     CodeScript.setPosition(CodeScriptPosition);
     window.clear();
@@ -1008,6 +1025,7 @@ void DataVisualization_2::DeleteFront(sf::RenderWindow &window)
 void DataVisualization_2::DeleteBack(sf::RenderWindow &window)
 {
     CodeScript.setImage(WorkingPath + "media/DataVisualization1/DeleteBack.png");
+    CodeScriptVisible = true;
     CodeHighLight.setPosition(CodeHighLightPosition);
     CodeScript.setPosition(CodeScriptPosition);
     window.clear();
@@ -1041,6 +1059,7 @@ void DataVisualization_2::DeleteMiddleVector(sf::RenderWindow &window, sf::Event
 void DataVisualization_2::DeleteMiddle(sf::RenderWindow &window, int index)
 {
     CodeScript.setImage(WorkingPath + "media/DataVisualization1/DeleteMid.png");
+    CodeScriptVisible = true;
     CodeHighLight.setPosition(CodeHighLightPosition);
     CodeScript.setPosition(CodeScriptPosition);
     window.clear();
@@ -1114,6 +1133,7 @@ void DataVisualization_2::AccessValue(sf::RenderWindow &window, int index)
     std::chrono::milliseconds delayTime2(500 / speed);
 
     CodeScript.setImage(WorkingPath + "media/DataVisualization1/Access.png");
+    CodeScriptVisible = true;
     CodeHighLight.setPosition(CodeHighLightPosition);
     CodeScript.setPosition(CodeScriptPosition);
     window.clear();
@@ -1184,6 +1204,7 @@ void DataVisualization_2::Update(sf::RenderWindow &window, int index, int value)
     std::chrono::milliseconds delayTime2(500 / speed);
  
     CodeScript.setImage(WorkingPath + "media/DataVisualization1/Update.png");
+    CodeScriptVisible = true;
     CodeHighLight.setPosition(CodeHighLightPosition);
     CodeScript.setPosition(CodeScriptPosition);
     window.clear();
@@ -1235,18 +1256,18 @@ void DataVisualization_2::swapNodes(sf::RenderWindow &window, int index1, int in
     }
     float movePerFrame = distance / fps;
     // moving up
-    for (float i = 0; i < 60 / speed; i++) {
-        Vector.at(index1).rect.move(0, -1 * 150 * speed / 60.f);
-        Vector.at(index1).data.move(0, -1 * 150 * speed / 60.f);
-        Vector.at(index2).rect.move(0, -1 * 150 * speed / 60.f);
-        Vector.at(index2).data.move(0, -1 * 150 * speed / 60.f);
+    // for (float i = 0; i < 60 / speed; i++) {
+    //     Vector.at(index1).rect.move(0, -1 * 150 * speed / 60.f);
+    //     Vector.at(index1).data.move(0, -1 * 150 * speed / 60.f);
+    //     Vector.at(index2).rect.move(0, -1 * 150 * speed / 60.f);
+    //     Vector.at(index2).data.move(0, -1 * 150 * speed / 60.f);
 
-        window.clear();
-        window.draw(DefaultBackground);
-        this->drawVector(window);
-        this->display(window);
-        window.display();
-    }
+    //     window.clear();
+    //     window.draw(DefaultBackground);
+    //     this->drawVector(window);
+    //     this->display(window);
+    //     window.display();
+    // }
 
     for (float i = 0; i < fps; i++) {
         Vector.at(index1).rect.move(movePerFrame, 0);
@@ -1261,18 +1282,18 @@ void DataVisualization_2::swapNodes(sf::RenderWindow &window, int index1, int in
         window.display();
     }
     // moving down
-    for (float i = 0; i < 60 / speed; i++) {
-        Vector.at(index1).rect.move(0, 150 * speed / 60.f);
-        Vector.at(index1).data.move(0, 150 * speed / 60.f);
-        Vector.at(index2).rect.move(0, 150 * speed / 60.f);
-        Vector.at(index2).data.move(0, 150 * speed / 60.f);
+    // for (float i = 0; i < 60 / speed; i++) {
+    //     Vector.at(index1).rect.move(0, 150 * speed / 60.f);
+    //     Vector.at(index1).data.move(0, 150 * speed / 60.f);
+    //     Vector.at(index2).rect.move(0, 150 * speed / 60.f);
+    //     Vector.at(index2).data.move(0, 150 * speed / 60.f);
 
-        window.clear();
-        window.draw(DefaultBackground);
-        this->drawVector(window);
-        this->display(window);
-        window.display();
-    }
+    //     window.clear();
+    //     window.draw(DefaultBackground);
+    //     this->drawVector(window);
+    //     this->display(window);
+    //     window.display();
+    // }
 
     std::swap(Vector.at(index1), Vector.at(index2));
     Vector.at(index1).setValue();
@@ -1309,6 +1330,7 @@ void DataVisualization_2::Search(sf::RenderWindow &window, int value)
     std::chrono::milliseconds delayTime2(500 / speed);
     
     CodeScript.setImage(WorkingPath + "media/DataVisualization1/Search.png");
+    CodeScriptVisible = true;
     CodeHighLight.setPosition(CodeHighLightPosition);
     CodeScript.setPosition(CodeScriptPosition);
     window.clear();
