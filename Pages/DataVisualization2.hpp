@@ -6,14 +6,12 @@
 #include "../Components/Image.hpp"
 #include "../Globals.hpp"
 
-struct VectorElement // one memory slot
+struct VectorElement
 {
     int value;
     sf::RectangleShape rect;
     sf::Text data;
 
-    // void sortAscending();
-    // void sortDescending();
     void setValue();
 };
 
@@ -76,9 +74,7 @@ struct DataVisualization_2
     // #3
     Button ControlMenu_btn3;
     Button DeleteFrontButton;
-    // Textbox DeleteFront_Textbox;
     Button DeleteBackButton;
-    // Textbox DeleteBack_Textbox;
     Button DeleteMiddleButton;
     Textbox DeleteMiddle_Textbox;
     Button ClearVectorButton;
@@ -101,9 +97,7 @@ struct DataVisualization_2
     int size;
     int capacity;
     int funcstate;
-    // VectorElement Vector[10];
     std::vector<VectorElement> Vector = std::vector<VectorElement>(10);
-
 
     DataVisualization_2();
     

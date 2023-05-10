@@ -138,9 +138,6 @@ struct DataVisualization_1
     void SortAscendingArray(sf::RenderWindow& window);
     void SortDescendingArray(sf::RenderWindow& window);
 
-    // void sortAscending();
-    // void sortDescending();
-
     bool checksize(sf::RenderWindow &window, int size);
     bool printMessage(sf::RenderWindow &window, std::string message);
 

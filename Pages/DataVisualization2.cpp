@@ -757,10 +757,19 @@ void DataVisualization_2::AddFront(sf::RenderWindow &window, int value)
     this->drawVector(window);
     this->display(window);
     window.display();
+    if (this->capacity == 10 && this->size == 10)
+    {
+        this->printMessage(window, "Out of range to display");
+        return;
+    }
     if (this->size == this->capacity)
     {
-        this->printMessage(window, "Vector's capacity is full");
-        return;
+        this->capacity = (10 < this->capacity * 2 ? 10 : this->capacity * 2);
+        for (int i = this->size; i < this->capacity; i++)
+        {
+            this->Vector.at(i).value = -1;
+            this->Vector.at(i).setValue();
+        }
     }
     Image arrow;
     arrow.setImage(WorkingPath + "media/DataVisualization1/arrowright.png");
@@ -778,7 +787,7 @@ void DataVisualization_2::AddFront(sf::RenderWindow &window, int value)
     sf::sleep(sf::milliseconds(2000 / speed));
 
     this->size++;
-    for (int i = this->size - 1; i >= 0; i--)
+    for (int i = this->size - 2; i >= 0; i--)
     {
         this->Vector.at(i+1).value = this->Vector.at(i).value;
         this->Vector.at(i+1).setValue();
@@ -829,10 +838,19 @@ void DataVisualization_2::AddBack(sf::RenderWindow &window, int value)
     this->drawVector(window);
     this->display(window);
     window.display();
+    if (this->capacity == 10 && this->size == 10)
+    {
+        this->printMessage(window, "Out of range to display");
+        return;
+    }
     if (this->size == this->capacity)
     {
-        this->printMessage(window, "Vector's capacity is full");
-        return;
+        this->capacity = (10 < this->capacity * 2 ? 10 : this->capacity * 2);
+        for (int i = this->size; i < this->capacity; i++)
+        {
+            this->Vector.at(i).value = -1;
+            this->Vector.at(i).setValue();
+        }
     }
     this->size++;
     this->Vector.at(size - 1).rect.setFillColor(sf::Color::White);
@@ -887,10 +905,19 @@ void DataVisualization_2::AddMiddle(sf::RenderWindow &window, int index, int val
     this->drawVector(window);
     this->display(window);
     window.display();
+    if (this->capacity == 10 && this->size == 10)
+    {
+        this->printMessage(window, "Out of range to display");
+        return;
+    }
     if (this->size == this->capacity)
     {
-        this->printMessage(window, "Vector's capacity is full");
-        return;
+        this->capacity = (10 < this->capacity * 2 ? 10 : this->capacity * 2);
+        for (int i = this->size; i < this->capacity; i++)
+        {
+            this->Vector.at(i).value = -1;
+            this->Vector.at(i).setValue();
+        }
     }
     if (index < 0 || index > this->size)
     {
@@ -923,7 +950,7 @@ void DataVisualization_2::AddMiddle(sf::RenderWindow &window, int index, int val
     sf::sleep(sf::milliseconds(2000 / speed));
 
     this->size++;
-    for (int i = this->size - 1; i >= index; i--)
+    for (int i = this->size - 2; i >= index; i--)
     {
         this->Vector.at(i+1).value = this->Vector.at(i).value;
         this->Vector.at(i+1).setValue();
