@@ -1,7 +1,5 @@
 #include "Textbox.hpp"
 
-Textbox::Textbox() {}
-
 void Textbox::setFont(sf::Font& fonts) 
 {
     textbox.setFont(fonts);
@@ -21,6 +19,16 @@ void Textbox::setLimit(bool ToF, int lim)
 {
     hasLimit = ToF;
     limit = lim - 1;
+}
+
+void Textbox::setSize(int size)
+{
+    textbox.setCharacterSize(size);
+}
+
+void Textbox::ColoringBox(sf::Color &color)
+{
+    textbox.setFillColor(color);
 }
 
 void Textbox::setSelected(bool sel) 
@@ -96,10 +104,6 @@ void Textbox::deleteLastChar()
 // Get user input:
 void Textbox::inputLogic(int charTyped) {
     if (charTyped != DELETE_KEY && charTyped != ENTER_KEY && charTyped != ESCAPE_KEY && isdigit(charTyped) && text.str().length() < limit) {
-        // if (text.str().length() == 0 && charTyped == '0') {
-        //     return;
-        // }
-        // else 
         if (text.str().length() == 1 && (charTyped > '9' || charTyped < '0')) {
             return;
         }
@@ -135,16 +139,6 @@ void Textbox::TextboxHandleEvent(sf::Event event, std::string &Mes)
             Mes = this->message;
         }
     } 
-}
-
-void Textbox::setSize(int size)
-{
-    textbox.setCharacterSize(size);
-}
-
-void Textbox::ColoringBox(sf::Color &color)
-{
-    textbox.setFillColor(color);
 }
 
 void InitTextbox(Textbox &box, int size, sf::Color color, bool sel, float PosX, float PosY, sf::Font &font, bool ToF, int lim)

@@ -33,26 +33,8 @@ struct CLL_Node
 
 class CLLArrow : public sf::Drawable
 {
-public:
-    CLLArrow();
-    CLLArrow(sf::Vector2f position1, sf::Vector2f position2, sf::Color color);
-    ~CLLArrow();
-
-    void setLength(float length);
-    void setAngle(float angle);
-    void setColor(sf::Color color);
-    void setPosition(sf::Vector2f position);
-    void setHeadPosition(sf::Vector2f HeadPosition);
-
-    float getLength() const;
-    float getAngle() const;
-    sf::Color getColor() const;
-    sf::Vector2f getPosition() const;
-    sf::Vector2f getHeadPosition() const;
-
-    void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-
 private:    
+public:
     sf::RectangleShape body;
     sf::ConvexShape head;
     sf::Vector2f position;
@@ -61,7 +43,11 @@ private:
     float angle;
     sf::Color color;
 
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     void update();
+
+    CLLArrow();
+    CLLArrow(sf::Vector2f position1, sf::Vector2f position2, sf::Color color);
 };
 
 #endif

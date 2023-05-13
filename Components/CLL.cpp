@@ -193,65 +193,6 @@ CLLArrow::CLLArrow(sf::Vector2f position1, sf::Vector2f position2, sf::Color col
     this->update();
 }
 
-CLLArrow::~CLLArrow()
-{
-}
-
-void CLLArrow::setLength(float length)
-{
-    this->length = length;
-    this->update();
-}
-
-void CLLArrow::setAngle(float angle)
-{
-    this->angle = angle;
-    this->update();
-}
-
-void CLLArrow::setColor(sf::Color color)
-{
-    this->color = color;
-    this->update();
-}
-
-void CLLArrow::setPosition(sf::Vector2f position)
-{
-    this->position = position;
-    this->update();
-}
-
-void CLLArrow::setHeadPosition(sf::Vector2f HeadPosition)
-{
-    this->HeadPosition = HeadPosition;
-    this->update();
-}
-
-float CLLArrow::getLength() const
-{
-    return this->length;
-}
-
-float CLLArrow::getAngle() const
-{
-    return this->angle;
-}
-
-sf::Color CLLArrow::getColor() const
-{
-    return this->color;
-}
-
-sf::Vector2f CLLArrow::getPosition() const
-{
-    return this->position;
-}
-
-sf::Vector2f CLLArrow::getHeadPosition() const
-{
-    return this->HeadPosition;
-}
-
 void CLLArrow::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     target.draw(this->body);

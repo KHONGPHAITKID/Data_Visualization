@@ -25,8 +25,8 @@ void Button::CreateButton(float recwidth, float recheight, float PosX, float Pos
 }
 void Button::displayButton(sf::RenderWindow &window)
 {
-        window.draw(this->rect);
-        window.draw(this->text);
+    window.draw(this->rect);
+    window.draw(this->text);
 }
 
 void Button::setSize(float size)

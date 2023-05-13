@@ -197,65 +197,6 @@ DLLArrow::DLLArrow(sf::Vector2f position1, sf::Vector2f position2, sf::Color col
     this->update();
 }
 
-DLLArrow::~DLLArrow()
-{
-}
-
-void DLLArrow::setLength(float length)
-{
-    this->length = length;
-    this->update();
-}
-
-void DLLArrow::setAngle(float angle)
-{
-    this->angle = angle;
-    this->update();
-}
-
-void DLLArrow::setColor(sf::Color color)
-{
-    this->color = color;
-    this->update();
-}
-
-void DLLArrow::setPosition(sf::Vector2f position)
-{
-    this->position = position;
-    this->update();
-}
-
-void DLLArrow::setHeadPosition(sf::Vector2f HeadPosition)
-{
-    this->HeadPosition = HeadPosition;
-    this->update();
-}
-
-float DLLArrow::getLength() const
-{
-    return this->length;
-}
-
-float DLLArrow::getAngle() const
-{
-    return this->angle;
-}
-
-sf::Color DLLArrow::getColor() const
-{
-    return this->color;
-}
-
-sf::Vector2f DLLArrow::getPosition() const
-{
-    return this->position;
-}
-
-sf::Vector2f DLLArrow::getHeadPosition() const
-{
-    return this->HeadPosition;
-}
-
 void DLLArrow::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     target.draw(this->body);

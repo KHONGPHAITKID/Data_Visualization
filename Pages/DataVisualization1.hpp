@@ -12,8 +12,6 @@ struct ArrayElement // one memory slot
     sf::RectangleShape rect;
     sf::Text data;
 
-    // void sortAscending();
-    // void sortDescending();
     void setValue();
 };
 

@@ -12,17 +12,16 @@ struct SLL_Node
     SLL_Node* next;
     sf::CircleShape circle;
     sf::Text text;
+
     void DeleteSLL(SLL_Node* &pHead);
 
     void SortSLL(SLL_Node* &pHead);
 
     void addBack(SLL_Node* &pHead, SLL_Node* &temp);
 
-    // void addSort(SLL_Node* &pHead, SLL_Node* &temp);
+    void CreateRandomSortSLL(SLL_Node* &head, int &n, sf::Font &font);
 
-    void CreateRandomSortSLL(SLL_Node* &head, int &n, sf::Font &font); // chua
-
-    // create a Node
+    // Create a Node
     SLL_Node* createNode(float x, float y, float radius, sf::Font &font, int value);
 
     // Create many Node
@@ -35,26 +34,8 @@ struct SLL_Node
 
 class SLLArrow : public sf::Drawable
 {
-public:
-    SLLArrow();
-    SLLArrow(sf::Vector2f position1, sf::Vector2f position2, sf::Color color);
-    ~SLLArrow();
-
-    void setLength(float length);
-    void setAngle(float angle);
-    void setColor(sf::Color color);
-    void setPosition(sf::Vector2f position);
-    void setHeadPosition(sf::Vector2f HeadPosition);
-
-    float getLength() const;
-    float getAngle() const;
-    sf::Color getColor() const;
-    sf::Vector2f getPosition() const;
-    sf::Vector2f getHeadPosition() const;
-
-    void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-
 private:    
+public:
     sf::RectangleShape body;
     sf::ConvexShape head;
     sf::Vector2f position;
@@ -63,6 +44,9 @@ private:
     float angle;
     sf::Color color;
 
+    SLLArrow();
+    SLLArrow(sf::Vector2f position1, sf::Vector2f position2, sf::Color color);
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     void update();
 };
 

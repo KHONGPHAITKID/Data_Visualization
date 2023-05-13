@@ -51,9 +51,6 @@ int main()
         return 0;
     }
 
-    //----------TESTING------------
-    //----------TESTING------------
-
     MenuPage menu;
     SettingPage setting;
     StartingPage StartMenu;
@@ -66,7 +63,6 @@ int main()
     DataVisualization_6 dv6;
     DataVisualization_7 dv7;
 
-//---------------------------
     while (window.isOpen())
     {
         sf::Event event;
@@ -116,7 +112,6 @@ int main()
                 window.close();
             }
         }
-        //-----------------
         window.clear();
         window.draw(DefaultBackground);
         switch (currentState)
