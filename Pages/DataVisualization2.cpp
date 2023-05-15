@@ -762,6 +762,10 @@ void DataVisualization_2::AddFront(sf::RenderWindow &window, int value)
         this->printMessage(window, "Out of range to display");
         return;
     }
+    if (this->capacity == 0)
+    {
+        this->capacity = 2;
+    }
     if (this->size == this->capacity)
     {
         this->capacity = (10 < this->capacity * 2 ? 10 : this->capacity * 2);
@@ -783,6 +787,8 @@ void DataVisualization_2::AddFront(sf::RenderWindow &window, int value)
         arrow.setPosition(sf::Vector2f(467 + arrow.ImageHolder.getLocalBounds().width / 2.f + 100 * i, 350 - arrow.ImageHolder.getLocalBounds().height + 4));
         arrow.drawImage(window);
     }
+    CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y + 35));
+    window.draw(CodeHighLight);
     window.display();
     sf::sleep(sf::milliseconds(2000 / speed));
 
@@ -799,6 +805,8 @@ void DataVisualization_2::AddFront(sf::RenderWindow &window, int value)
     window.draw(DefaultBackground);
     this->display(window);
     this->drawVector(window);
+    CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y + 71));
+    window.draw(CodeHighLight);
     window.display();
     sf::sleep(sf::milliseconds(2000 / speed));
 
@@ -808,8 +816,20 @@ void DataVisualization_2::AddFront(sf::RenderWindow &window, int value)
     window.draw(DefaultBackground);
     this->display(window);
     this->drawVector(window);
+    CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y + 107));
+    window.draw(CodeHighLight);
     window.display();
     this->Vector.at(0).rect.setFillColor(sf::Color(106, 231, 255));
+    pause_for(std::chrono::milliseconds(2000 / speed));
+
+    window.clear();
+    window.draw(DefaultBackground);
+    this->display(window);
+    this->drawVector(window);
+    CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y + 143));
+    window.draw(CodeHighLight);
+    window.display();
+    pause_for(std::chrono::milliseconds(2000 / speed));
 }
 void DataVisualization_2::AddBackVector(sf::RenderWindow &window, sf::Event &event)
 {
@@ -843,6 +863,7 @@ void DataVisualization_2::AddBack(sf::RenderWindow &window, int value)
         this->printMessage(window, "Out of range to display");
         return;
     }
+    if (this->capacity == 0) this->capacity = 2;
     if (this->size == this->capacity)
     {
         this->capacity = (10 < this->capacity * 2 ? 10 : this->capacity * 2);
@@ -858,12 +879,22 @@ void DataVisualization_2::AddBack(sf::RenderWindow &window, int value)
     window.draw(DefaultBackground);
     this->display(window);
     this->drawVector(window);
+    CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y + 71));
+    window.draw(CodeHighLight);
     window.display();
     sf::sleep(sf::milliseconds(2000 / speed));
 
     this->Vector.at(size - 1).value = value;
     this->Vector.at(size - 1).setValue();
     this->Vector.at(size - 1).rect.setFillColor(sf::Color(106, 231, 255));
+    window.clear();
+    window.draw(DefaultBackground);
+    this->display(window);
+    this->drawVector(window);
+    CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y + 107));
+    window.draw(CodeHighLight);
+    window.display();
+    pause_for(std::chrono::milliseconds(2000 / speed));
 }
 void DataVisualization_2::AddMiddleVector(sf::RenderWindow &window, sf::Event &event)
 {
@@ -910,6 +941,7 @@ void DataVisualization_2::AddMiddle(sf::RenderWindow &window, int index, int val
         this->printMessage(window, "Out of range to display");
         return;
     }
+    if (this->capacity == 0) this->capacity = 2; 
     if (this->size == this->capacity)
     {
         this->capacity = (10 < this->capacity * 2 ? 10 : this->capacity * 2);
@@ -946,6 +978,8 @@ void DataVisualization_2::AddMiddle(sf::RenderWindow &window, int index, int val
         arrow.setPosition(sf::Vector2f(467 + arrow.ImageHolder.getLocalBounds().width / 2.f + 100 * i, 350 - arrow.ImageHolder.getLocalBounds().height + 4));
         arrow.drawImage(window);
     }
+    CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y + 71));
+    window.draw(CodeHighLight);
     window.display();
     sf::sleep(sf::milliseconds(2000 / speed));
 
@@ -961,6 +995,8 @@ void DataVisualization_2::AddMiddle(sf::RenderWindow &window, int index, int val
     window.draw(DefaultBackground);
     this->display(window);
     this->drawVector(window);
+    CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y + 107));
+    window.draw(CodeHighLight);
     window.display();
     sf::sleep(sf::milliseconds(2000 / speed));
 
@@ -970,8 +1006,21 @@ void DataVisualization_2::AddMiddle(sf::RenderWindow &window, int index, int val
     window.draw(DefaultBackground);
     this->display(window);
     this->drawVector(window);
+    CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y + 179));
+    window.draw(CodeHighLight);
     window.display();
+    pause_for(std::chrono::milliseconds(2000 / speed));
+
     this->Vector.at(index).rect.setFillColor(sf::Color(106, 231, 255));
+    window.clear();
+    window.draw(DefaultBackground);
+    this->display(window);
+    this->drawVector(window);
+    CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y + 215));
+    window.draw(CodeHighLight);
+    window.display();
+    pause_for(std::chrono::milliseconds(2000 / speed));
+
 }
 
 void DataVisualization_2::AllocateSizeVector(sf::RenderWindow &window, sf::Event &event)
@@ -1034,6 +1083,8 @@ void DataVisualization_2::DeleteFront(sf::RenderWindow &window)
     window.draw(DefaultBackground);
     this->drawVector(window);
     this->display(window);
+    CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y + 71));
+    window.draw(CodeHighLight);
     for (int i = 0; i < size - 1; i++)
     {
         arrow.setPosition(sf::Vector2f(467 + arrow.ImageHolder.getLocalBounds().width / 2.f + 100 * i, 350 - arrow.ImageHolder.getLocalBounds().height + 4));
@@ -1042,12 +1093,29 @@ void DataVisualization_2::DeleteFront(sf::RenderWindow &window)
     window.display();
     sf::sleep(sf::milliseconds(2000 / speed));
 
-    this->size--;
-    for (int i = 0; i < this->size; i++)
+    for (int i = 0; i < this->size - 1; i++)
     {
         this->Vector.at(i).value = this->Vector.at(i + 1).value;
         this->Vector.at(i).setValue();
     }
+    window.clear();
+    window.draw(DefaultBackground);
+    this->display(window);
+    this->drawVector(window);
+    CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y + 107));
+    window.draw(CodeHighLight);
+    window.display();
+    pause_for(std::chrono::milliseconds(2000 / speed));
+
+    this->size--;
+    window.clear();
+    window.draw(DefaultBackground);
+    this->display(window);
+    this->drawVector(window);
+    CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y + 179));
+    window.draw(CodeHighLight);
+    window.display();
+    pause_for(std::chrono::milliseconds(2000 / speed));
 }
 void DataVisualization_2::DeleteBack(sf::RenderWindow &window)
 {
@@ -1066,6 +1134,15 @@ void DataVisualization_2::DeleteBack(sf::RenderWindow &window)
         return;
     }
     this->size--;
+    window.clear();
+    window.draw(DefaultBackground);
+    this->display(window);
+    this->drawVector(window);
+    CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y + 71));
+    window.draw(CodeHighLight);
+    window.display();
+    pause_for(std::chrono::milliseconds(2000 / speed));
+
 }
 void DataVisualization_2::DeleteMiddleVector(sf::RenderWindow &window, sf::Event &event)
 {
@@ -1125,15 +1202,34 @@ void DataVisualization_2::DeleteMiddle(sf::RenderWindow &window, int index)
         arrow.setPosition(sf::Vector2f(467 + arrow.ImageHolder.getLocalBounds().width / 2.f + 100 * i, 350 - arrow.ImageHolder.getLocalBounds().height + 4));
         arrow.drawImage(window);
     }
+    CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y + 71));
+    window.draw(CodeHighLight);
     window.display();
     sf::sleep(sf::milliseconds(2000 / speed));
 
-    this->size--;
-    for (int i = index; i < this->size; i++)
+    for (int i = index; i < this->size - 1; i++)
     {
         this->Vector.at(i).value = this->Vector.at(i + 1).value;
         this->Vector.at(i).setValue();
     }
+    window.clear();
+    window.draw(DefaultBackground);
+    this->display(window);
+    this->drawVector(window);
+    CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y + 108));
+    window.draw(CodeHighLight);
+    window.display();
+    pause_for(std::chrono::milliseconds(2000 / speed));
+
+    this->size--;
+    window.clear();
+    window.draw(DefaultBackground);
+    this->display(window);
+    this->drawVector(window);
+    CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y + 143));
+    window.draw(CodeHighLight);
+    window.display();
+    pause_for(std::chrono::milliseconds(2000 / speed));
 }
 
 void DataVisualization_2::AccessVector(sf::RenderWindow &window, sf::Event &event)
@@ -1188,8 +1284,26 @@ void DataVisualization_2::AccessValue(sf::RenderWindow &window, int index)
     window.display();
     std::this_thread::sleep_for(delayTime);
     std::string mess = "Vector[" + std::to_string(index) + "] = " + std::to_string(this->Vector.at(index).value);
-    printMessage(window, mess);
-
+    // printMessage(window, mess);
+    sf::Text WarningMessage;
+    WarningMessage.setString(mess);
+    WarningMessage.setCharacterSize(50);
+    WarningMessage.setFillColor(sf::Color::White);
+    WarningMessage.setOutlineColor(sf::Color::Red);
+    WarningMessage.setOutlineThickness(5);
+    WarningMessage.setFont(this->font);
+    WarningMessage.setOrigin(WarningMessage.getLocalBounds().width/2.f, WarningMessage.getLocalBounds().height/2.f);
+    WarningMessage.setPosition(window.getSize().x / 2.f + 20, window.getSize().y / 2.f - 240.f);
+    window.clear();
+    window.draw(DefaultBackground);
+    this->display(window);
+    this->drawVector(window);
+    CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y + 71));
+    window.draw(CodeHighLight);
+    NotificationImage.drawImage(window);
+    window.draw(WarningMessage);
+    window.display();
+    std::this_thread::sleep_for(delayTime);
     this->Vector.at(index).rect.setFillColor(sf::Color(106, 231, 255));
     return;
 }
@@ -1259,6 +1373,8 @@ void DataVisualization_2::Update(sf::RenderWindow &window, int index, int value)
     window.draw(DefaultBackground);
     this->display(window);
     this->drawVector(window);
+    CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y + 71));
+    window.draw(CodeHighLight);
     window.display();
     std::this_thread::sleep_for(delayTime);
     
@@ -1268,6 +1384,8 @@ void DataVisualization_2::Update(sf::RenderWindow &window, int index, int value)
     window.draw(DefaultBackground);
     this->display(window);
     this->drawVector(window);
+    CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y + 71));
+    window.draw(CodeHighLight);
     window.display();
     std::this_thread::sleep_for(delayTime);
     this->Vector.at(index).rect.setFillColor(sf::Color(106, 231, 255));
@@ -1375,9 +1493,26 @@ void DataVisualization_2::Search(sf::RenderWindow &window, int value)
     // code
     int index = 0;
     std::string mess = "Value not found!";
+    window.clear();
+    window.draw(DefaultBackground);
+    this->drawVector(window);
+    this->display(window);
+    CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y));
+    window.draw(CodeHighLight);
+    window.display();
+    std::this_thread::sleep_for(delayTime2);
     for (int i = 0; i < size; i++)
     {
         this->Vector.at(i).rect.setFillColor(sf::Color::White);
+        window.clear();
+        window.draw(DefaultBackground);
+        this->drawVector(window);
+        this->display(window);
+        CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y + 36));
+        window.draw(CodeHighLight);
+        window.display();
+        std::this_thread::sleep_for(delayTime2);
+        
         if (this->Vector.at(i).value == value)
         {
             mess = "Founded at index " + std::to_string(index);
@@ -1387,9 +1522,37 @@ void DataVisualization_2::Search(sf::RenderWindow &window, int value)
         window.draw(DefaultBackground);
         this->drawVector(window);
         this->display(window);
+        CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y));
+        window.draw(CodeHighLight);
         window.display();
         std::this_thread::sleep_for(delayTime);
         index++;
+        CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y + 179));
+    }
+    sf::Text message;
+    message.setString(mess);
+    message.setCharacterSize(50);
+    message.setFillColor(sf::Color::White);
+    message.setOutlineColor(sf::Color::Red);
+    message.setOutlineThickness(5);
+    message.setFont(this->font);
+    message.setOrigin(message.getLocalBounds().width/2.f, message.getLocalBounds().height/2.f);
+    message.setPosition(window.getSize().x / 2.f + 20, window.getSize().y / 2.f - 240.f);
+
+    window.clear();
+    window.draw(DefaultBackground);
+    this->drawVector(window);
+    this->display(window);
+    window.draw(CodeHighLight);
+    NotificationImage.drawImage(window);
+    window.draw(message);
+    window.display();
+    std::this_thread::sleep_for(delayTime2);
+    // printMessage(window, mess);
+
+    for (int i = 0; i <= index; i++)
+    {
+        this->Vector.at(i).rect.setFillColor(sf::Color(106, 231, 255));
     }
     window.clear();
     window.draw(DefaultBackground);
@@ -1397,12 +1560,6 @@ void DataVisualization_2::Search(sf::RenderWindow &window, int value)
     this->display(window);
     window.display();
     std::this_thread::sleep_for(delayTime2);
-    printMessage(window, mess);
-
-    for (int i = 0; i <= index; i++)
-    {
-        this->Vector.at(i).rect.setFillColor(sf::Color(106, 231, 255));
-    }
     return;
 }
 

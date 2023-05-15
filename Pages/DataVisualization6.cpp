@@ -39,14 +39,12 @@ DataVisualization_6::DataVisualization_6()
 
     // Code Script
     CodeScriptPosition = sf::Vector2f(1520,740);
-    CodeHighLightPosition = sf::Vector2f(1170, 697.5f);
+    CodeHighLightPosition = sf::Vector2f(1170, 795);
     CodeScript.setPosition(CodeScriptPosition);
     CodeHighLight.setSize(sf::Vector2f(700, 30));
     CodeHighLight.setFillColor(sf::Color(106, 231, 255, 100));
     CodeHighLight.setOutlineColor(sf::Color(106, 231, 255));
-    //---------------------
     CodeHighLight.setPosition(CodeHighLightPosition); // 1170 - 697.5 ~ 35
-    //---------------------
 
     //Title
     sf::Text DV6Title("Stack", this->titlefont, 35);
@@ -354,14 +352,12 @@ void DataVisualization_6::ImportFromFile(sf::RenderWindow &window)
 
         if (inputFile.is_open())
         {
-            // std::vector<int> array;
             // delete the Node
             this->NodeArray->DeleteStack(this->NodeArray);
             int num;
             int i = 0;
             while (inputFile >> num)
             {
-                // Stack_Node* temp = this->NodeArray->createNode(250 + i * 150, 250, 30, this->font, num);
                 Stack_Node* temp = this->NodeArray->createNode(960, 627.5 - 75 * i, 75, 300, this->font, num);
                 this->NodeArray->addBack(this->NodeArray, temp);
                 i++;
@@ -515,8 +511,9 @@ void DataVisualization_6::InsertNodeFront(sf::RenderWindow &window, int data)
     this->drawNodes(window);
     window.draw(newNode->rec);
     window.draw(newNode->text);
+    CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y));
+    window.draw(CodeHighLight);
     window.display();
-    // sleep(1);
     std::this_thread::sleep_for(delayTime);
     for (int i = 0; i < 25; i++)
     {
@@ -529,6 +526,8 @@ void DataVisualization_6::InsertNodeFront(sf::RenderWindow &window, int data)
         this->display(window);
         window.draw(newNode->rec);
         window.draw(newNode->text);
+        CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y + 35));
+        window.draw(CodeHighLight);
         window.display();
     }
     float distance = (this->NodeArray->rec.getPosition().y - 75 - newNode->rec.getPosition().y) / 25.0;
@@ -542,6 +541,7 @@ void DataVisualization_6::InsertNodeFront(sf::RenderWindow &window, int data)
         this->display(window);
         window.draw(newNode->rec);
         window.draw(newNode->text);
+        window.draw(CodeHighLight);
         window.display();
     }
     newNode->next = this->NodeArray;
@@ -627,6 +627,8 @@ void DataVisualization_6::DeleteNodeFront(sf::RenderWindow &window)
     window.draw(DefaultBackground);
     this->drawNodes(window);
     this->display(window);
+    CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y + 36));
+    window.draw(CodeHighLight);
     window.display();
     std::this_thread::sleep_for(delayTime); 
     
@@ -639,6 +641,8 @@ void DataVisualization_6::DeleteNodeFront(sf::RenderWindow &window)
         window.draw(DefaultBackground);
         this->drawNodes(window);
         this->display(window);
+        CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y + 72));
+        window.draw(CodeHighLight);
         window.display();
     }
     for (int i = 0; i < 25; i++)
@@ -649,6 +653,8 @@ void DataVisualization_6::DeleteNodeFront(sf::RenderWindow &window)
         window.draw(DefaultBackground);
         this->drawNodes(window);
         this->display(window);
+        CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y + 72));
+        window.draw(CodeHighLight);
         window.display();
     }
     Stack_Node* temp = this->NodeArray;
@@ -658,13 +664,18 @@ void DataVisualization_6::DeleteNodeFront(sf::RenderWindow &window)
     window.draw(DefaultBackground);
     this->drawNodes(window);
     this->display(window);
+    CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y + 107));
+    window.draw(CodeHighLight);
     window.display();
     this->size--;
+    std::this_thread::sleep_for(delayTime); 
     return;
 }   
 
 void DataVisualization_6::PeekNode(sf::RenderWindow &window)
 {
+    std::chrono::milliseconds delayTime(1500 / speed); 
+    std::chrono::milliseconds delayTime1(50); 
     CodeScript.setImage(WorkingPath + "media/DataVisualization6/peek.png");
     CodeScriptVisible = true;
     CodeHighLight.setPosition(CodeHighLightPosition);
@@ -677,11 +688,25 @@ void DataVisualization_6::PeekNode(sf::RenderWindow &window)
 
     if (this->NodeArray == nullptr)
     {
+        window.clear();
+        window.draw(DefaultBackground);
+        this->drawNodes(window);
+        this->display(window);
+        CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y));
+        window.draw(CodeHighLight);
+        window.display();
+        std::this_thread::sleep_for(delayTime); 
         printMessage(window, "Stack is empty!");
+        window.clear();
+        window.draw(DefaultBackground);
+        this->drawNodes(window);
+        this->display(window);
+        CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y));
+        window.draw(CodeHighLight);
+        window.display();
+        std::this_thread::sleep_for(delayTime); 
         return;
     }
-    std::chrono::milliseconds delayTime(1500 / speed); 
-    std::chrono::milliseconds delayTime1(50); 
     this->NodeArray->rec.setFillColor(sf::Color::Red);
     window.clear();
     window.draw(DefaultBackground);
@@ -696,7 +721,10 @@ void DataVisualization_6::PeekNode(sf::RenderWindow &window)
     window.draw(DefaultBackground);
     this->drawNodes(window);
     this->display(window);
+    CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y + 36));
+    window.draw(CodeHighLight);
     window.display();
+    std::this_thread::sleep_for(delayTime); 
 }
 
 bool DataVisualization_6::printMessage(sf::RenderWindow &window, std::string message/*, int min_range, int max_range, int value*/)

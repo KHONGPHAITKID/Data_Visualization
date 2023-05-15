@@ -67,6 +67,10 @@ struct DataVisualization_7
     int size;
 
     Queue_Node* NodeArray;
+    sf::Text HeadText;
+    sf::Text tailText;
+    sf::Text vtxText;
+    sf::Text curText;
 
     int funcstate;
 
@@ -76,6 +80,8 @@ struct DataVisualization_7
     void handleEvent(sf::RenderWindow &window, sf::Vector2f &mousePos, sf::Event &ev);
     void display(sf::RenderWindow &window);
     void drawNodes(sf::RenderWindow &window);
+
+    void NodeTextsetPos(sf::Text &text, Queue_Node* &pHead);
 
     bool checkSize(sf::RenderWindow &window, int size);
 

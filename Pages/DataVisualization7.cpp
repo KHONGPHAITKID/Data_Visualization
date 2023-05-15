@@ -44,9 +44,28 @@ DataVisualization_7::DataVisualization_7()
     CodeHighLight.setSize(sf::Vector2f(700, 30));
     CodeHighLight.setFillColor(sf::Color(106, 231, 255, 100));
     CodeHighLight.setOutlineColor(sf::Color(106, 231, 255));
-    //---------------------
     CodeHighLight.setPosition(CodeHighLightPosition); // 1170 - 697.5 ~ 35-36
-    //---------------------
+
+    // Text
+    this->HeadText.setString("Head");
+    this->HeadText.setFont(this->font);
+    this->HeadText.setCharacterSize(20);
+    this->HeadText.setOrigin(sf::Vector2f(this->HeadText.getLocalBounds().width / 2.f , this->HeadText.getLocalBounds().height / 2.f));
+    
+    this->vtxText.setString("vtx");
+    this->vtxText.setFont(this->font);
+    this->vtxText.setCharacterSize(20);
+    this->vtxText.setOrigin(sf::Vector2f(this->vtxText.getLocalBounds().width / 2.f , this->vtxText.getLocalBounds().height / 2.f));
+
+    this->tailText.setString("tail");
+    this->tailText.setFont(this->font);
+    this->tailText.setCharacterSize(20);
+    this->tailText.setOrigin(sf::Vector2f(this->tailText.getLocalBounds().width / 2.f , this->tailText.getLocalBounds().height / 2.f));
+    
+    this->curText.setString("cur");
+    this->curText.setFont(this->font);
+    this->curText.setCharacterSize(20);
+    this->curText.setOrigin(sf::Vector2f(this->curText.getLocalBounds().width / 2.f , this->curText.getLocalBounds().height / 2.f));
 
     //Title
     sf::Text DV7Title("Queue", this->titlefont, 35);
@@ -65,7 +84,7 @@ DataVisualization_7::DataVisualization_7()
     this->Queue1.setFillColor(sf::Color::White);
     this->Queue2.setSize(sf::Vector2f(850, 10));
     this->Queue2.setOrigin(sf::Vector2f(0, 5));
-    this->Queue2.setPosition(sf::Vector2f(550, 500));
+    this->Queue2.setPosition(sf::Vector2f(550, 530)); // 550 - 500
     this->Queue2.setFillColor(sf::Color::White);
 
 // Menu table
@@ -158,7 +177,9 @@ void DataVisualization_7::display(sf::RenderWindow &window)
         this->ReplayButton.drawImage(window);
     speedText.setString("Speed: x" + std::to_string(speed));
     window.draw(speedText);
-
+    NodeTextsetPos(HeadText, this->NodeArray);
+    if (NodeArray != nullptr)
+        window.draw(HeadText);
 
     switch (this->funcstate)
     {
@@ -504,41 +525,86 @@ void DataVisualization_7::InsertNodeBack(sf::RenderWindow &window, int data)
     this->drawNodes(window);
     window.display();
 
-    // std::this_thread::sleep_for(delayTime); 
     if (this->NodeArray == nullptr)
     {
         this->NodeArray = this->NodeArray->createNode(600, 450, 30, font, data);
         this->size = 1;
         return;
     }
-    if (checkSize(window, this->size) == false) return;
+    if (this->size==6)
+    {
+        printMessage(window, "Size must be from 0 to 6");
+        return;
+    } 
+    HeadText.setString("Head/Tail");
+    NodeTextsetPos(HeadText, NodeArray);
     Queue_Node* LastNode = this->NodeArray;
     while (LastNode->next != nullptr) LastNode = LastNode->next;
     Queue_Node* newNode = this->NodeArray->createNode(window.getSize().x / 2.f, 300, 30, this->font, data);
+    vtxText.setString("Vtx");
+    NodeTextsetPos(vtxText, newNode);
     window.clear();
     window.draw(DefaultBackground);
     this->display(window);
     this->drawNodes(window);
     window.draw(newNode->circle);
     window.draw(newNode->text);
+    window.draw(vtxText);
+    CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y + 36));
+    window.draw(CodeHighLight);
     window.display();
     std::this_thread::sleep_for(delayTime);
 
 // getting the lastNode;
     Queue_Node* temp = this->NodeArray;
-    while (temp != nullptr)
+    temp->circle.setFillColor(sf::Color(106, 231, 255));
+    temp->text.setFillColor(sf::Color::Black);
+    window.clear();
+    window.draw(DefaultBackground);
+    this->display(window);
+    this->drawNodes(window);
+    window.draw(newNode->circle);
+    window.draw(newNode->text);
+    window.draw(vtxText);
+    CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y + 72));
+    window.draw(CodeHighLight);
+    window.display();
+    std::this_thread::sleep_for(delayTime);
+
+    while (temp->next != nullptr)
     {
+        HeadText.setString("Head");
+        NodeTextsetPos(HeadText, NodeArray);
         window.clear();
         window.draw(DefaultBackground);
-        temp->circle.setFillColor(sf::Color(106, 231, 255));
-        temp->text.setFillColor(sf::Color::Black);
+        temp->next->circle.setFillColor(sf::Color(106, 231, 255));
+        temp->next->text.setFillColor(sf::Color::Black);
         this->drawNodes(window);
         this->display(window);
         window.draw(newNode->circle);
         window.draw(newNode->text);
+        NodeTextsetPos(tailText, temp->next);
+        window.draw(tailText);
+        window.draw(vtxText);
+        CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y + 108));
+        window.draw(CodeHighLight);
         window.display();
         std::this_thread::sleep_for(delayTime);
+        
         temp = temp->next;
+
+        window.clear();
+        window.draw(DefaultBackground);
+        this->display(window);
+        this->drawNodes(window);
+        window.draw(newNode->circle);
+        window.draw(newNode->text);
+        window.draw(vtxText);
+        window.draw(tailText);
+        CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y + 72));
+        window.draw(CodeHighLight);
+        window.display();
+        std::this_thread::sleep_for(delayTime);
     }
  // moving right
     for (int i = 0; i < 50; i++)
@@ -551,6 +617,12 @@ void DataVisualization_7::InsertNodeBack(sf::RenderWindow &window, int data)
         this->display(window);
         window.draw(newNode->circle);
         window.draw(newNode->text);
+        NodeTextsetPos(vtxText, newNode);
+        if (temp != NodeArray)
+            window.draw(tailText);
+        window.draw(vtxText);
+        CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y + 145));
+        window.draw(CodeHighLight);
         window.display();
     }
 //moving down
@@ -564,6 +636,12 @@ void DataVisualization_7::InsertNodeBack(sf::RenderWindow &window, int data)
         this->display(window);
         window.draw(newNode->circle);
         window.draw(newNode->text);
+        NodeTextsetPos(vtxText, newNode);
+        if (temp != NodeArray)
+            window.draw(tailText);
+        window.draw(vtxText);
+        CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y + 145));
+        window.draw(CodeHighLight);
         window.display();
     }
 
@@ -582,6 +660,11 @@ void DataVisualization_7::InsertNodeBack(sf::RenderWindow &window, int data)
         newNode->text.move(moving_distance * -1, 0);
         this->drawNodes(window);
         this->display(window);
+        NodeTextsetPos(vtxText, newNode);
+        window.draw(tailText);
+        window.draw(vtxText);
+        CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y + 145));
+        window.draw(CodeHighLight);
         window.display();
     }
     std::this_thread::sleep_for(delayTime);
@@ -598,8 +681,11 @@ void DataVisualization_7::InsertNodeBack(sf::RenderWindow &window, int data)
     window.draw(DefaultBackground);
     this->drawNodes(window);
     this->display(window);
+    CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y + 145));
+    window.draw(CodeHighLight);
     window.display();
     this->size++;
+    HeadText.setString("Head");
 }
 
 void DataVisualization_7::drawNodes(sf::RenderWindow &window)
@@ -675,7 +761,7 @@ void DataVisualization_7::DeleteNodeFront(sf::RenderWindow &window)
         printMessage(window, "There is no Node to be deleted!");
         return;
     }
-
+    // one node case
     if (this->NodeArray->next == nullptr)
     {
         this->NodeArray->circle.setFillColor(sf::Color(106, 231, 255));
@@ -684,8 +770,22 @@ void DataVisualization_7::DeleteNodeFront(sf::RenderWindow &window)
         window.draw(DefaultBackground);
         this->drawNodes(window);
         this->display(window);
+        CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y + 36));
+        window.draw(CodeHighLight);
         window.display();
         std::this_thread::sleep_for(delayTime); 
+
+        // Head = Head->next
+        window.clear();
+        window.draw(DefaultBackground);
+        this->drawNodes(window);
+        this->display(window);
+        CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y + 72));
+        window.draw(CodeHighLight);
+        window.display();
+        std::this_thread::sleep_for(delayTime); 
+
+        // Delete Cur
         while (this->NodeArray->circle.getRadius() > 16)
         {
             float radius = this->NodeArray->circle.getRadius();
@@ -700,6 +800,8 @@ void DataVisualization_7::DeleteNodeFront(sf::RenderWindow &window)
             window.draw(this->NodeArray->text);
             this->drawNodes(window);
             this->display(window);
+            CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y + 109));
+            window.draw(CodeHighLight);
             window.display();
             std::this_thread::sleep_for(delayTime1); 
         }
@@ -709,10 +811,23 @@ void DataVisualization_7::DeleteNodeFront(sf::RenderWindow &window)
         this->size = 0;
         return;
     }
+    // > 1 node case
+    HeadText.setString("Head/Cur");
+    curText.setString("Cur");
+    NodeTextsetPos(curText, NodeArray);
+    window.clear();
+    window.draw(DefaultBackground);
+    this->drawNodes(window);
+    this->display(window);
+    CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y + 36));
+    window.draw(CodeHighLight);
+    window.display();
+    std::this_thread::sleep_for(delayTime); 
 
     Queue_Node* cur = this->NodeArray;
     this->NodeArray = this->NodeArray->next;
 
+    HeadText.setString("Head");
     window.clear();
     window.draw(DefaultBackground);
     cur->circle.setFillColor(sf::Color(106, 231, 255));
@@ -722,9 +837,12 @@ void DataVisualization_7::DeleteNodeFront(sf::RenderWindow &window)
     window.draw(cur->text);
     this->drawNodes(window);
     this->display(window);
+    window.draw(curText);
+    CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y + 72));
+    window.draw(CodeHighLight);
     window.display();
+    std::this_thread::sleep_for(delayTime);
 
-    std::this_thread::sleep_for(delayTime); 
     while (cur->circle.getRadius() > 16)
     {
         float radius = cur->circle.getRadius();
@@ -740,6 +858,9 @@ void DataVisualization_7::DeleteNodeFront(sf::RenderWindow &window)
         window.draw(cur->text);
         this->drawNodes(window);
         this->display(window);
+        window.draw(curText);
+        CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y + 109));
+        window.draw(CodeHighLight);
         window.display();
         std::this_thread::sleep_for(delayTime1); 
     }
@@ -749,6 +870,8 @@ void DataVisualization_7::DeleteNodeFront(sf::RenderWindow &window)
     window.draw(DefaultBackground);   
     this->drawNodes(window);
     this->display(window);
+    CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y + 109));
+    window.draw(CodeHighLight);
     window.display();
     // move the rest nodes after delete
     for (int i = 0; i < 25; i++)
@@ -764,12 +887,16 @@ void DataVisualization_7::DeleteNodeFront(sf::RenderWindow &window)
         }
         this->drawNodes(window);
         this->display(window);
+        CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y + 109));
+        window.draw(CodeHighLight);
         window.display();
     }
     window.clear();
     window.draw(DefaultBackground);
     this->drawNodes(window);
     this->display(window);
+    CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y + 109));
+    window.draw(CodeHighLight);
     window.display();
     this->size--;
 }   
@@ -801,6 +928,8 @@ void DataVisualization_7::PeekFrontQueue(sf::RenderWindow &window)
     window.draw(DefaultBackground);
     this->drawNodes(window);
     this->display(window);
+    CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y + 36));
+    window.draw(CodeHighLight);
     window.display();
     std::this_thread::sleep_for(delayTime); 
     std::string mess = "Queue.top() = " + std::to_string(this->NodeArray->data);
@@ -811,6 +940,8 @@ void DataVisualization_7::PeekFrontQueue(sf::RenderWindow &window)
     window.draw(DefaultBackground);
     this->drawNodes(window);
     this->display(window);
+    CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y + 36));
+    window.draw(CodeHighLight);
     window.display();
 }
 
@@ -836,42 +967,34 @@ void DataVisualization_7::PeekBackQueue(sf::RenderWindow &window)
     }
     Queue_Node* temp = this->NodeArray;
     while (temp->next != nullptr) temp = temp->next;
+    NodeTextsetPos(tailText, temp);
     temp->circle.setFillColor(sf::Color(106, 231, 255));
     temp->text.setFillColor(sf::Color::Black);
     window.clear();
     window.draw(DefaultBackground);
     this->drawNodes(window);
     this->display(window);
+    window.draw(tailText);
+    CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y + 36));
+    window.draw(CodeHighLight);
     window.display();
     std::this_thread::sleep_for(delayTime); 
     std::string mess = "Queue.back() = " + std::to_string(temp->data);
     printMessage(window, mess);
-    // temp->circle.setFillColor(sf::Color::Yellow);
     temp->circle.setFillColor(sf::Color(106, 231, 255, 0));
     temp->text.setFillColor(sf::Color(106, 231, 255));
     window.clear();
     window.draw(DefaultBackground);
     this->drawNodes(window);
     this->display(window);
+    window.draw(tailText);
+    CodeHighLight.setPosition(sf::Vector2f(CodeHighLightPosition.x, CodeHighLightPosition.y + 36));
+    window.draw(CodeHighLight);
     window.display();
 }
 
 bool DataVisualization_7::printMessage(sf::RenderWindow &window, std::string message/*, int min_range, int max_range, int value*/)
 {
-    // std::chrono::milliseconds delayTime(750);
-    // sf::Text WarningMessage;
-    // WarningMessage.setString(message);
-    // WarningMessage.setCharacterSize(50);
-    // WarningMessage.setFillColor(sf::Color::White);
-    // WarningMessage.setOutlineColor(sf::Color::Red);
-    // WarningMessage.setOutlineThickness(5);
-    // WarningMessage.setFont(this->font);
-    // WarningMessage.setOrigin(WarningMessage.getLocalBounds().width/2.f, WarningMessage.getLocalBounds().height/2.f);
-    // WarningMessage.setPosition(window.getSize().x / 2.f, window.getSize().y / 2.f + 100.f);
-    // window.draw(WarningMessage);
-    // window.display();
-    // std::this_thread::sleep_for(delayTime);
-    // return true;
     std::chrono::milliseconds delayTime(1000);
     sf::Text WarningMessage;
     WarningMessage.setString(message);
@@ -891,6 +1014,14 @@ bool DataVisualization_7::printMessage(sf::RenderWindow &window, std::string mes
     window.display();
     std::this_thread::sleep_for(delayTime);
     return true;
+}
+
+void DataVisualization_7::NodeTextsetPos(sf::Text &text, Queue_Node* &pHead)
+{
+    if (pHead == nullptr) {
+        return;
+    }
+    text.setPosition(sf::Vector2f(pHead->circle.getPosition().x, pHead->circle.getPosition().y + 50));
 }
 
 void DataVisualization_7::updateChanges(sf::Font tempFont)

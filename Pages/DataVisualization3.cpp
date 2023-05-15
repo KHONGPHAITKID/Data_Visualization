@@ -736,9 +736,6 @@ bool DataVisualization_3::checkSize(sf::RenderWindow &window, int size)
     window.display();
     std::this_thread::sleep_for(delayTime);
     return false;
-    // NotificationImage.drawImage(window);
-    // window.draw(message);
-    // window.display();
 }
 
 void DataVisualization_3::InsertNodeFront(sf::RenderWindow &window, int data)
@@ -848,7 +845,6 @@ void DataVisualization_3::InsertNodeBack(sf::RenderWindow &window, int data)
     newNode->circle.setFillColor(sf::Color(106, 231, 255));
     newNode->text.setFillColor(sf::Color::Black);
     NodeTextsetPos(vtxText, newNode);
-    // window.draw(tailText);
     window.draw(CodeHighLight);
     this->display(window);
     window.draw(vtxText);
@@ -856,7 +852,6 @@ void DataVisualization_3::InsertNodeBack(sf::RenderWindow &window, int data)
     window.draw(newNode->text);
     window.draw(CodeHighLight);
     window.display();
-    // std::this_thread::sleep_for(delayTime);
     pause_for(std::chrono::milliseconds(500 / speed));
 
     // create tail pointer
@@ -873,7 +868,6 @@ void DataVisualization_3::InsertNodeBack(sf::RenderWindow &window, int data)
     window.display();
     // std::this_thread::sleep_for(delayTime);
     pause_for(std::chrono::milliseconds(500 / speed));
-    //----------
     //check the condition in the code highlight
     SLL_Node* temp = this->NodeArray;
     CodeHighLight.setPosition(CodeHighLightPosition.x, CodeHighLightPosition.y + 72);

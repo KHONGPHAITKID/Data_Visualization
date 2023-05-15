@@ -79,12 +79,12 @@ struct DataVisualization_3
 
     SLL_Node* NodeArray;
     sf::Text HeadText;
+    sf::Text tailText;
     sf::Text vtxText;
+    sf::Text curText;
     sf::Text aftText;
     sf::Text preText;
     sf::Text delText;
-    sf::Text tailText;
-    sf::Text curText;
     // sf::Text 
 
     int funcstate;
